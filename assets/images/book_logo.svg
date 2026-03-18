@@ -1,0 +1,18 @@
+<svg width="160" height="130" viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left page -->
+  <path d="M80 8 Q78 10, 76 15 L76 80 Q50 85, 15 75 L15 25 Q50 15, 80 8 Z" fill="white"/>
+  <!-- Right page -->
+  <path d="M80 8 Q82 10, 84 15 L84 80 Q110 85, 145 75 L145 25 Q110 15, 80 8 Z" fill="white"/>
+  <!-- Spine shadow left -->
+  <path d="M76 15 L80 8 L80 88 L76 80 Z" fill="#D0D0D0"/>
+  <!-- Spine shadow right -->
+  <path d="M84 15 L80 8 L80 88 L84 80 Z" fill="#E8E8E8"/>
+  <!-- Left page curl -->
+  <path d="M15 75 Q20 78, 28 100 Q45 92, 76 80 Q50 85, 15 75 Z" fill="#F5F5F5"/>
+  <!-- Right page curl -->
+  <path d="M145 75 Q140 78, 132 100 Q115 92, 84 80 Q110 85, 145 75 Z" fill="#F5F5F5"/>
+  <!-- EN text -->
+  <text x="46" y="55" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#22C55E" text-anchor="middle">EN</text>
+  <!-- RU text -->
+  <text x="114" y="55" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#EF4444" text-anchor="middle">RU</text>
+</svg>
