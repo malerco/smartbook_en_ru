@@ -2,7 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/domain/entities/dictionary_entry.dart';
-import '../../../../core/services/dictionary_service.dart';
+import '../../domain/usecases/get_dictionary_entries_usecase.dart';
+import '../../domain/usecases/add_dictionary_entry_usecase.dart';
+import '../../domain/usecases/delete_dictionary_entry_usecase.dart';
+import '../../domain/usecases/search_dictionary_usecase.dart';
+import '../../domain/usecases/clear_dictionary_usecase.dart';
 
 part 'dictionary_bloc.freezed.dart';
 part 'dictionary_event.dart';
@@ -10,9 +14,19 @@ part 'dictionary_state.dart';
 
 @injectable
 class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
-  final DictionaryService _dictionaryService;
+  final GetDictionaryEntriesUseCase _getEntriesUseCase;
+  final AddDictionaryEntryUseCase _addEntryUseCase;
+  final DeleteDictionaryEntryUseCase _deleteEntryUseCase;
+  final SearchDictionaryUseCase _searchUseCase;
+  final ClearDictionaryUseCase _clearUseCase;
 
-  DictionaryBloc(this._dictionaryService) : super(const DictionaryState.initial()) {
+  DictionaryBloc(
+    this._getEntriesUseCase,
+    this._addEntryUseCase,
+    this._deleteEntryUseCase,
+    this._searchUseCase,
+    this._clearUseCase,
+  ) : super(const DictionaryState.initial()) {
     on<DictionaryLoadRequested>(_onLoadRequested);
     on<DictionaryAddRequested>(_onAddRequested);
     on<DictionaryDeleteRequested>(_onDeleteRequested);
@@ -26,7 +40,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
   ) async {
     emit(const DictionaryState.loading());
     try {
-      final entries = _dictionaryService.getEntries();
+      final entries = _getEntriesUseCase();
       emit(DictionaryState.loaded(entries: entries));
     } catch (e) {
       emit(DictionaryState.error(message: e.toString()));
@@ -38,7 +52,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
     Emitter<DictionaryState> emit,
   ) async {
     try {
-      await _dictionaryService.addEntry(event.entry);
+      await _addEntryUseCase(event.entry);
       add(const DictionaryEvent.loadRequested());
     } catch (e) {
       emit(DictionaryState.error(message: e.toString()));
@@ -50,7 +64,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
     Emitter<DictionaryState> emit,
   ) async {
     try {
-      await _dictionaryService.deleteEntry(event.entryId);
+      await _deleteEntryUseCase(event.entryId);
       add(const DictionaryEvent.loadRequested());
     } catch (e) {
       emit(DictionaryState.error(message: e.toString()));
@@ -66,7 +80,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
         add(const DictionaryEvent.loadRequested());
         return;
       }
-      final entries = _dictionaryService.searchEntries(event.query);
+      final entries = _searchUseCase(event.query);
       emit(DictionaryState.loaded(entries: entries, searchQuery: event.query));
     } catch (e) {
       emit(DictionaryState.error(message: e.toString()));
@@ -78,7 +92,7 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
     Emitter<DictionaryState> emit,
   ) async {
     try {
-      await _dictionaryService.clearAll();
+      await _clearUseCase();
       emit(const DictionaryState.loaded(entries: []));
     } catch (e) {
       emit(DictionaryState.error(message: e.toString()));

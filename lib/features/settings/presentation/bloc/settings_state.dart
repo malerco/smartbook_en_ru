@@ -9,5 +9,7 @@ class SettingsState with _$SettingsState {
     required LineSpacingOption lineSpacing,
     required String fontFamily,
     required String primaryLanguage,
+    required String appLanguage,
+    required String appVersion,
   }) = SettingsLoaded;
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/di/injection.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:smartbook_en_ru/core/constants/image_constants.dart';
+import 'package:smartbook_en_ru/core/theme/theme.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/router/app_router.dart';
 import '../bloc/splash_bloc.dart';
@@ -14,18 +14,6 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<SplashBloc>()..add(const SplashStarted()),
-      child: const SplashView(),
-    );
-  }
-}
-
-class SplashView extends StatelessWidget {
-  const SplashView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state is SplashLoaded) {
@@ -33,71 +21,105 @@ class SplashView extends StatelessWidget {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.splashBackground,
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(flex: 2),
-                RepaintBoundary(
-                  child: SvgPicture.asset(
-                    'assets/images/book_logo.svg',
-                    width: 160,
-                    height: 130,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                Text(
-                  AppLocalizations.of(context)!.appTitle,
-                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        letterSpacing: 1,
-                      ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  AppLocalizations.of(context)!.appSubtitle,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.white.withOpacity(0.8),
-                        letterSpacing: 1.5,
-                      ),
-                ),
-                const Spacer(flex: 2),
-                BlocBuilder<SplashBloc, SplashState>(
-                  builder: (context, state) {
-                    if (state is SplashLoading) {
-                      return LoadingIndicator(
-                        progress: state.progress,
-                        messageType: state.messageType,
-                      );
-                    } else if (state is SplashError) {
-                      return Column(
-                        children: [
-                          const Icon(
-                            Icons.error_outline,
-                            color: Colors.white,
-                            size: 48,
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            state.errorKey,
-                            style: const TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
-                const Spacer(),
-              ],
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(ImageConstants.splashImage),
+            SafeArea(
+              child: Column(
+                children: [
+                  const Spacer(flex: 3),
+                  _buildTitle(context),
+                  const Spacer(flex: 2),
+                  _buildLoadingSection(context),
+                  const SizedBox(height: 48),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    final appLocale = AppLocalizations.of(context)!;
+    final colors = context.colors;
+    return Column(
+      children: [
+        Text(
+          appLocale.appTitle,
+          style: GoogleFonts.playfairDisplay(
+            fontSize: 42,
+            fontWeight: FontWeight.bold,
+            color: colors.white,
+            fontStyle: FontStyle.italic,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.3),
+                offset: const Offset(2, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          appLocale.appSubtitle,
+          style: GoogleFonts.lato(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: colors.white,
+            letterSpacing: 1.2,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.3),
+                offset: const Offset(2, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoadingSection(BuildContext context) {
+    final colors = context.colors;
+    return BlocBuilder<SplashBloc, SplashState>(
+      builder: (context, state) {
+        if (state is SplashLoading) {
+          return LoadingIndicator(
+            progress: state.progress,
+            messageType: state.messageType,
+          );
+        } else if (state is SplashError) {
+          return Column(
+            children: [
+              const Icon(
+                Icons.error_outline,
+                color: Color(0xFFCF6679),
+                size: 48,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                state.errorKey,
+                style: TextStyle(color: colors.white, shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: const Offset(2, 2),
+                    blurRadius: 4,
+                  ),
+                ],),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          );
+        }
+        return const SizedBox(height: 72,);
+      },
     );
   }
 }

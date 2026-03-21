@@ -19,9 +19,9 @@ class PronunciationService {
     
     try {
       final jsonString = await rootBundle.loadString('assets/pronunciations.json');
-      await Future.delayed(Duration.zero); // Yield before heavy JSON parsing
+      await Future.delayed(Duration.zero);
       final Map<String, dynamic> data = json.decode(jsonString);
-      await Future.delayed(Duration.zero); // Yield before map conversion
+      await Future.delayed(Duration.zero);
       _pronunciations = data.map((key, value) => MapEntry(key, value.toString()));
     } catch (e) {
       _pronunciations = {};

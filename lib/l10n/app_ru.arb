@@ -1,7 +1,7 @@
 {
   "@@locale": "ru",
-  "appTitle": "SmartBook",
-  "appSubtitle": "Читай • Переводи • Учись",
+  "appTitle": "Читай и Учись",
+  "appSubtitle": "Изучай языки через книги",
   "english": "Английский",
   "russian": "Русский",
   "enterText": "Введите текст для перевода...",
@@ -31,12 +31,13 @@
   "almostReady": "Почти готово...",
   "failedToLoadModel": "Не удалось загрузить модель",
 
-  "tabBooks": "Книги",
+  "tabLibrary": "Библиотека",
   "tabDictionary": "Словарь",
   "tabSettings": "Настройки",
 
-  "booksTitle": "Моя библиотека",
+  "booksTitle": "Мои Книги",
   "addBook": "Добавить книгу",
+  "addNewBook": "+ Добавить книгу",
   "noBooks": "Пока нет книг",
   "noBooksHint": "Нажмите +, чтобы добавить первую книгу",
   "deleteBook": "Удалить",
@@ -51,8 +52,12 @@
   "word": "Слово",
   "translation": "Перевод",
   "examples": "Примеры",
+  "wordList": "Список слов",
+  "flashcards": "Карточки",
+  "edit": "Изменить",
 
   "settingsTitle": "Настройки",
+  "appTheme": "Тема приложения",
   "appearance": "Внешний вид",
   "theme": "Тема",
   "themeDark": "Тёмная",
@@ -66,11 +71,13 @@
   "appLanguage": "Язык приложения",
   "mainLanguage": "Основной язык",
   "translationLanguage": "Язык перевода",
+  "primaryTranslationLanguage": "Язык перевода",
   "primaryLanguage": "Основной язык",
   "reading": "Чтение",
   "lineSpacing": "Межстрочный интервал",
   "lineSpacingCompact": "Компактный",
   "lineSpacingNormal": "Обычный",
+  "lineSpacingWide": "Широкий",
   "lineSpacingRelaxed": "Свободный",
   "fontFamily": "Шрифт",
   "dataAndStorage": "Данные и хранилище",
@@ -80,5 +87,6 @@
   "confirmClearAllData": "Вы уверены, что хотите удалить все данные? Это действие нельзя отменить.",
   "cancel": "Отмена",
   "confirm": "Подтвердить",
-  "aboutApp": "О приложении"
+  "aboutApp": "О приложении",
+  "appVersion": "Версия приложения"
 }

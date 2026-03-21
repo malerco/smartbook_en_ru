@@ -25,6 +25,7 @@ mixin _$SettingsEvent {
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -34,6 +35,7 @@ mixin _$SettingsEvent {
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -43,6 +45,7 @@ mixin _$SettingsEvent {
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +59,8 @@ mixin _$SettingsEvent {
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -66,6 +71,7 @@ mixin _$SettingsEvent {
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -76,6 +82,7 @@ mixin _$SettingsEvent {
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -152,6 +159,7 @@ class _$SettingsLoadRequestedImpl implements SettingsLoadRequested {
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) {
     return loadRequested();
   }
@@ -165,6 +173,7 @@ class _$SettingsLoadRequestedImpl implements SettingsLoadRequested {
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) {
     return loadRequested?.call();
   }
@@ -178,6 +187,7 @@ class _$SettingsLoadRequestedImpl implements SettingsLoadRequested {
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (loadRequested != null) {
@@ -198,6 +208,8 @@ class _$SettingsLoadRequestedImpl implements SettingsLoadRequested {
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) {
     return loadRequested(this);
   }
@@ -212,6 +224,7 @@ class _$SettingsLoadRequestedImpl implements SettingsLoadRequested {
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) {
     return loadRequested?.call(this);
   }
@@ -226,6 +239,7 @@ class _$SettingsLoadRequestedImpl implements SettingsLoadRequested {
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (loadRequested != null) {
@@ -320,6 +334,7 @@ class _$SettingsThemeChangedImpl implements SettingsThemeChanged {
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) {
     return themeChanged(themeMode);
   }
@@ -333,6 +348,7 @@ class _$SettingsThemeChangedImpl implements SettingsThemeChanged {
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) {
     return themeChanged?.call(themeMode);
   }
@@ -346,6 +362,7 @@ class _$SettingsThemeChangedImpl implements SettingsThemeChanged {
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (themeChanged != null) {
@@ -366,6 +383,8 @@ class _$SettingsThemeChangedImpl implements SettingsThemeChanged {
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) {
     return themeChanged(this);
   }
@@ -380,6 +399,7 @@ class _$SettingsThemeChangedImpl implements SettingsThemeChanged {
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) {
     return themeChanged?.call(this);
   }
@@ -394,6 +414,7 @@ class _$SettingsThemeChangedImpl implements SettingsThemeChanged {
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (themeChanged != null) {
@@ -496,6 +517,7 @@ class _$SettingsFontSizeChangedImpl implements SettingsFontSizeChanged {
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) {
     return fontSizeChanged(fontSize);
   }
@@ -509,6 +531,7 @@ class _$SettingsFontSizeChangedImpl implements SettingsFontSizeChanged {
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) {
     return fontSizeChanged?.call(fontSize);
   }
@@ -522,6 +545,7 @@ class _$SettingsFontSizeChangedImpl implements SettingsFontSizeChanged {
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (fontSizeChanged != null) {
@@ -542,6 +566,8 @@ class _$SettingsFontSizeChangedImpl implements SettingsFontSizeChanged {
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) {
     return fontSizeChanged(this);
   }
@@ -556,6 +582,7 @@ class _$SettingsFontSizeChangedImpl implements SettingsFontSizeChanged {
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) {
     return fontSizeChanged?.call(this);
   }
@@ -570,6 +597,7 @@ class _$SettingsFontSizeChangedImpl implements SettingsFontSizeChanged {
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (fontSizeChanged != null) {
@@ -672,6 +700,7 @@ class _$SettingsLineSpacingChangedImpl implements SettingsLineSpacingChanged {
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) {
     return lineSpacingChanged(lineSpacing);
   }
@@ -685,6 +714,7 @@ class _$SettingsLineSpacingChangedImpl implements SettingsLineSpacingChanged {
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) {
     return lineSpacingChanged?.call(lineSpacing);
   }
@@ -698,6 +728,7 @@ class _$SettingsLineSpacingChangedImpl implements SettingsLineSpacingChanged {
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (lineSpacingChanged != null) {
@@ -718,6 +749,8 @@ class _$SettingsLineSpacingChangedImpl implements SettingsLineSpacingChanged {
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) {
     return lineSpacingChanged(this);
   }
@@ -732,6 +765,7 @@ class _$SettingsLineSpacingChangedImpl implements SettingsLineSpacingChanged {
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) {
     return lineSpacingChanged?.call(this);
   }
@@ -746,6 +780,7 @@ class _$SettingsLineSpacingChangedImpl implements SettingsLineSpacingChanged {
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (lineSpacingChanged != null) {
@@ -849,6 +884,7 @@ class _$SettingsFontFamilyChangedImpl implements SettingsFontFamilyChanged {
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) {
     return fontFamilyChanged(fontFamily);
   }
@@ -862,6 +898,7 @@ class _$SettingsFontFamilyChangedImpl implements SettingsFontFamilyChanged {
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) {
     return fontFamilyChanged?.call(fontFamily);
   }
@@ -875,6 +912,7 @@ class _$SettingsFontFamilyChangedImpl implements SettingsFontFamilyChanged {
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (fontFamilyChanged != null) {
@@ -895,6 +933,8 @@ class _$SettingsFontFamilyChangedImpl implements SettingsFontFamilyChanged {
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) {
     return fontFamilyChanged(this);
   }
@@ -909,6 +949,7 @@ class _$SettingsFontFamilyChangedImpl implements SettingsFontFamilyChanged {
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) {
     return fontFamilyChanged?.call(this);
   }
@@ -923,6 +964,7 @@ class _$SettingsFontFamilyChangedImpl implements SettingsFontFamilyChanged {
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (fontFamilyChanged != null) {
@@ -1029,6 +1071,7 @@ class _$SettingsPrimaryLanguageChangedImpl
     required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
     required TResult Function(String fontFamily) fontFamilyChanged,
     required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
   }) {
     return primaryLanguageChanged(language);
   }
@@ -1042,6 +1085,7 @@ class _$SettingsPrimaryLanguageChangedImpl
     TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult? Function(String fontFamily)? fontFamilyChanged,
     TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
   }) {
     return primaryLanguageChanged?.call(language);
   }
@@ -1055,6 +1099,7 @@ class _$SettingsPrimaryLanguageChangedImpl
     TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
     TResult Function(String fontFamily)? fontFamilyChanged,
     TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (primaryLanguageChanged != null) {
@@ -1075,6 +1120,8 @@ class _$SettingsPrimaryLanguageChangedImpl
     fontFamilyChanged,
     required TResult Function(SettingsPrimaryLanguageChanged value)
     primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
   }) {
     return primaryLanguageChanged(this);
   }
@@ -1089,6 +1136,7 @@ class _$SettingsPrimaryLanguageChangedImpl
     TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult? Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
   }) {
     return primaryLanguageChanged?.call(this);
   }
@@ -1103,6 +1151,7 @@ class _$SettingsPrimaryLanguageChangedImpl
     TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
     TResult Function(SettingsPrimaryLanguageChanged value)?
     primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
     required TResult orElse(),
   }) {
     if (primaryLanguageChanged != null) {
@@ -1128,6 +1177,189 @@ abstract class SettingsPrimaryLanguageChanged implements SettingsEvent {
 }
 
 /// @nodoc
+abstract class _$$SettingsAppLanguageChangedImplCopyWith<$Res> {
+  factory _$$SettingsAppLanguageChangedImplCopyWith(
+    _$SettingsAppLanguageChangedImpl value,
+    $Res Function(_$SettingsAppLanguageChangedImpl) then,
+  ) = __$$SettingsAppLanguageChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String language});
+}
+
+/// @nodoc
+class __$$SettingsAppLanguageChangedImplCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$SettingsAppLanguageChangedImpl>
+    implements _$$SettingsAppLanguageChangedImplCopyWith<$Res> {
+  __$$SettingsAppLanguageChangedImplCopyWithImpl(
+    _$SettingsAppLanguageChangedImpl _value,
+    $Res Function(_$SettingsAppLanguageChangedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? language = null}) {
+    return _then(
+      _$SettingsAppLanguageChangedImpl(
+        null == language
+            ? _value.language
+            : language // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$SettingsAppLanguageChangedImpl implements SettingsAppLanguageChanged {
+  const _$SettingsAppLanguageChangedImpl(this.language);
+
+  @override
+  final String language;
+
+  @override
+  String toString() {
+    return 'SettingsEvent.appLanguageChanged(language: $language)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SettingsAppLanguageChangedImpl &&
+            (identical(other.language, language) ||
+                other.language == language));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, language);
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SettingsAppLanguageChangedImplCopyWith<_$SettingsAppLanguageChangedImpl>
+  get copyWith =>
+      __$$SettingsAppLanguageChangedImplCopyWithImpl<
+        _$SettingsAppLanguageChangedImpl
+      >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadRequested,
+    required TResult Function(AppThemeMode themeMode) themeChanged,
+    required TResult Function(FontSizeOption fontSize) fontSizeChanged,
+    required TResult Function(LineSpacingOption lineSpacing) lineSpacingChanged,
+    required TResult Function(String fontFamily) fontFamilyChanged,
+    required TResult Function(String language) primaryLanguageChanged,
+    required TResult Function(String language) appLanguageChanged,
+  }) {
+    return appLanguageChanged(language);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadRequested,
+    TResult? Function(AppThemeMode themeMode)? themeChanged,
+    TResult? Function(FontSizeOption fontSize)? fontSizeChanged,
+    TResult? Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
+    TResult? Function(String fontFamily)? fontFamilyChanged,
+    TResult? Function(String language)? primaryLanguageChanged,
+    TResult? Function(String language)? appLanguageChanged,
+  }) {
+    return appLanguageChanged?.call(language);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadRequested,
+    TResult Function(AppThemeMode themeMode)? themeChanged,
+    TResult Function(FontSizeOption fontSize)? fontSizeChanged,
+    TResult Function(LineSpacingOption lineSpacing)? lineSpacingChanged,
+    TResult Function(String fontFamily)? fontFamilyChanged,
+    TResult Function(String language)? primaryLanguageChanged,
+    TResult Function(String language)? appLanguageChanged,
+    required TResult orElse(),
+  }) {
+    if (appLanguageChanged != null) {
+      return appLanguageChanged(language);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(SettingsLoadRequested value) loadRequested,
+    required TResult Function(SettingsThemeChanged value) themeChanged,
+    required TResult Function(SettingsFontSizeChanged value) fontSizeChanged,
+    required TResult Function(SettingsLineSpacingChanged value)
+    lineSpacingChanged,
+    required TResult Function(SettingsFontFamilyChanged value)
+    fontFamilyChanged,
+    required TResult Function(SettingsPrimaryLanguageChanged value)
+    primaryLanguageChanged,
+    required TResult Function(SettingsAppLanguageChanged value)
+    appLanguageChanged,
+  }) {
+    return appLanguageChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(SettingsLoadRequested value)? loadRequested,
+    TResult? Function(SettingsThemeChanged value)? themeChanged,
+    TResult? Function(SettingsFontSizeChanged value)? fontSizeChanged,
+    TResult? Function(SettingsLineSpacingChanged value)? lineSpacingChanged,
+    TResult? Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
+    TResult? Function(SettingsPrimaryLanguageChanged value)?
+    primaryLanguageChanged,
+    TResult? Function(SettingsAppLanguageChanged value)? appLanguageChanged,
+  }) {
+    return appLanguageChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SettingsLoadRequested value)? loadRequested,
+    TResult Function(SettingsThemeChanged value)? themeChanged,
+    TResult Function(SettingsFontSizeChanged value)? fontSizeChanged,
+    TResult Function(SettingsLineSpacingChanged value)? lineSpacingChanged,
+    TResult Function(SettingsFontFamilyChanged value)? fontFamilyChanged,
+    TResult Function(SettingsPrimaryLanguageChanged value)?
+    primaryLanguageChanged,
+    TResult Function(SettingsAppLanguageChanged value)? appLanguageChanged,
+    required TResult orElse(),
+  }) {
+    if (appLanguageChanged != null) {
+      return appLanguageChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SettingsAppLanguageChanged implements SettingsEvent {
+  const factory SettingsAppLanguageChanged(final String language) =
+      _$SettingsAppLanguageChangedImpl;
+
+  String get language;
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SettingsAppLanguageChangedImplCopyWith<_$SettingsAppLanguageChangedImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$SettingsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -1138,6 +1370,8 @@ mixin _$SettingsState {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )
     loaded,
   }) => throw _privateConstructorUsedError;
@@ -1150,6 +1384,8 @@ mixin _$SettingsState {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )?
     loaded,
   }) => throw _privateConstructorUsedError;
@@ -1162,6 +1398,8 @@ mixin _$SettingsState {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )?
     loaded,
     required TResult orElse(),
@@ -1256,6 +1494,8 @@ class _$SettingsInitialImpl implements SettingsInitial {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )
     loaded,
   }) {
@@ -1272,6 +1512,8 @@ class _$SettingsInitialImpl implements SettingsInitial {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )?
     loaded,
   }) {
@@ -1288,6 +1530,8 @@ class _$SettingsInitialImpl implements SettingsInitial {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )?
     loaded,
     required TResult orElse(),
@@ -1347,6 +1591,8 @@ abstract class _$$SettingsLoadedImplCopyWith<$Res> {
     LineSpacingOption lineSpacing,
     String fontFamily,
     String primaryLanguage,
+    String appLanguage,
+    String appVersion,
   });
 }
 
@@ -1369,6 +1615,8 @@ class __$$SettingsLoadedImplCopyWithImpl<$Res>
     Object? lineSpacing = null,
     Object? fontFamily = null,
     Object? primaryLanguage = null,
+    Object? appLanguage = null,
+    Object? appVersion = null,
   }) {
     return _then(
       _$SettingsLoadedImpl(
@@ -1392,6 +1640,14 @@ class __$$SettingsLoadedImplCopyWithImpl<$Res>
             ? _value.primaryLanguage
             : primaryLanguage // ignore: cast_nullable_to_non_nullable
                   as String,
+        appLanguage: null == appLanguage
+            ? _value.appLanguage
+            : appLanguage // ignore: cast_nullable_to_non_nullable
+                  as String,
+        appVersion: null == appVersion
+            ? _value.appVersion
+            : appVersion // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
   }
@@ -1406,6 +1662,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
     required this.lineSpacing,
     required this.fontFamily,
     required this.primaryLanguage,
+    required this.appLanguage,
+    required this.appVersion,
   });
 
   @override
@@ -1418,10 +1676,14 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
   final String fontFamily;
   @override
   final String primaryLanguage;
+  @override
+  final String appLanguage;
+  @override
+  final String appVersion;
 
   @override
   String toString() {
-    return 'SettingsState.loaded(themeMode: $themeMode, fontSize: $fontSize, lineSpacing: $lineSpacing, fontFamily: $fontFamily, primaryLanguage: $primaryLanguage)';
+    return 'SettingsState.loaded(themeMode: $themeMode, fontSize: $fontSize, lineSpacing: $lineSpacing, fontFamily: $fontFamily, primaryLanguage: $primaryLanguage, appLanguage: $appLanguage, appVersion: $appVersion)';
   }
 
   @override
@@ -1438,7 +1700,11 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
             (identical(other.fontFamily, fontFamily) ||
                 other.fontFamily == fontFamily) &&
             (identical(other.primaryLanguage, primaryLanguage) ||
-                other.primaryLanguage == primaryLanguage));
+                other.primaryLanguage == primaryLanguage) &&
+            (identical(other.appLanguage, appLanguage) ||
+                other.appLanguage == appLanguage) &&
+            (identical(other.appVersion, appVersion) ||
+                other.appVersion == appVersion));
   }
 
   @override
@@ -1449,6 +1715,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
     lineSpacing,
     fontFamily,
     primaryLanguage,
+    appLanguage,
+    appVersion,
   );
 
   /// Create a copy of SettingsState
@@ -1472,6 +1740,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )
     loaded,
   }) {
@@ -1481,6 +1751,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
       lineSpacing,
       fontFamily,
       primaryLanguage,
+      appLanguage,
+      appVersion,
     );
   }
 
@@ -1494,6 +1766,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )?
     loaded,
   }) {
@@ -1503,6 +1777,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
       lineSpacing,
       fontFamily,
       primaryLanguage,
+      appLanguage,
+      appVersion,
     );
   }
 
@@ -1516,6 +1792,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
       LineSpacingOption lineSpacing,
       String fontFamily,
       String primaryLanguage,
+      String appLanguage,
+      String appVersion,
     )?
     loaded,
     required TResult orElse(),
@@ -1527,6 +1805,8 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
         lineSpacing,
         fontFamily,
         primaryLanguage,
+        appLanguage,
+        appVersion,
       );
     }
     return orElse();
@@ -1571,6 +1851,8 @@ abstract class SettingsLoaded implements SettingsState {
     required final LineSpacingOption lineSpacing,
     required final String fontFamily,
     required final String primaryLanguage,
+    required final String appLanguage,
+    required final String appVersion,
   }) = _$SettingsLoadedImpl;
 
   AppThemeMode get themeMode;
@@ -1578,6 +1860,8 @@ abstract class SettingsLoaded implements SettingsState {
   LineSpacingOption get lineSpacing;
   String get fontFamily;
   String get primaryLanguage;
+  String get appLanguage;
+  String get appVersion;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

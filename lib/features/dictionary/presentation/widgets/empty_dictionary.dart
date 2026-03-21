@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/l10n/app_localizations.dart';
+import '../../../../core/theme/theme.dart';
 
 class EmptyDictionary extends StatelessWidget {
   const EmptyDictionary({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final appLocale = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
+    final colors = context.colors;
     
     return Center(
       child: Padding(
@@ -19,28 +20,28 @@ class EmptyDictionary extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: colors.surface,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.menu_book_outlined,
-                color: AppColors.textSecondary,
+                color: colors.textSecondary,
                 size: 40,
               ),
             ),
             const SizedBox(height: 24),
             Text(
-              appLocale.dictionaryEmpty,
+              l10n.dictionaryEmpty,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colors.textPrimary,
                   ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              appLocale.dictionaryEmptyHint,
+              l10n.dictionaryEmptyHint,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colors.textSecondary,
                   ),
               textAlign: TextAlign.center,
             ),

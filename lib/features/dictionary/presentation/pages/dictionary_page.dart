@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/app_localizations.dart';
+import '../../../../core/theme/theme.dart';
 import '../bloc/dictionary_bloc.dart';
-import '../widgets/dictionary_entry_card.dart';
+import '../widgets/dictionary_word_list.dart';
+import '../widgets/dictionary_flashcards.dart';
 import '../widgets/empty_dictionary.dart';
 
 class DictionaryPage extends StatelessWidget {
@@ -26,106 +27,162 @@ class DictionaryView extends StatefulWidget {
   State<DictionaryView> createState() => _DictionaryViewState();
 }
 
-class _DictionaryViewState extends State<DictionaryView> {
-  final TextEditingController _searchController = TextEditingController();
+class _DictionaryViewState extends State<DictionaryView> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context)!;
+    final colors = context.colors;
     
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.dictionaryBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: colors.dictionaryBackground,
         elevation: 0,
         title: Text(
           appLocale.dictionaryTitle,
-          style: const TextStyle(
-            color: AppColors.textPrimary,
+          style: TextStyle(
+            color: colors.textPrimary,
             fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
         centerTitle: false,
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: TextField(
-              controller: _searchController,
-              style: const TextStyle(color: AppColors.textPrimary),
-              decoration: InputDecoration(
-                hintText: appLocale.searchWord,
-                hintStyle: const TextStyle(color: AppColors.textHint),
-                prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
-                filled: true,
-                fillColor: AppColors.surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              ),
-              onChanged: (value) {
-                context.read<DictionaryBloc>().add(DictionaryEvent.searchRequested(value));
-              },
-            ),
-          ),
+          _buildTabBar(appLocale, colors),
+
           Expanded(
-            child: BlocBuilder<DictionaryBloc, DictionaryState>(
-              builder: (context, state) {
-                return state.when(
-                  initial: () => const Center(child: CircularProgressIndicator()),
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  loaded: (entries, searchQuery) {
-                    if (entries.isEmpty) {
-                      return const EmptyDictionary();
-                    }
-                    return ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: entries.length,
-                      itemBuilder: (context, index) {
-                        return DictionaryEntryCard(
-                          entry: entries[index],
-                          onDelete: () {
-                            context.read<DictionaryBloc>().add(
-                              DictionaryEvent.deleteRequested(entries[index].id),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                  error: (message) => Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.error_outline,
-                          color: AppColors.error,
-                          size: 48,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          message,
-                          style: const TextStyle(color: AppColors.textSecondary),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildWordListTab(colors),
+                _buildFlashcardsTab(colors),
+              ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTabBar(AppLocalizations appLocale, AppColorScheme colors) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: colors.surfaceVariant,
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: TabBar(
+        controller: _tabController,
+        indicator: BoxDecoration(
+          color: colors.primary,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        indicatorSize: TabBarIndicatorSize.tab,
+        dividerColor: Colors.transparent,
+        labelColor: colors.onPrimary,
+        unselectedLabelColor: colors.textSecondary,
+        labelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+        ),
+        tabs: [
+          Tab(text: appLocale.wordList),
+          Tab(text: appLocale.flashcards),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWordListTab(AppColorScheme colors) {
+    return BlocBuilder<DictionaryBloc, DictionaryState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => Center(
+            child: CircularProgressIndicator(color: colors.primary),
+          ),
+          loading: () => Center(
+            child: CircularProgressIndicator(color: colors.primary),
+          ),
+          loaded: (entries, searchQuery) {
+            if (entries.isEmpty) {
+              return const EmptyDictionary();
+            }
+            return DictionaryWordList(
+              entries: entries,
+              onDelete: (id) {
+                context.read<DictionaryBloc>().add(
+                  DictionaryEvent.deleteRequested(id),
+                );
+              },
+            );
+          },
+          error: (message) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  color: colors.error,
+                  size: 48,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  message,
+                  style: TextStyle(color: colors.textSecondary),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildFlashcardsTab(AppColorScheme colors) {
+    return BlocBuilder<DictionaryBloc, DictionaryState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => Center(
+            child: CircularProgressIndicator(color: colors.primary),
+          ),
+          loading: () => Center(
+            child: CircularProgressIndicator(color: colors.primary),
+          ),
+          loaded: (entries, searchQuery) {
+            if (entries.isEmpty) {
+              return const EmptyDictionary();
+            }
+            return DictionaryFlashcards(entries: entries);
+          },
+          error: (message) => Center(
+            child: Text(
+              message,
+              style: TextStyle(color: colors.textSecondary),
+            ),
+          ),
+        );
+      },
     );
   }
 }

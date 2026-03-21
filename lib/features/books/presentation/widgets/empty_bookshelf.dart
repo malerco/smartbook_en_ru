@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/l10n/app_localizations.dart';
+import '../../../../core/theme/theme.dart';
 
 class EmptyBookshelf extends StatelessWidget {
   const EmptyBookshelf({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final appLocale = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
+    final colors = context.colors;
     
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildEmptyBookPlaceholder(context, appLocale),
+          _buildEmptyBookPlaceholder(context, l10n, colors),
           const SizedBox(height: 24),
           Text(
-            appLocale.noBooks,
+            l10n.noBooks,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: AppColors.textPrimary,
+                  color: colors.textPrimary,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            appLocale.noBooksHint,
+            l10n.noBooksHint,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colors.textSecondary,
                 ),
             textAlign: TextAlign.center,
           ),
@@ -34,19 +35,19 @@ class EmptyBookshelf extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyBookPlaceholder(BuildContext context, AppLocalizations appLocale) {
+  Widget _buildEmptyBookPlaceholder(BuildContext context, AppLocalizations l10n, AppColorScheme colors) {
     return GestureDetector(
       onTap: () {
-        _showAddBookDialog(context);
+        _showAddBookDialog(context, colors);
       },
       child: Container(
         width: 120,
         height: 180,
         decoration: BoxDecoration(
-          color: AppColors.surface.withOpacity(0.5),
+          color: colors.surface.withOpacity(0.5),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: AppColors.surfaceLight.withOpacity(0.5),
+            color: colors.surfaceVariant.withOpacity(0.5),
             width: 2,
             style: BorderStyle.solid,
           ),
@@ -58,20 +59,20 @@ class EmptyBookshelf extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.2),
+                color: colors.primary.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.add,
-                color: AppColors.primary,
+                color: colors.primary,
                 size: 28,
               ),
             ),
             const SizedBox(height: 12),
             Text(
-              appLocale.addBook,
-              style: const TextStyle(
-                color: AppColors.textSecondary,
+              l10n.addBook,
+              style: TextStyle(
+                color: colors.textSecondary,
                 fontSize: 12,
               ),
               textAlign: TextAlign.center,
@@ -82,11 +83,11 @@ class EmptyBookshelf extends StatelessWidget {
     );
   }
 
-  void _showAddBookDialog(BuildContext context) {
+  void _showAddBookDialog(BuildContext context, AppColorScheme colors) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(AppLocalizations.of(context)!.addBook),
-        backgroundColor: AppColors.surface,
+        backgroundColor: colors.surface,
       ),
     );
   }

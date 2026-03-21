@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../domain/entities/dictionary_entry.dart';
+import '../../domain/entities/dictionary_entry.dart';
+import '../../domain/repositories/dictionary_repository.dart';
 
-@lazySingleton
-class DictionaryService {
+@LazySingleton(as: DictionaryRepository)
+class DictionaryRepositoryImpl implements DictionaryRepository {
   static const String _dictionaryKey = 'dictionary_entries';
   final SharedPreferences _prefs;
 
-  DictionaryService(this._prefs);
+  DictionaryRepositoryImpl(this._prefs);
 
+  @override
   List<DictionaryEntry> getEntries() {
     final jsonString = _prefs.getString(_dictionaryKey);
     if (jsonString == null) return [];
@@ -20,17 +22,20 @@ class DictionaryService {
         .toList();
   }
 
+  @override
   Future<void> saveEntries(List<DictionaryEntry> entries) async {
     final jsonList = entries.map((e) => e.toJson()).toList();
     await _prefs.setString(_dictionaryKey, json.encode(jsonList));
   }
 
+  @override
   Future<void> addEntry(DictionaryEntry entry) async {
     final entries = getEntries();
     entries.insert(0, entry);
     await saveEntries(entries);
   }
 
+  @override
   Future<void> updateEntry(DictionaryEntry entry) async {
     final entries = getEntries();
     final index = entries.indexWhere((e) => e.id == entry.id);
@@ -40,16 +45,19 @@ class DictionaryService {
     }
   }
 
+  @override
   Future<void> deleteEntry(String entryId) async {
     final entries = getEntries();
     entries.removeWhere((e) => e.id == entryId);
     await saveEntries(entries);
   }
 
+  @override
   Future<void> clearAll() async {
     await _prefs.remove(_dictionaryKey);
   }
 
+  @override
   List<DictionaryEntry> searchEntries(String query) {
     final entries = getEntries();
     final lowerQuery = query.toLowerCase();

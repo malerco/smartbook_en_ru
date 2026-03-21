@@ -685,21 +685,21 @@ mixin _$BooksState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Book> books) loaded,
+    required TResult Function(List<Book?> books) loaded,
     required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Book> books)? loaded,
+    TResult? Function(List<Book?> books)? loaded,
     TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Book> books)? loaded,
+    TResult Function(List<Book?> books)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -794,7 +794,7 @@ class _$BooksInitialImpl implements BooksInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Book> books) loaded,
+    required TResult Function(List<Book?> books) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -805,7 +805,7 @@ class _$BooksInitialImpl implements BooksInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Book> books)? loaded,
+    TResult? Function(List<Book?> books)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -816,7 +816,7 @@ class _$BooksInitialImpl implements BooksInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Book> books)? loaded,
+    TResult Function(List<Book?> books)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -913,7 +913,7 @@ class _$BooksLoadingImpl implements BooksLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Book> books) loaded,
+    required TResult Function(List<Book?> books) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -924,7 +924,7 @@ class _$BooksLoadingImpl implements BooksLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Book> books)? loaded,
+    TResult? Function(List<Book?> books)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -935,7 +935,7 @@ class _$BooksLoadingImpl implements BooksLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Book> books)? loaded,
+    TResult Function(List<Book?> books)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -994,7 +994,7 @@ abstract class _$$BooksLoadedImplCopyWith<$Res> {
     $Res Function(_$BooksLoadedImpl) then,
   ) = __$$BooksLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Book> books});
+  $Res call({List<Book?> books});
 }
 
 /// @nodoc
@@ -1016,7 +1016,7 @@ class __$$BooksLoadedImplCopyWithImpl<$Res>
         books: null == books
             ? _value._books
             : books // ignore: cast_nullable_to_non_nullable
-                  as List<Book>,
+                  as List<Book?>,
       ),
     );
   }
@@ -1025,11 +1025,11 @@ class __$$BooksLoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$BooksLoadedImpl implements BooksLoaded {
-  const _$BooksLoadedImpl({required final List<Book> books}) : _books = books;
+  const _$BooksLoadedImpl({required final List<Book?> books}) : _books = books;
 
-  final List<Book> _books;
+  final List<Book?> _books;
   @override
-  List<Book> get books {
+  List<Book?> get books {
     if (_books is EqualUnmodifiableListView) return _books;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_books);
@@ -1065,7 +1065,7 @@ class _$BooksLoadedImpl implements BooksLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Book> books) loaded,
+    required TResult Function(List<Book?> books) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(books);
@@ -1076,7 +1076,7 @@ class _$BooksLoadedImpl implements BooksLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Book> books)? loaded,
+    TResult? Function(List<Book?> books)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(books);
@@ -1087,7 +1087,7 @@ class _$BooksLoadedImpl implements BooksLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Book> books)? loaded,
+    TResult Function(List<Book?> books)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -1136,10 +1136,10 @@ class _$BooksLoadedImpl implements BooksLoaded {
 }
 
 abstract class BooksLoaded implements BooksState {
-  const factory BooksLoaded({required final List<Book> books}) =
+  const factory BooksLoaded({required final List<Book?> books}) =
       _$BooksLoadedImpl;
 
-  List<Book> get books;
+  List<Book?> get books;
 
   /// Create a copy of BooksState
   /// with the given fields replaced by the non-null parameter values.
@@ -1220,7 +1220,7 @@ class _$BooksErrorImpl implements BooksError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Book> books) loaded,
+    required TResult Function(List<Book?> books) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -1231,7 +1231,7 @@ class _$BooksErrorImpl implements BooksError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Book> books)? loaded,
+    TResult? Function(List<Book?> books)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -1242,7 +1242,7 @@ class _$BooksErrorImpl implements BooksError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Book> books)? loaded,
+    TResult Function(List<Book?> books)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

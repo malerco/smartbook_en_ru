@@ -1,82 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'core/constants/app_theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/injection.dart';
+import 'core/domain/repositories/settings_repository.dart';
 import 'core/l10n/app_localizations.dart';
 import 'core/router/app_router.dart';
+import 'core/theme/theme.dart';
+import 'features/settings/presentation/bloc/settings_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xFF0F172A),
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
-
   await configureDependencies();
 
-  final prefs = await SharedPreferences.getInstance();
-  final savedLocaleCode = prefs.getString('app_language');
-  final savedLocale = savedLocaleCode != null ? Locale(savedLocaleCode) : null;
-
-  runApp(AITranslatorApp(initialLocale: savedLocale));
+  runApp(const AITranslatorApp());
 }
 
-class AITranslatorApp extends StatefulWidget {
-  final Locale? initialLocale;
-
-  const AITranslatorApp({super.key, this.initialLocale});
-
-  static void setLocale(BuildContext context, Locale locale) {
-    final state = context.findAncestorStateOfType<_AITranslatorAppState>();
-    state?.setLocale(locale);
-  }
-
-  @override
-  State<AITranslatorApp> createState() => _AITranslatorAppState();
-}
-
-class _AITranslatorAppState extends State<AITranslatorApp> {
-  Locale? _locale;
-
-  @override
-  void initState() {
-    super.initState();
-    _locale = widget.initialLocale;
-  }
-
-  void setLocale(Locale locale) async {
-    setState(() {
-      _locale = locale;
-    });
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('app_language', locale.languageCode);
-  }
+class AITranslatorApp extends StatelessWidget {
+  const AITranslatorApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'SmartBook',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      locale: _locale,
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (_locale != null) return _locale;
-        for (final supportedLocale in supportedLocales) {
-          if (locale?.languageCode == supportedLocale.languageCode) {
-            return supportedLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
-      routerConfig: appRouter,
+    return BlocProvider(
+      create: (_) => getIt<SettingsBloc>()..add(const SettingsEvent.loadRequested()),
+      child: const _AppView(),
     );
+  }
+}
+
+class _AppView extends StatelessWidget {
+  const _AppView();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        ThemeMode themeMode = ThemeMode.dark;
+        Locale? locale;
+
+        if (state is SettingsLoaded) {
+          themeMode = _getThemeMode(state.themeMode);
+          locale = Locale(state.appLanguage);
+        }
+        return MaterialApp.router(
+          title: 'SmartBook',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeProvider.lightTheme,
+          darkTheme: ThemeProvider.darkTheme,
+          themeMode: themeMode,
+          locale: locale,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localeResolutionCallback: (deviceLocale, supportedLocales) {
+            if (locale != null) return locale;
+            for (final supportedLocale in supportedLocales) {
+              if (deviceLocale?.languageCode == supportedLocale.languageCode) {
+                return supportedLocale;
+              }
+            }
+            return supportedLocales.first;
+          },
+          routerConfig: appRouter,
+        );
+      },
+    );
+  }
+
+  ThemeMode _getThemeMode(AppThemeMode mode) {
+    switch (mode) {
+      case AppThemeMode.dark:
+        return ThemeMode.dark;
+      case AppThemeMode.light:
+        return ThemeMode.light;
+      case AppThemeMode.system:
+        return ThemeMode.system;
+    }
   }
 }

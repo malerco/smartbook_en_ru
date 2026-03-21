@@ -1,16 +1,19 @@
 import 'dart:convert';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../domain/entities/book.dart';
+import '../../domain/entities/book.dart';
+import '../../domain/repositories/books_repository.dart';
 
-@lazySingleton
-class BooksService {
+@LazySingleton(as: BooksRepository)
+class BooksRepositoryImpl implements BooksRepository {
   static const String _booksKey = 'saved_books';
   final SharedPreferences _prefs;
 
-  BooksService(this._prefs);
+  BooksRepositoryImpl(this._prefs);
 
+  @override
   List<Book> getBooks() {
+    return [Book(title: '1', id: '0', filePath: '/', addedAt: DateTime.now()), Book(title: '2', id: '1', filePath: '/', addedAt: DateTime.now()), Book(title: '3', id: '2', filePath: '/', addedAt: DateTime.now()), Book(title: '4', id: '3', filePath: '/', addedAt: DateTime.now()), Book(title: '5', id: '4', filePath: '/', addedAt: DateTime.now())];
     final jsonString = _prefs.getString(_booksKey);
     if (jsonString == null) return [];
     
@@ -18,17 +21,20 @@ class BooksService {
     return jsonList.map((e) => Book.fromJson(e as Map<String, dynamic>)).toList();
   }
 
+  @override
   Future<void> saveBooks(List<Book> books) async {
     final jsonList = books.map((e) => e.toJson()).toList();
     await _prefs.setString(_booksKey, json.encode(jsonList));
   }
 
+  @override
   Future<void> addBook(Book book) async {
     final books = getBooks();
     books.add(book);
     await saveBooks(books);
   }
 
+  @override
   Future<void> updateBook(Book book) async {
     final books = getBooks();
     final index = books.indexWhere((b) => b.id == book.id);
@@ -38,12 +44,14 @@ class BooksService {
     }
   }
 
+  @override
   Future<void> deleteBook(String bookId) async {
     final books = getBooks();
     books.removeWhere((b) => b.id == bookId);
     await saveBooks(books);
   }
 
+  @override
   Book? getBookById(String bookId) {
     final books = getBooks();
     try {

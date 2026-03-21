@@ -9,10 +9,10 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appTitle => 'SmartBook';
+  String get appTitle => 'Читай и Учись';
 
   @override
-  String get appSubtitle => 'Читай • Переводи • Учись';
+  String get appSubtitle => 'Изучай языки через книги';
 
   @override
   String get english => 'Английский';
@@ -99,7 +99,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get failedToLoadModel => 'Не удалось загрузить модель';
 
   @override
-  String get tabBooks => 'Книги';
+  String get tabLibrary => 'Библиотека';
 
   @override
   String get tabDictionary => 'Словарь';
@@ -108,10 +108,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabSettings => 'Настройки';
 
   @override
-  String get booksTitle => 'Моя библиотека';
+  String get booksTitle => 'Мои Книги';
 
   @override
   String get addBook => 'Добавить книгу';
+
+  @override
+  String get addNewBook => '+ Добавить книгу';
 
   @override
   String get noBooks => 'Пока нет книг';
@@ -154,7 +157,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get examples => 'Примеры';
 
   @override
+  String get wordList => 'Список слов';
+
+  @override
+  String get flashcards => 'Карточки';
+
+  @override
+  String get edit => 'Изменить';
+
+  @override
   String get settingsTitle => 'Настройки';
+
+  @override
+  String get appTheme => 'Тема приложения';
 
   @override
   String get appearance => 'Внешний вид';
@@ -196,6 +211,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get translationLanguage => 'Язык перевода';
 
   @override
+  String get primaryTranslationLanguage => 'Язык перевода';
+
+  @override
   String get primaryLanguage => 'Основной язык';
 
   @override
@@ -209,6 +227,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get lineSpacingNormal => 'Обычный';
+
+  @override
+  String get lineSpacingWide => 'Широкий';
 
   @override
   String get lineSpacingRelaxed => 'Свободный';
@@ -241,4 +262,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get aboutApp => 'О приложении';
+
+  @override
+  String get appVersion => 'Версия приложения';
 }

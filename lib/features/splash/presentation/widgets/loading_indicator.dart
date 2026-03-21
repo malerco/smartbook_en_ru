@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../bloc/splash_bloc.dart';
 
@@ -14,21 +13,24 @@ class LoadingIndicator extends StatelessWidget {
     required this.messageType,
   });
 
+  static const _textColor = Color(0xFFFFFFFF);
+  static const _accentColor = Color(0xFFFFFFFF);
+
   String _getLocalizedMessage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final appLocale = AppLocalizations.of(context)!;
     switch (messageType) {
       case LoadingMessageType.initializing:
-        return l10n.initializingTranslator;
+        return appLocale.initializingTranslator;
       case LoadingMessageType.downloadingModels:
-        return l10n.downloadingModels;
+        return appLocale.downloadingModels;
       case LoadingMessageType.loadingNeuralNetwork:
-        return l10n.loadingNeuralNetwork;
+        return appLocale.loadingNeuralNetwork;
       case LoadingMessageType.preparingVocabulary:
-        return l10n.preparingVocabulary;
+        return appLocale.preparingVocabulary;
       case LoadingMessageType.almostReady:
-        return l10n.almostReady;
+        return appLocale.almostReady;
       case LoadingMessageType.ready:
-        return l10n.ready;
+        return appLocale.ready;
     }
   }
 
@@ -44,35 +46,42 @@ class LoadingIndicator extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  height: 6,
+                  height: 4,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
+                    color: _textColor.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  height: 6,
+                  height: 4,
                   width: MediaQuery.of(context).size.width * 0.7 * progress,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: _accentColor,
                     borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: _accentColor.withOpacity(0.5),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 14,
-                height: 14,
+                width: 12,
+                height: 12,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white.withOpacity(0.8),
+                    _textColor.withOpacity(0.7),
                   ),
                 ),
               ),
@@ -80,9 +89,17 @@ class LoadingIndicator extends StatelessWidget {
               Flexible(
                 child: Text(
                   _getLocalizedMessage(context),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withOpacity(0.9),
-                      ),
+                  style: TextStyle(
+                    color: _textColor.withOpacity(0.8),
+                    fontSize: 14,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(0.3),
+                          offset: const Offset(2, 2),
+                          blurRadius: 4,
+                        ),
+                      ]
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -93,10 +110,18 @@ class LoadingIndicator extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             '${(progress * 100).toInt()}%',
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+            style: TextStyle(
+              color: _accentColor,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: const Offset(2, 2),
+                    blurRadius: 4,
+                  ),
+                ]
+            ),
           ),
         ],
       ),

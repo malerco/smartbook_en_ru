@@ -1,24 +1,25 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../domain/repositories/settings_repository.dart';
 
-enum AppThemeMode { dark, light, system }
-enum FontSizeOption { small, medium, large, extraLarge }
-enum LineSpacingOption { compact, normal, relaxed }
-
-@lazySingleton
-class SettingsService {
+@LazySingleton(as: SettingsRepository)
+class SettingsRepositoryImpl implements SettingsRepository {
   static const String _themeKey = 'app_theme';
   static const String _fontSizeKey = 'font_size';
   static const String _lineSpacingKey = 'line_spacing';
   static const String _fontFamilyKey = 'font_family';
   static const String _primaryLanguageKey = 'primary_language';
+  static const String _appLanguageKey = 'app_language';
 
   final SharedPreferences _prefs;
 
-  SettingsService(this._prefs);
+  SettingsRepositoryImpl(this._prefs);
 
-  AppThemeMode get themeMode {
+  @override
+  AppThemeMode getThemeMode() {
     final value = _prefs.getString(_themeKey);
     return AppThemeMode.values.firstWhere(
       (e) => e.name == value,
@@ -26,11 +27,13 @@ class SettingsService {
     );
   }
 
+  @override
   Future<void> setThemeMode(AppThemeMode mode) async {
     await _prefs.setString(_themeKey, mode.name);
   }
 
-  FontSizeOption get fontSize {
+  @override
+  FontSizeOption getFontSize() {
     final value = _prefs.getString(_fontSizeKey);
     return FontSizeOption.values.firstWhere(
       (e) => e.name == value,
@@ -38,11 +41,13 @@ class SettingsService {
     );
   }
 
+  @override
   Future<void> setFontSize(FontSizeOption size) async {
     await _prefs.setString(_fontSizeKey, size.name);
   }
 
-  LineSpacingOption get lineSpacing {
+  @override
+  LineSpacingOption getLineSpacing() {
     final value = _prefs.getString(_lineSpacingKey);
     return LineSpacingOption.values.firstWhere(
       (e) => e.name == value,
@@ -50,26 +55,42 @@ class SettingsService {
     );
   }
 
+  @override
   Future<void> setLineSpacing(LineSpacingOption spacing) async {
     await _prefs.setString(_lineSpacingKey, spacing.name);
   }
 
-  String get fontFamily {
+  @override
+  String getFontFamily() {
     return _prefs.getString(_fontFamilyKey) ?? 'Inter';
   }
 
+  @override
   Future<void> setFontFamily(String family) async {
     await _prefs.setString(_fontFamilyKey, family);
   }
 
-  String get primaryLanguage {
+  @override
+  String getPrimaryLanguage() {
     return _prefs.getString(_primaryLanguageKey) ?? 'en';
   }
 
+  @override
   Future<void> setPrimaryLanguage(String language) async {
     await _prefs.setString(_primaryLanguageKey, language);
   }
 
+  @override
+  String getAppLanguage() {
+    return _prefs.getString(_appLanguageKey) ?? PlatformDispatcher.instance.locale.languageCode;
+  }
+
+  @override
+  Future<void> setAppLanguage(String language) async {
+    await _prefs.setString(_appLanguageKey, language);
+  }
+
+  @override
   double getFontSizeValue(FontSizeOption option) {
     switch (option) {
       case FontSizeOption.small:
@@ -83,6 +104,7 @@ class SettingsService {
     }
   }
 
+  @override
   double getLineSpacingValue(LineSpacingOption option) {
     switch (option) {
       case LineSpacingOption.compact:
@@ -94,6 +116,7 @@ class SettingsService {
     }
   }
 
+  @override
   ThemeMode getFlutterThemeMode(AppThemeMode mode) {
     switch (mode) {
       case AppThemeMode.dark:

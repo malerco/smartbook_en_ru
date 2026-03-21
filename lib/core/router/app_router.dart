@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/main/presentation/pages/main_page.dart';
+import '../../features/splash/presentation/bloc/splash_bloc.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../di/injection.dart';
 
 abstract class AppRoutes {
-  static const splash = '/';
+  static const splash = '/splash';
   static const main = '/main';
 }
 
@@ -14,7 +17,11 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.splash,
-      pageBuilder: (context, state) => buildTransitionPage(childScreen: const SplashPage(), state: state),
+
+      pageBuilder: (context, state) => buildTransitionPage(childScreen: BlocProvider(
+        create: (_) => getIt<SplashBloc>()..add(const SplashStarted()),
+        child: const SplashPage(),
+      ), state: state),
     ),
     GoRoute(
       path: AppRoutes.main,

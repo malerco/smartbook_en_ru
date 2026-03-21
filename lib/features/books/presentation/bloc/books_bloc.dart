@@ -2,7 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/domain/entities/book.dart';
-import '../../../../core/services/books_service.dart';
+import '../../domain/usecases/get_books_usecase.dart';
+import '../../domain/usecases/add_book_usecase.dart';
+import '../../domain/usecases/update_book_usecase.dart';
+import '../../domain/usecases/delete_book_usecase.dart';
 
 part 'books_bloc.freezed.dart';
 part 'books_event.dart';
@@ -10,9 +13,17 @@ part 'books_state.dart';
 
 @injectable
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
-  final BooksService _booksService;
+  final GetBooksUseCase _getBooksUseCase;
+  final AddBookUseCase _addBookUseCase;
+  final UpdateBookUseCase _updateBookUseCase;
+  final DeleteBookUseCase _deleteBookUseCase;
 
-  BooksBloc(this._booksService) : super(const BooksState.initial()) {
+  BooksBloc(
+    this._getBooksUseCase,
+    this._addBookUseCase,
+    this._updateBookUseCase,
+    this._deleteBookUseCase,
+  ) : super(const BooksState.initial()) {
     on<BooksLoadRequested>(_onLoadRequested);
     on<BooksAddRequested>(_onAddRequested);
     on<BooksDeleteRequested>(_onDeleteRequested);
@@ -25,8 +36,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   ) async {
     emit(const BooksState.loading());
     try {
-      final books = _booksService.getBooks();
-      books.sort((a, b) => b.addedAt.compareTo(a.addedAt));
+      final books = _getBooksUseCase();
       emit(BooksState.loaded(books: books));
     } catch (e) {
       emit(BooksState.error(message: e.toString()));
@@ -38,7 +48,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     Emitter<BooksState> emit,
   ) async {
     try {
-      await _booksService.addBook(event.book);
+      await _addBookUseCase(event.book);
       add(const BooksEvent.loadRequested());
     } catch (e) {
       emit(BooksState.error(message: e.toString()));
@@ -50,7 +60,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     Emitter<BooksState> emit,
   ) async {
     try {
-      await _booksService.deleteBook(event.bookId);
+      await _deleteBookUseCase(event.bookId);
       add(const BooksEvent.loadRequested());
     } catch (e) {
       emit(BooksState.error(message: e.toString()));
@@ -62,7 +72,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     Emitter<BooksState> emit,
   ) async {
     try {
-      await _booksService.updateBook(event.book);
+      await _updateBookUseCase(event.book);
       add(const BooksEvent.loadRequested());
     } catch (e) {
       emit(BooksState.error(message: e.toString()));

@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'SmartBook';
+  String get appTitle => 'Read & Learn';
 
   @override
-  String get appSubtitle => 'Read • Translate • Learn';
+  String get appSubtitle => 'Explore Languages Through Books';
 
   @override
   String get english => 'English';
@@ -99,7 +99,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToLoadModel => 'Failed to load model';
 
   @override
-  String get tabBooks => 'Books';
+  String get tabLibrary => 'Library';
 
   @override
   String get tabDictionary => 'Dictionary';
@@ -108,10 +108,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabSettings => 'Settings';
 
   @override
-  String get booksTitle => 'My Library';
+  String get booksTitle => 'My Books';
 
   @override
   String get addBook => 'Add Book';
+
+  @override
+  String get addNewBook => '+ Add New Book';
 
   @override
   String get noBooks => 'No books yet';
@@ -154,7 +157,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get examples => 'Examples';
 
   @override
+  String get wordList => 'Word List';
+
+  @override
+  String get flashcards => 'Flashcards';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
   String get settingsTitle => 'Settings';
+
+  @override
+  String get appTheme => 'App Theme';
 
   @override
   String get appearance => 'Appearance';
@@ -196,6 +211,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get translationLanguage => 'Translation Language';
 
   @override
+  String get primaryTranslationLanguage => 'Primary Translation Language';
+
+  @override
   String get primaryLanguage => 'Primary Language';
 
   @override
@@ -209,6 +227,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lineSpacingNormal => 'Normal';
+
+  @override
+  String get lineSpacingWide => 'Wide';
 
   @override
   String get lineSpacingRelaxed => 'Relaxed';
@@ -241,4 +262,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutApp => 'About App';
+
+  @override
+  String get appVersion => 'App Version';
 }

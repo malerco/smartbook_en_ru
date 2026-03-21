@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "SmartBook",
-  "appSubtitle": "Read • Translate • Learn",
+  "appTitle": "Read & Learn",
+  "appSubtitle": "Explore Languages Through Books",
   "english": "English",
   "russian": "Russian",
   "enterText": "Enter text to translate...",
@@ -31,12 +31,13 @@
   "almostReady": "Almost ready...",
   "failedToLoadModel": "Failed to load model",
 
-  "tabBooks": "Books",
+  "tabLibrary": "Library",
   "tabDictionary": "Dictionary",
   "tabSettings": "Settings",
 
-  "booksTitle": "My Library",
+  "booksTitle": "My Books",
   "addBook": "Add Book",
+  "addNewBook": "+ Add New Book",
   "noBooks": "No books yet",
   "noBooksHint": "Tap + to add your first book",
   "deleteBook": "Delete",
@@ -51,8 +52,12 @@
   "word": "Word",
   "translation": "Translation",
   "examples": "Examples",
+  "wordList": "Word List",
+  "flashcards": "Flashcards",
+  "edit": "Edit",
 
   "settingsTitle": "Settings",
+  "appTheme": "App Theme",
   "appearance": "Appearance",
   "theme": "Theme",
   "themeDark": "Dark",
@@ -66,11 +71,13 @@
   "appLanguage": "App Language",
   "mainLanguage": "Main Language",
   "translationLanguage": "Translation Language",
+  "primaryTranslationLanguage": "Primary Translation Language",
   "primaryLanguage": "Primary Language",
   "reading": "Reading",
   "lineSpacing": "Line Spacing",
   "lineSpacingCompact": "Compact",
   "lineSpacingNormal": "Normal",
+  "lineSpacingWide": "Wide",
   "lineSpacingRelaxed": "Relaxed",
   "fontFamily": "Font Family",
   "dataAndStorage": "Data & Storage",
@@ -80,5 +87,6 @@
   "confirmClearAllData": "Are you sure you want to delete all data? This action cannot be undone.",
   "cancel": "Cancel",
   "confirm": "Confirm",
-  "aboutApp": "About App"
+  "aboutApp": "About App",
+  "appVersion": "App Version"
 }

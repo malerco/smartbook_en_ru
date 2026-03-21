@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'SmartBook'**
+  /// **'Read & Learn'**
   String get appTitle;
 
   /// No description provided for @appSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Read • Translate • Learn'**
+  /// **'Explore Languages Through Books'**
   String get appSubtitle;
 
   /// No description provided for @english.
@@ -278,11 +278,11 @@ abstract class AppLocalizations {
   /// **'Failed to load model'**
   String get failedToLoadModel;
 
-  /// No description provided for @tabBooks.
+  /// No description provided for @tabLibrary.
   ///
   /// In en, this message translates to:
-  /// **'Books'**
-  String get tabBooks;
+  /// **'Library'**
+  String get tabLibrary;
 
   /// No description provided for @tabDictionary.
   ///
@@ -299,7 +299,7 @@ abstract class AppLocalizations {
   /// No description provided for @booksTitle.
   ///
   /// In en, this message translates to:
-  /// **'My Library'**
+  /// **'My Books'**
   String get booksTitle;
 
   /// No description provided for @addBook.
@@ -307,6 +307,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Book'**
   String get addBook;
+
+  /// No description provided for @addNewBook.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add New Book'**
+  String get addNewBook;
 
   /// No description provided for @noBooks.
   ///
@@ -386,11 +392,35 @@ abstract class AppLocalizations {
   /// **'Examples'**
   String get examples;
 
+  /// No description provided for @wordList.
+  ///
+  /// In en, this message translates to:
+  /// **'Word List'**
+  String get wordList;
+
+  /// No description provided for @flashcards.
+  ///
+  /// In en, this message translates to:
+  /// **'Flashcards'**
+  String get flashcards;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settingsTitle;
+
+  /// No description provided for @appTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'App Theme'**
+  String get appTheme;
 
   /// No description provided for @appearance.
   ///
@@ -470,6 +500,12 @@ abstract class AppLocalizations {
   /// **'Translation Language'**
   String get translationLanguage;
 
+  /// No description provided for @primaryTranslationLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Translation Language'**
+  String get primaryTranslationLanguage;
+
   /// No description provided for @primaryLanguage.
   ///
   /// In en, this message translates to:
@@ -499,6 +535,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Normal'**
   String get lineSpacingNormal;
+
+  /// No description provided for @lineSpacingWide.
+  ///
+  /// In en, this message translates to:
+  /// **'Wide'**
+  String get lineSpacingWide;
 
   /// No description provided for @lineSpacingRelaxed.
   ///
@@ -559,6 +601,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About App'**
   String get aboutApp;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version'**
+  String get appVersion;
 }
 
 class _AppLocalizationsDelegate
