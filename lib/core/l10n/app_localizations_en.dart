@@ -265,4 +265,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appVersion => 'App Version';
+
+  @override
+  String get chapters => 'Chapters';
+
+  @override
+  String get importingBook => 'Importing book...';
+
+  @override
+  String get bookImported => 'Book imported successfully';
+
+  @override
+  String get bookImportError => 'Failed to import book';
+
+  @override
+  String get unsupportedFormat => 'Unsupported book format';
+
+  @override
+  String get selectBook => 'Select a book';
+
+  @override
+  String get supportedFormats => 'Supported formats: EPUB, FB2, TXT';
 }

@@ -13,7 +13,6 @@ class BooksRepositoryImpl implements BooksRepository {
 
   @override
   List<Book> getBooks() {
-    return [Book(title: '1', id: '0', filePath: '/', addedAt: DateTime.now()), Book(title: '2', id: '1', filePath: '/', addedAt: DateTime.now()), Book(title: '3', id: '2', filePath: '/', addedAt: DateTime.now()), Book(title: '4', id: '3', filePath: '/', addedAt: DateTime.now()), Book(title: '5', id: '4', filePath: '/', addedAt: DateTime.now())];
     final jsonString = _prefs.getString(_booksKey);
     if (jsonString == null) return [];
     

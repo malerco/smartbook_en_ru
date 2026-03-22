@@ -9,6 +9,7 @@ class Book extends Equatable {
   final int totalPages;
   final int currentPage;
   final double progress;
+  final double scrollPosition;
   final DateTime addedAt;
   final DateTime? lastReadAt;
 
@@ -21,6 +22,7 @@ class Book extends Equatable {
     this.totalPages = 0,
     this.currentPage = 0,
     this.progress = 0.0,
+    this.scrollPosition = 0.0,
     required this.addedAt,
     this.lastReadAt,
   });
@@ -34,6 +36,7 @@ class Book extends Equatable {
     int? totalPages,
     int? currentPage,
     double? progress,
+    double? scrollPosition,
     DateTime? addedAt,
     DateTime? lastReadAt,
   }) {
@@ -46,6 +49,7 @@ class Book extends Equatable {
       totalPages: totalPages ?? this.totalPages,
       currentPage: currentPage ?? this.currentPage,
       progress: progress ?? this.progress,
+      scrollPosition: scrollPosition ?? this.scrollPosition,
       addedAt: addedAt ?? this.addedAt,
       lastReadAt: lastReadAt ?? this.lastReadAt,
     );
@@ -61,6 +65,7 @@ class Book extends Equatable {
       'totalPages': totalPages,
       'currentPage': currentPage,
       'progress': progress,
+      'scrollPosition': scrollPosition,
       'addedAt': addedAt.toIso8601String(),
       'lastReadAt': lastReadAt?.toIso8601String(),
     };
@@ -76,6 +81,7 @@ class Book extends Equatable {
       totalPages: json['totalPages'] as int? ?? 0,
       currentPage: json['currentPage'] as int? ?? 0,
       progress: (json['progress'] as num?)?.toDouble() ?? 0.0,
+      scrollPosition: (json['scrollPosition'] as num?)?.toDouble() ?? 0.0,
       addedAt: DateTime.parse(json['addedAt'] as String),
       lastReadAt: json['lastReadAt'] != null
           ? DateTime.parse(json['lastReadAt'] as String)
@@ -93,6 +99,7 @@ class Book extends Equatable {
         totalPages,
         currentPage,
         progress,
+        scrollPosition,
         addedAt,
         lastReadAt,
       ];

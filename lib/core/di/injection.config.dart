@@ -15,8 +15,12 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/books/domain/usecases/add_book_usecase.dart' as _i199;
 import '../../features/books/domain/usecases/delete_book_usecase.dart' as _i919;
+import '../../features/books/domain/usecases/get_book_content_usecase.dart'
+    as _i4;
 import '../../features/books/domain/usecases/get_books_usecase.dart' as _i297;
+import '../../features/books/domain/usecases/import_book_usecase.dart' as _i156;
 import '../../features/books/domain/usecases/update_book_usecase.dart' as _i562;
+import '../../features/books/presentation/bloc/book_reader_bloc.dart' as _i420;
 import '../../features/books/presentation/bloc/books_bloc.dart' as _i815;
 import '../../features/dictionary/domain/usecases/add_dictionary_entry_usecase.dart'
     as _i307;
@@ -58,6 +62,7 @@ import '../domain/repositories/settings_repository.dart' as _i977;
 import '../domain/repositories/translation_repository.dart' as _i352;
 import '../domain/usecases/translate_text_usecase.dart' as _i682;
 import '../ml/translation_model.dart' as _i1004;
+import '../services/book_parser/book_parser_service.dart' as _i71;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -73,6 +78,7 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i1004.TranslationModel>(() => _i1004.TranslationModel());
+    gh.lazySingleton<_i71.BookParserService>(() => _i71.BookParserService());
     gh.lazySingleton<_i977.SettingsRepository>(
       () => _i453.SettingsRepositoryImpl(gh<_i460.SharedPreferences>()),
     );
@@ -97,6 +103,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i69.ClearDictionaryUseCase>(
       () => _i69.ClearDictionaryUseCase(gh<_i794.DictionaryRepository>()),
+    );
+    gh.lazySingleton<_i4.GetBookContentUseCase>(
+      () => _i4.GetBookContentUseCase(
+        gh<_i71.BookParserService>(),
+        gh<_i195.BooksRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i156.ImportBookUseCase>(
+      () => _i156.ImportBookUseCase(
+        gh<_i71.BookParserService>(),
+        gh<_i195.BooksRepository>(),
+      ),
     );
     gh.factory<_i928.DictionaryBloc>(
       () => _i928.DictionaryBloc(
@@ -155,6 +173,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i848.SetAppLanguageUseCase>(
       () => _i848.SetAppLanguageUseCase(gh<_i977.SettingsRepository>()),
     );
+    gh.factory<_i815.BooksBloc>(
+      () => _i815.BooksBloc(
+        gh<_i297.GetBooksUseCase>(),
+        gh<_i199.AddBookUseCase>(),
+        gh<_i562.UpdateBookUseCase>(),
+        gh<_i919.DeleteBookUseCase>(),
+        gh<_i156.ImportBookUseCase>(),
+      ),
+    );
     gh.factory<_i585.SettingsBloc>(
       () => _i585.SettingsBloc(
         gh<_i1029.GetSettingsUseCase>(),
@@ -166,12 +193,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i848.SetAppLanguageUseCase>(),
       ),
     );
-    gh.factory<_i815.BooksBloc>(
-      () => _i815.BooksBloc(
-        gh<_i297.GetBooksUseCase>(),
-        gh<_i199.AddBookUseCase>(),
+    gh.factory<_i420.BookReaderBloc>(
+      () => _i420.BookReaderBloc(
+        gh<_i4.GetBookContentUseCase>(),
         gh<_i562.UpdateBookUseCase>(),
-        gh<_i919.DeleteBookUseCase>(),
+        gh<_i195.BooksRepository>(),
       ),
     );
     return this;

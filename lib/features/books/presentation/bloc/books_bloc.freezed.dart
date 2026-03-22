@@ -23,6 +23,7 @@ mixin _$BooksEvent {
     required TResult Function(Book book) addRequested,
     required TResult Function(String bookId) deleteRequested,
     required TResult Function(Book book) updateRequested,
+    required TResult Function(String filePath) importRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -30,6 +31,7 @@ mixin _$BooksEvent {
     TResult? Function(Book book)? addRequested,
     TResult? Function(String bookId)? deleteRequested,
     TResult? Function(Book book)? updateRequested,
+    TResult? Function(String filePath)? importRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -37,6 +39,7 @@ mixin _$BooksEvent {
     TResult Function(Book book)? addRequested,
     TResult Function(String bookId)? deleteRequested,
     TResult Function(Book book)? updateRequested,
+    TResult Function(String filePath)? importRequested,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,6 +48,7 @@ mixin _$BooksEvent {
     required TResult Function(BooksAddRequested value) addRequested,
     required TResult Function(BooksDeleteRequested value) deleteRequested,
     required TResult Function(BooksUpdateRequested value) updateRequested,
+    required TResult Function(BooksImportRequested value) importRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -52,6 +56,7 @@ mixin _$BooksEvent {
     TResult? Function(BooksAddRequested value)? addRequested,
     TResult? Function(BooksDeleteRequested value)? deleteRequested,
     TResult? Function(BooksUpdateRequested value)? updateRequested,
+    TResult? Function(BooksImportRequested value)? importRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -59,6 +64,7 @@ mixin _$BooksEvent {
     TResult Function(BooksAddRequested value)? addRequested,
     TResult Function(BooksDeleteRequested value)? deleteRequested,
     TResult Function(BooksUpdateRequested value)? updateRequested,
+    TResult Function(BooksImportRequested value)? importRequested,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -132,6 +138,7 @@ class _$BooksLoadRequestedImpl implements BooksLoadRequested {
     required TResult Function(Book book) addRequested,
     required TResult Function(String bookId) deleteRequested,
     required TResult Function(Book book) updateRequested,
+    required TResult Function(String filePath) importRequested,
   }) {
     return loadRequested();
   }
@@ -143,6 +150,7 @@ class _$BooksLoadRequestedImpl implements BooksLoadRequested {
     TResult? Function(Book book)? addRequested,
     TResult? Function(String bookId)? deleteRequested,
     TResult? Function(Book book)? updateRequested,
+    TResult? Function(String filePath)? importRequested,
   }) {
     return loadRequested?.call();
   }
@@ -154,6 +162,7 @@ class _$BooksLoadRequestedImpl implements BooksLoadRequested {
     TResult Function(Book book)? addRequested,
     TResult Function(String bookId)? deleteRequested,
     TResult Function(Book book)? updateRequested,
+    TResult Function(String filePath)? importRequested,
     required TResult orElse(),
   }) {
     if (loadRequested != null) {
@@ -169,6 +178,7 @@ class _$BooksLoadRequestedImpl implements BooksLoadRequested {
     required TResult Function(BooksAddRequested value) addRequested,
     required TResult Function(BooksDeleteRequested value) deleteRequested,
     required TResult Function(BooksUpdateRequested value) updateRequested,
+    required TResult Function(BooksImportRequested value) importRequested,
   }) {
     return loadRequested(this);
   }
@@ -180,6 +190,7 @@ class _$BooksLoadRequestedImpl implements BooksLoadRequested {
     TResult? Function(BooksAddRequested value)? addRequested,
     TResult? Function(BooksDeleteRequested value)? deleteRequested,
     TResult? Function(BooksUpdateRequested value)? updateRequested,
+    TResult? Function(BooksImportRequested value)? importRequested,
   }) {
     return loadRequested?.call(this);
   }
@@ -191,6 +202,7 @@ class _$BooksLoadRequestedImpl implements BooksLoadRequested {
     TResult Function(BooksAddRequested value)? addRequested,
     TResult Function(BooksDeleteRequested value)? deleteRequested,
     TResult Function(BooksUpdateRequested value)? updateRequested,
+    TResult Function(BooksImportRequested value)? importRequested,
     required TResult orElse(),
   }) {
     if (loadRequested != null) {
@@ -281,6 +293,7 @@ class _$BooksAddRequestedImpl implements BooksAddRequested {
     required TResult Function(Book book) addRequested,
     required TResult Function(String bookId) deleteRequested,
     required TResult Function(Book book) updateRequested,
+    required TResult Function(String filePath) importRequested,
   }) {
     return addRequested(book);
   }
@@ -292,6 +305,7 @@ class _$BooksAddRequestedImpl implements BooksAddRequested {
     TResult? Function(Book book)? addRequested,
     TResult? Function(String bookId)? deleteRequested,
     TResult? Function(Book book)? updateRequested,
+    TResult? Function(String filePath)? importRequested,
   }) {
     return addRequested?.call(book);
   }
@@ -303,6 +317,7 @@ class _$BooksAddRequestedImpl implements BooksAddRequested {
     TResult Function(Book book)? addRequested,
     TResult Function(String bookId)? deleteRequested,
     TResult Function(Book book)? updateRequested,
+    TResult Function(String filePath)? importRequested,
     required TResult orElse(),
   }) {
     if (addRequested != null) {
@@ -318,6 +333,7 @@ class _$BooksAddRequestedImpl implements BooksAddRequested {
     required TResult Function(BooksAddRequested value) addRequested,
     required TResult Function(BooksDeleteRequested value) deleteRequested,
     required TResult Function(BooksUpdateRequested value) updateRequested,
+    required TResult Function(BooksImportRequested value) importRequested,
   }) {
     return addRequested(this);
   }
@@ -329,6 +345,7 @@ class _$BooksAddRequestedImpl implements BooksAddRequested {
     TResult? Function(BooksAddRequested value)? addRequested,
     TResult? Function(BooksDeleteRequested value)? deleteRequested,
     TResult? Function(BooksUpdateRequested value)? updateRequested,
+    TResult? Function(BooksImportRequested value)? importRequested,
   }) {
     return addRequested?.call(this);
   }
@@ -340,6 +357,7 @@ class _$BooksAddRequestedImpl implements BooksAddRequested {
     TResult Function(BooksAddRequested value)? addRequested,
     TResult Function(BooksDeleteRequested value)? deleteRequested,
     TResult Function(BooksUpdateRequested value)? updateRequested,
+    TResult Function(BooksImportRequested value)? importRequested,
     required TResult orElse(),
   }) {
     if (addRequested != null) {
@@ -439,6 +457,7 @@ class _$BooksDeleteRequestedImpl implements BooksDeleteRequested {
     required TResult Function(Book book) addRequested,
     required TResult Function(String bookId) deleteRequested,
     required TResult Function(Book book) updateRequested,
+    required TResult Function(String filePath) importRequested,
   }) {
     return deleteRequested(bookId);
   }
@@ -450,6 +469,7 @@ class _$BooksDeleteRequestedImpl implements BooksDeleteRequested {
     TResult? Function(Book book)? addRequested,
     TResult? Function(String bookId)? deleteRequested,
     TResult? Function(Book book)? updateRequested,
+    TResult? Function(String filePath)? importRequested,
   }) {
     return deleteRequested?.call(bookId);
   }
@@ -461,6 +481,7 @@ class _$BooksDeleteRequestedImpl implements BooksDeleteRequested {
     TResult Function(Book book)? addRequested,
     TResult Function(String bookId)? deleteRequested,
     TResult Function(Book book)? updateRequested,
+    TResult Function(String filePath)? importRequested,
     required TResult orElse(),
   }) {
     if (deleteRequested != null) {
@@ -476,6 +497,7 @@ class _$BooksDeleteRequestedImpl implements BooksDeleteRequested {
     required TResult Function(BooksAddRequested value) addRequested,
     required TResult Function(BooksDeleteRequested value) deleteRequested,
     required TResult Function(BooksUpdateRequested value) updateRequested,
+    required TResult Function(BooksImportRequested value) importRequested,
   }) {
     return deleteRequested(this);
   }
@@ -487,6 +509,7 @@ class _$BooksDeleteRequestedImpl implements BooksDeleteRequested {
     TResult? Function(BooksAddRequested value)? addRequested,
     TResult? Function(BooksDeleteRequested value)? deleteRequested,
     TResult? Function(BooksUpdateRequested value)? updateRequested,
+    TResult? Function(BooksImportRequested value)? importRequested,
   }) {
     return deleteRequested?.call(this);
   }
@@ -498,6 +521,7 @@ class _$BooksDeleteRequestedImpl implements BooksDeleteRequested {
     TResult Function(BooksAddRequested value)? addRequested,
     TResult Function(BooksDeleteRequested value)? deleteRequested,
     TResult Function(BooksUpdateRequested value)? updateRequested,
+    TResult Function(BooksImportRequested value)? importRequested,
     required TResult orElse(),
   }) {
     if (deleteRequested != null) {
@@ -598,6 +622,7 @@ class _$BooksUpdateRequestedImpl implements BooksUpdateRequested {
     required TResult Function(Book book) addRequested,
     required TResult Function(String bookId) deleteRequested,
     required TResult Function(Book book) updateRequested,
+    required TResult Function(String filePath) importRequested,
   }) {
     return updateRequested(book);
   }
@@ -609,6 +634,7 @@ class _$BooksUpdateRequestedImpl implements BooksUpdateRequested {
     TResult? Function(Book book)? addRequested,
     TResult? Function(String bookId)? deleteRequested,
     TResult? Function(Book book)? updateRequested,
+    TResult? Function(String filePath)? importRequested,
   }) {
     return updateRequested?.call(book);
   }
@@ -620,6 +646,7 @@ class _$BooksUpdateRequestedImpl implements BooksUpdateRequested {
     TResult Function(Book book)? addRequested,
     TResult Function(String bookId)? deleteRequested,
     TResult Function(Book book)? updateRequested,
+    TResult Function(String filePath)? importRequested,
     required TResult orElse(),
   }) {
     if (updateRequested != null) {
@@ -635,6 +662,7 @@ class _$BooksUpdateRequestedImpl implements BooksUpdateRequested {
     required TResult Function(BooksAddRequested value) addRequested,
     required TResult Function(BooksDeleteRequested value) deleteRequested,
     required TResult Function(BooksUpdateRequested value) updateRequested,
+    required TResult Function(BooksImportRequested value) importRequested,
   }) {
     return updateRequested(this);
   }
@@ -646,6 +674,7 @@ class _$BooksUpdateRequestedImpl implements BooksUpdateRequested {
     TResult? Function(BooksAddRequested value)? addRequested,
     TResult? Function(BooksDeleteRequested value)? deleteRequested,
     TResult? Function(BooksUpdateRequested value)? updateRequested,
+    TResult? Function(BooksImportRequested value)? importRequested,
   }) {
     return updateRequested?.call(this);
   }
@@ -657,6 +686,7 @@ class _$BooksUpdateRequestedImpl implements BooksUpdateRequested {
     TResult Function(BooksAddRequested value)? addRequested,
     TResult Function(BooksDeleteRequested value)? deleteRequested,
     TResult Function(BooksUpdateRequested value)? updateRequested,
+    TResult Function(BooksImportRequested value)? importRequested,
     required TResult orElse(),
   }) {
     if (updateRequested != null) {
@@ -676,6 +706,172 @@ abstract class BooksUpdateRequested implements BooksEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BooksUpdateRequestedImplCopyWith<_$BooksUpdateRequestedImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BooksImportRequestedImplCopyWith<$Res> {
+  factory _$$BooksImportRequestedImplCopyWith(
+    _$BooksImportRequestedImpl value,
+    $Res Function(_$BooksImportRequestedImpl) then,
+  ) = __$$BooksImportRequestedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String filePath});
+}
+
+/// @nodoc
+class __$$BooksImportRequestedImplCopyWithImpl<$Res>
+    extends _$BooksEventCopyWithImpl<$Res, _$BooksImportRequestedImpl>
+    implements _$$BooksImportRequestedImplCopyWith<$Res> {
+  __$$BooksImportRequestedImplCopyWithImpl(
+    _$BooksImportRequestedImpl _value,
+    $Res Function(_$BooksImportRequestedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of BooksEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? filePath = null}) {
+    return _then(
+      _$BooksImportRequestedImpl(
+        null == filePath
+            ? _value.filePath
+            : filePath // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$BooksImportRequestedImpl implements BooksImportRequested {
+  const _$BooksImportRequestedImpl(this.filePath);
+
+  @override
+  final String filePath;
+
+  @override
+  String toString() {
+    return 'BooksEvent.importRequested(filePath: $filePath)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BooksImportRequestedImpl &&
+            (identical(other.filePath, filePath) ||
+                other.filePath == filePath));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, filePath);
+
+  /// Create a copy of BooksEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BooksImportRequestedImplCopyWith<_$BooksImportRequestedImpl>
+  get copyWith =>
+      __$$BooksImportRequestedImplCopyWithImpl<_$BooksImportRequestedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadRequested,
+    required TResult Function(Book book) addRequested,
+    required TResult Function(String bookId) deleteRequested,
+    required TResult Function(Book book) updateRequested,
+    required TResult Function(String filePath) importRequested,
+  }) {
+    return importRequested(filePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadRequested,
+    TResult? Function(Book book)? addRequested,
+    TResult? Function(String bookId)? deleteRequested,
+    TResult? Function(Book book)? updateRequested,
+    TResult? Function(String filePath)? importRequested,
+  }) {
+    return importRequested?.call(filePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadRequested,
+    TResult Function(Book book)? addRequested,
+    TResult Function(String bookId)? deleteRequested,
+    TResult Function(Book book)? updateRequested,
+    TResult Function(String filePath)? importRequested,
+    required TResult orElse(),
+  }) {
+    if (importRequested != null) {
+      return importRequested(filePath);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(BooksLoadRequested value) loadRequested,
+    required TResult Function(BooksAddRequested value) addRequested,
+    required TResult Function(BooksDeleteRequested value) deleteRequested,
+    required TResult Function(BooksUpdateRequested value) updateRequested,
+    required TResult Function(BooksImportRequested value) importRequested,
+  }) {
+    return importRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(BooksLoadRequested value)? loadRequested,
+    TResult? Function(BooksAddRequested value)? addRequested,
+    TResult? Function(BooksDeleteRequested value)? deleteRequested,
+    TResult? Function(BooksUpdateRequested value)? updateRequested,
+    TResult? Function(BooksImportRequested value)? importRequested,
+  }) {
+    return importRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BooksLoadRequested value)? loadRequested,
+    TResult Function(BooksAddRequested value)? addRequested,
+    TResult Function(BooksDeleteRequested value)? deleteRequested,
+    TResult Function(BooksUpdateRequested value)? updateRequested,
+    TResult Function(BooksImportRequested value)? importRequested,
+    required TResult orElse(),
+  }) {
+    if (importRequested != null) {
+      return importRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class BooksImportRequested implements BooksEvent {
+  const factory BooksImportRequested(final String filePath) =
+      _$BooksImportRequestedImpl;
+
+  String get filePath;
+
+  /// Create a copy of BooksEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BooksImportRequestedImplCopyWith<_$BooksImportRequestedImpl>
   get copyWith => throw _privateConstructorUsedError;
 }
 

@@ -88,5 +88,13 @@
   "cancel": "Cancel",
   "confirm": "Confirm",
   "aboutApp": "About App",
-  "appVersion": "App Version"
+  "appVersion": "App Version",
+
+  "chapters": "Chapters",
+  "importingBook": "Importing book...",
+  "bookImported": "Book imported successfully",
+  "bookImportError": "Failed to import book",
+  "unsupportedFormat": "Unsupported book format",
+  "selectBook": "Select a book",
+  "supportedFormats": "Supported formats: EPUB, FB2, TXT"
 }

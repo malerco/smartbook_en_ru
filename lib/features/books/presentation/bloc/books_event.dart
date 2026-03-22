@@ -6,4 +6,5 @@ class BooksEvent with _$BooksEvent {
   const factory BooksEvent.addRequested(Book book) = BooksAddRequested;
   const factory BooksEvent.deleteRequested(String bookId) = BooksDeleteRequested;
   const factory BooksEvent.updateRequested(Book book) = BooksUpdateRequested;
+  const factory BooksEvent.importRequested(String filePath) = BooksImportRequested;
 }

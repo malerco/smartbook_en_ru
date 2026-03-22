@@ -6,6 +6,7 @@ import '../../domain/usecases/get_books_usecase.dart';
 import '../../domain/usecases/add_book_usecase.dart';
 import '../../domain/usecases/update_book_usecase.dart';
 import '../../domain/usecases/delete_book_usecase.dart';
+import '../../domain/usecases/import_book_usecase.dart';
 
 part 'books_bloc.freezed.dart';
 part 'books_event.dart';
@@ -17,17 +18,20 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   final AddBookUseCase _addBookUseCase;
   final UpdateBookUseCase _updateBookUseCase;
   final DeleteBookUseCase _deleteBookUseCase;
+  final ImportBookUseCase _importBookUseCase;
 
   BooksBloc(
     this._getBooksUseCase,
     this._addBookUseCase,
     this._updateBookUseCase,
     this._deleteBookUseCase,
+    this._importBookUseCase,
   ) : super(const BooksState.initial()) {
     on<BooksLoadRequested>(_onLoadRequested);
     on<BooksAddRequested>(_onAddRequested);
     on<BooksDeleteRequested>(_onDeleteRequested);
     on<BooksUpdateRequested>(_onUpdateRequested);
+    on<BooksImportRequested>(_onImportRequested);
   }
 
   Future<void> _onLoadRequested(
@@ -77,5 +81,16 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     } catch (e) {
       emit(BooksState.error(message: e.toString()));
     }
+  }
+
+  Future<void> _onImportRequested(
+    BooksImportRequested event,
+    Emitter<BooksState> emit,
+  ) async {
+    final result = await _importBookUseCase(event.filePath);
+    result.fold(
+      (failure) => emit(BooksState.error(message: failure.message)),
+      (_) => add(const BooksEvent.loadRequested()),
+    );
   }
 }

@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String appName = 'AI Translator';
+  static const String appName = 'SmartBook';
   static const String modelFileName = 'translator_model.tflite';
   static const String vocabFileName = 'vocab.json';
   

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../core/domain/entities/book.dart';
 import '../../../../core/l10n/app_localizations.dart';
@@ -6,11 +7,15 @@ import '../../../../core/theme/theme.dart';
 class WoodenBookshelf extends StatelessWidget {
   final List<Book?> books;
   final VoidCallback onAddBook;
+  final Function(String bookId)? onBookTap;
+  final Function(String bookId)? onDeleteBook;
 
   const WoodenBookshelf({
     super.key,
     required this.books,
     required this.onAddBook,
+    this.onBookTap,
+    this.onDeleteBook,
   });
 
   @override
@@ -46,6 +51,8 @@ class WoodenBookshelf extends StatelessWidget {
           return _BookshelfRow(
             books: shelves[index],
             onAddBook: onAddBook,
+            onBookTap: onBookTap,
+            onDeleteBook: onDeleteBook,
             isLastShelf: index == shelves.length - 1,
           );
         },
@@ -57,11 +64,15 @@ class WoodenBookshelf extends StatelessWidget {
 class _BookshelfRow extends StatelessWidget {
   final List<Book?> books;
   final VoidCallback onAddBook;
+  final Function(String bookId)? onBookTap;
+  final Function(String bookId)? onDeleteBook;
   final bool isLastShelf;
 
   const _BookshelfRow({
     required this.books,
     required this.onAddBook,
+    this.onBookTap,
+    this.onDeleteBook,
     required this.isLastShelf,
   });
 
@@ -85,7 +96,11 @@ class _BookshelfRow extends StatelessWidget {
                 return Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: _BookOnShelf(book: book),
+                    child: _BookOnShelf(
+                      book: book,
+                      onTap: onBookTap != null ? () => onBookTap!(book.id) : null,
+                      onDelete: onDeleteBook != null ? () => onDeleteBook!(book.id) : null,
+                    ),
                   ),
                 );
               } else if (isLastShelf && index == books.where((b) => b != null).length) {
@@ -204,8 +219,107 @@ class _WoodGrainPainter extends CustomPainter {
 
 class _BookOnShelf extends StatelessWidget {
   final Book book;
+  final VoidCallback? onTap;
+  final VoidCallback? onDelete;
 
-  const _BookOnShelf({required this.book});
+  const _BookOnShelf({required this.book, this.onTap, this.onDelete});
+
+  void _showContextMenu(BuildContext context, Offset position) {
+    final colors = context.colors;
+    final appLocale = AppLocalizations.of(context)!;
+    final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+
+    showMenu<String>(
+      context: context,
+      position: RelativeRect.fromRect(
+        Rect.fromLTWH(position.dx, position.dy, 0, 0),
+        Offset.zero & overlay.size,
+      ),
+      color: colors.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: colors.surfaceVariant,
+          width: 1,
+        ),
+      ),
+      elevation: 8,
+      items: [
+        PopupMenuItem<String>(
+          value: 'delete',
+          child: Row(
+            children: [
+              Icon(
+                Icons.delete_outline,
+                color: colors.error,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                appLocale.deleteBook,
+                style: TextStyle(
+                  color: colors.error,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ).then((value) {
+      if (value == 'delete' && onDelete != null && context.mounted) {
+        _showDeleteConfirmation(context, colors, appLocale);
+      }
+    });
+  }
+
+  void _showDeleteConfirmation(BuildContext context, AppColorScheme colors, AppLocalizations appLocale) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: colors.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          appLocale.deleteBook,
+          style: TextStyle(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          book.title,
+          style: TextStyle(
+            color: colors.textSecondary,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              appLocale.cancel,
+              style: TextStyle(color: colors.textSecondary),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              onDelete?.call();
+            },
+            child: Text(
+              appLocale.confirm,
+              style: TextStyle(
+                color: colors.error,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -215,9 +329,8 @@ class _BookOnShelf extends StatelessWidget {
     final bookColor = _getBookColor(book.title.hashCode);
     
     return GestureDetector(
-      onTap: () {
-        // TODO: Open book reader
-      },
+      onTap: onTap,
+      onLongPressStart: (details) => _showContextMenu(context, details.globalPosition),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -272,15 +385,15 @@ class _BookOnShelf extends StatelessWidget {
                     ),
                   ),
                   // Book cover image or title
-                  if (book.coverPath != null)
+                  if (book.coverPath != null && File(book.coverPath!).existsSync())
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(4),
                         bottomRight: Radius.circular(2),
                       ),
-                      child: Image.asset(
-                        book.coverPath!,
-                        fit: BoxFit.cover,
+                      child: Image.file(
+                        File(book.coverPath!),
+                        fit: BoxFit.fill,
                         width: double.infinity,
                         height: double.infinity,
                         errorBuilder: (_, __, ___) => _buildTitleOnSpine(book.title),

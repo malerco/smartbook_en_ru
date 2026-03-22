@@ -607,6 +607,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App Version'**
   String get appVersion;
+
+  /// No description provided for @chapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapters'**
+  String get chapters;
+
+  /// No description provided for @importingBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing book...'**
+  String get importingBook;
+
+  /// No description provided for @bookImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Book imported successfully'**
+  String get bookImported;
+
+  /// No description provided for @bookImportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import book'**
+  String get bookImportError;
+
+  /// No description provided for @unsupportedFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported book format'**
+  String get unsupportedFormat;
+
+  /// No description provided for @selectBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a book'**
+  String get selectBook;
+
+  /// No description provided for @supportedFormats.
+  ///
+  /// In en, this message translates to:
+  /// **'Supported formats: EPUB, FB2, TXT'**
+  String get supportedFormats;
 }
 
 class _AppLocalizationsDelegate

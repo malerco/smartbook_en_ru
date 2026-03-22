@@ -88,5 +88,13 @@
   "cancel": "Отмена",
   "confirm": "Подтвердить",
   "aboutApp": "О приложении",
-  "appVersion": "Версия приложения"
+  "appVersion": "Версия приложения",
+
+  "chapters": "Главы",
+  "importingBook": "Импорт книги...",
+  "bookImported": "Книга успешно импортирована",
+  "bookImportError": "Не удалось импортировать книгу",
+  "unsupportedFormat": "Неподдерживаемый формат книги",
+  "selectBook": "Выберите книгу",
+  "supportedFormats": "Поддерживаемые форматы: EPUB, FB2, TXT"
 }

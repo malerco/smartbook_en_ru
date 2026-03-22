@@ -265,4 +265,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get appVersion => 'Версия приложения';
+
+  @override
+  String get chapters => 'Главы';
+
+  @override
+  String get importingBook => 'Импорт книги...';
+
+  @override
+  String get bookImported => 'Книга успешно импортирована';
+
+  @override
+  String get bookImportError => 'Не удалось импортировать книгу';
+
+  @override
+  String get unsupportedFormat => 'Неподдерживаемый формат книги';
+
+  @override
+  String get selectBook => 'Выберите книгу';
+
+  @override
+  String get supportedFormats => 'Поддерживаемые форматы: EPUB, FB2, TXT';
 }

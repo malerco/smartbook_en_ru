@@ -1,7 +1,10 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/app_localizations.dart';
+import '../../../../core/services/book_parser/book_parser.dart';
 import '../../../../core/theme/theme.dart';
 import '../bloc/books_bloc.dart';
 import '../widgets/wooden_bookshelf.dart';
@@ -21,6 +24,25 @@ class BooksPage extends StatelessWidget {
 
 class BooksView extends StatelessWidget {
   const BooksView({super.key});
+
+  Future<void> _pickAndImportBook(BuildContext context) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: BookFormat.supportedExtensions,
+      allowMultiple: false,
+    );
+
+    if (result != null && result.files.isNotEmpty && context.mounted) {
+      final filePath = result.files.first.path;
+      if (filePath != null) {
+        context.read<BooksBloc>().add(BooksEvent.importRequested(filePath));
+      }
+    }
+  }
+
+  void _openBook(BuildContext context, String bookId) {
+    context.push('/book/$bookId');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +64,17 @@ class BooksView extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      body: BlocBuilder<BooksBloc, BooksState>(
+      body: BlocConsumer<BooksBloc, BooksState>(
+        listener: (context, state) {
+          if (state is BooksError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: colors.error,
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           return state.when(
             initial: () => Center(
@@ -54,14 +86,9 @@ class BooksView extends StatelessWidget {
             loaded: (books) {
               return WoodenBookshelf(
                 books: books,
-                onAddBook: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(appLocale.addBook),
-                      backgroundColor: colors.surface,
-                    ),
-                  );
-                },
+                onAddBook: () => _pickAndImportBook(context),
+                onBookTap: (bookId) => _openBook(context, bookId),
+                onDeleteBook: (bookId) => context.read<BooksBloc>().add(BooksEvent.deleteRequested(bookId)),
               );
             },
             error: (message) => Center(
