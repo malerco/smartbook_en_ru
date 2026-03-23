@@ -353,4 +353,44 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get loadingModel => 'Загрузка модели...';
+
+  @override
+  String get onboardingWelcomeTitle => 'Добро пожаловать';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Читайте книги на иностранном языке и учите новые слова без усилий. Загружайте книги в удобном формате.';
+
+  @override
+  String get onboardingTranslationTitle => 'Перевод абзацев';
+
+  @override
+  String get onboardingTranslationDesc =>
+      'Свайпните влево на любом абзаце, чтобы увидеть его перевод. Перевод загружается при открытии главы.';
+
+  @override
+  String get onboardingWordTitle => 'Нажмите на слово';
+
+  @override
+  String get onboardingWordDesc =>
+      'Нажмите на любое слово, чтобы увидеть его перевод, транскрипцию и варианты значений.';
+
+  @override
+  String get onboardingSaveTitle => 'Создайте свой словарь';
+
+  @override
+  String get onboardingSaveDesc =>
+      'Сохраняйте слова для изучения в личный словарь. Просматривайте их в любое время во вкладке Словарь.';
+
+  @override
+  String get back => 'Назад';
+
+  @override
+  String get next => 'Далее';
+
+  @override
+  String get skip => 'Пропустить';
+
+  @override
+  String get getStarted => 'Начать';
 }

@@ -775,6 +775,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading model...'**
   String get loadingModel;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Read & Learn'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Read books in a foreign language and learn new words effortlessly. Upload books in your preferred format.'**
+  String get onboardingWelcomeDesc;
+
+  /// No description provided for @onboardingTranslationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate Paragraphs'**
+  String get onboardingTranslationTitle;
+
+  /// No description provided for @onboardingTranslationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe left on any paragraph to see its translation. The translation loads when you open a chapter.'**
+  String get onboardingTranslationDesc;
+
+  /// No description provided for @onboardingWordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Any Word'**
+  String get onboardingWordTitle;
+
+  /// No description provided for @onboardingWordDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap on any word to see its translation, transcription, and multiple meaning variants.'**
+  String get onboardingWordDesc;
+
+  /// No description provided for @onboardingSaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Your Vocabulary'**
+  String get onboardingSaveTitle;
+
+  /// No description provided for @onboardingSaveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Save words you want to learn to your personal dictionary. Review them anytime in the Dictionary tab.'**
+  String get onboardingSaveDesc;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
 }
 
 class _AppLocalizationsDelegate

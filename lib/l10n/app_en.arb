@@ -120,5 +120,18 @@
   "downloadingRussianModel": "Downloading Russian model...",
   "initializingTranslators": "Initializing translators...",
   "modelsReady": "Ready!",
-  "loadingModel": "Loading model..."
+  "loadingModel": "Loading model...",
+
+  "onboardingWelcomeTitle": "Welcome to Read & Learn",
+  "onboardingWelcomeDesc": "Read books in a foreign language and learn new words effortlessly. Upload books in your preferred format.",
+  "onboardingTranslationTitle": "Translate Paragraphs",
+  "onboardingTranslationDesc": "Swipe left on any paragraph to see its translation. The translation loads when you open a chapter.",
+  "onboardingWordTitle": "Tap Any Word",
+  "onboardingWordDesc": "Tap on any word to see its translation, transcription, and multiple meaning variants.",
+  "onboardingSaveTitle": "Build Your Vocabulary",
+  "onboardingSaveDesc": "Save words you want to learn to your personal dictionary. Review them anytime in the Dictionary tab.",
+  "back": "Back",
+  "next": "Next",
+  "skip": "Skip",
+  "getStarted": "Get Started"
 }

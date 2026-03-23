@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smartbook_en_ru/core/constants/image_constants.dart';
 import 'package:smartbook_en_ru/core/theme/theme.dart';
+import '../../../../core/di/injection.dart';
+import '../../../../core/domain/repositories/settings_repository.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/router/app_router.dart';
 import '../bloc/splash_bloc.dart';
@@ -17,7 +19,12 @@ class SplashPage extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state is SplashLoaded) {
-          context.go(AppRoutes.main);
+          final isOnboardingCompleted = getIt<SettingsRepository>().isOnboardingCompleted();
+          if (isOnboardingCompleted) {
+            context.go(AppRoutes.main);
+          } else {
+            context.go(AppRoutes.onboarding);
+          }
         }
       },
       child: Scaffold(

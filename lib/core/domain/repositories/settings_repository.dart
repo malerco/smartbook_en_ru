@@ -23,6 +23,9 @@ abstract class SettingsRepository {
   String getAppLanguage();
   Future<void> setAppLanguage(String language);
 
+  bool isOnboardingCompleted();
+  Future<void> setOnboardingCompleted(bool completed);
+
   double getFontSizeValue(FontSizeOption option);
   double getLineSpacingValue(LineSpacingOption option);
   ThemeMode getFlutterThemeMode(AppThemeMode mode);

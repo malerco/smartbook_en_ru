@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/books/presentation/pages/book_reader_page.dart';
 import '../../features/main/presentation/pages/main_page.dart';
+import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/splash/presentation/bloc/splash_bloc.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../di/injection.dart';
 
 abstract class AppRoutes {
   static const splash = '/splash';
+  static const onboarding = '/onboarding';
   static const main = '/main';
   static const bookReader = '/book/:bookId';
 }
@@ -19,11 +21,18 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.splash,
-
       pageBuilder: (context, state) => buildTransitionPage(childScreen: BlocProvider(
         create: (_) => getIt<SplashBloc>()..add(const SplashStarted()),
         child: const SplashPage(),
       ), state: state),
+    ),
+    GoRoute(
+      path: AppRoutes.onboarding,
+      pageBuilder: (context, state) => buildTransitionPage(
+        childScreen: const OnboardingPage(),
+        state: state,
+        hasDuration: true,
+      ),
     ),
     GoRoute(
       path: AppRoutes.main,

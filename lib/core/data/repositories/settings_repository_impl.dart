@@ -13,6 +13,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
   static const String _fontFamilyKey = 'font_family';
   static const String _primaryLanguageKey = 'primary_language';
   static const String _appLanguageKey = 'app_language';
+  static const String _onboardingCompletedKey = 'onboarding_completed';
 
   final SharedPreferences _prefs;
 
@@ -88,6 +89,16 @@ class SettingsRepositoryImpl implements SettingsRepository {
   @override
   Future<void> setAppLanguage(String language) async {
     await _prefs.setString(_appLanguageKey, language);
+  }
+
+  @override
+  bool isOnboardingCompleted() {
+    return _prefs.getBool(_onboardingCompletedKey) ?? false;
+  }
+
+  @override
+  Future<void> setOnboardingCompleted(bool completed) async {
+    await _prefs.setBool(_onboardingCompletedKey, completed);
   }
 
   @override

@@ -352,4 +352,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loadingModel => 'Loading model...';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Read & Learn';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Read books in a foreign language and learn new words effortlessly. Upload books in your preferred format.';
+
+  @override
+  String get onboardingTranslationTitle => 'Translate Paragraphs';
+
+  @override
+  String get onboardingTranslationDesc =>
+      'Swipe left on any paragraph to see its translation. The translation loads when you open a chapter.';
+
+  @override
+  String get onboardingWordTitle => 'Tap Any Word';
+
+  @override
+  String get onboardingWordDesc =>
+      'Tap on any word to see its translation, transcription, and multiple meaning variants.';
+
+  @override
+  String get onboardingSaveTitle => 'Build Your Vocabulary';
+
+  @override
+  String get onboardingSaveDesc =>
+      'Save words you want to learn to your personal dictionary. Review them anytime in the Dictionary tab.';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get getStarted => 'Get Started';
 }
