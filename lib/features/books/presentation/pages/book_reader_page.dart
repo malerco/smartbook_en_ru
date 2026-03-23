@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/domain/repositories/settings_repository.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../bloc/book_reader_bloc.dart';
+import '../bloc/chapter_translation_bloc.dart';
+import '../bloc/reader_translation_bloc.dart';
+import '../widgets/chapter_loading_overlay.dart';
+import '../widgets/reader_text_content.dart';
 
 class BookReaderPage extends StatelessWidget {
   final String bookId;
@@ -15,16 +20,28 @@ class BookReaderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<BookReaderBloc>()
-        ..add(BookReaderEvent.loadRequested(bookId: bookId)),
-      child: const BookReaderView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<BookReaderBloc>()
+            ..add(BookReaderEvent.loadRequested(bookId: bookId)),
+        ),
+        BlocProvider(
+          create: (_) => getIt<ReaderTranslationBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<ChapterTranslationBloc>(),
+        ),
+      ],
+      child: BookReaderView(bookId: bookId),
     );
   }
 }
 
 class BookReaderView extends StatefulWidget {
-  const BookReaderView({super.key});
+  final String bookId;
+  
+  const BookReaderView({super.key, required this.bookId});
 
   @override
   State<BookReaderView> createState() => _BookReaderViewState();
@@ -35,6 +52,8 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
   bool _showControls = true;
   bool _initialScrollRestored = false;
   int _lastSavedChapterIndex = -1;
+  int _lastTranslationChapterIndex = -1;
+  bool _translationSkipped = false;
 
   @override
   void initState() {
@@ -134,51 +153,85 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                   }
                 }
 
+                // Start chapter translation loading when chapter changes
+                if (_lastTranslationChapterIndex != currentChapterIndex && !_translationSkipped) {
+                  _lastTranslationChapterIndex = currentChapterIndex;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    context.read<ChapterTranslationBloc>().add(
+                      ChapterTranslationEvent.started(
+                        bookId: widget.bookId,
+                        chapterIndex: currentChapterIndex,
+                        chapterContent: currentChapter.content,
+                        direction: TranslationDirection.enToRu,
+                      ),
+                    );
+                  });
+                }
+
                 return Scaffold(
                   backgroundColor: colors.background,
                   body: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        _showControls = !_showControls;
-                      });
+                      // setState(() {
+                      //   _showControls = !_showControls;
+                      // });
                     },
-                    child: Stack(
-                      children: [
-                        SafeArea(
-                          child: Column(
-                            children: [
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 200),
-                                height: _showControls ? 56 : 0,
-                                child: _showControls
-                                    ? _buildAppBar(
-                                        context,
-                                        colors,
-                                        book.title,
-                                        currentChapter.title,
-                                      )
-                                    : const SizedBox.shrink(),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 16,
-                                  ),
-                                  child: SingleChildScrollView(
-                                    controller: _scrollController,
-                                    child: SelectableText(
-                                      currentChapter.content,
-                                      style: TextStyle(
+                    child: BlocListener<ChapterTranslationBloc, ChapterTranslationState>(
+                      listener: (context, chapterTranslationState) {
+                        chapterTranslationState.maybeWhen(
+                          loaded: (translations, failedIndices) {
+                            // Pass cached translations to ReaderTranslationBloc
+                            context.read<ReaderTranslationBloc>().setCachedTranslations(translations, failedIndices);
+                          },
+                          partial: (translations, failedIndices, progress, totalParagraphs, isLoading) {
+                            // Pass partial translations to ReaderTranslationBloc
+                            context.read<ReaderTranslationBloc>().setCachedTranslations(translations, failedIndices);
+                          },
+                          skipped: () {
+                            setState(() {
+                              _translationSkipped = true;
+                            });
+                            context.read<ReaderTranslationBloc>().setCachedTranslations(null);
+                          },
+                          orElse: () {},
+                        );
+                      },
+                      child: Stack(
+                        children: [
+                          SafeArea(
+                            child: Column(
+                              children: [
+                                AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  height: _showControls ? 56 : 0,
+                                  child: _showControls
+                                      ? _buildAppBar(
+                                          context,
+                                          colors,
+                                          book.title,
+                                          currentChapter.title,
+                                        )
+                                      : const SizedBox.shrink(),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 16,
+                                    ),
+                                    child: ReaderTextContent(
+                                      content: currentChapter.content,
+                                      textStyle: TextStyle(
                                         fontSize: fontSize,
                                         height: lineSpacing,
                                         fontFamily: fontFamily,
                                         color: colors.textPrimary,
                                       ),
+                                      scrollController: _scrollController,
+                                      translationDirection: TranslationDirection.enToRu,
                                     ),
                                   ),
                                 ),
-                              ),
                               // AnimatedContainer(
                               //   duration: const Duration(milliseconds: 200),
                               //   height: _showControls ? 80 : 0,
@@ -197,7 +250,19 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                             ],
                           ),
                         ),
-                      ],
+                          // Chapter loading overlay
+                          ChapterLoadingOverlay(
+                            bookId: widget.bookId,
+                            chapterIndex: currentChapterIndex,
+                            chapterContent: currentChapter.content,
+                            onSkip: () {
+                              context.read<ChapterTranslationBloc>().add(
+                                const ChapterTranslationEvent.skipped(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -453,6 +518,10 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                         Navigator.of(dialogContext).pop();
                         _initialScrollRestored = true;
                         _scrollController.jumpTo(0);
+                        // Reset skip flag - cache check happens in bloc
+                        setState(() {
+                          _translationSkipped = false;
+                        });
                         bloc.add(
                           BookReaderEvent.chapterChanged(chapterIndex: index),
                         );

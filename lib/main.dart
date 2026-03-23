@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'core/di/injection.dart';
 import 'core/domain/repositories/settings_repository.dart';
 import 'core/l10n/app_localizations.dart';
 import 'core/router/app_router.dart';
+import 'core/services/offline_dictionary_service.dart';
+import 'core/services/pronunciation_service.dart';
 import 'core/theme/theme.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
 
@@ -16,7 +19,12 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  await Hive.initFlutter();
+
   await configureDependencies();
+
+  await getIt<PronunciationService>().initialize();
+  await OfflineDictionaryService().initialize();
 
   runApp(const AITranslatorApp());
 }

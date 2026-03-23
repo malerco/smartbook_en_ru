@@ -3,7 +3,7 @@ part of 'splash_bloc.dart';
 enum LoadingMessageType {
   initializing,
   downloadingModels,
-  loadingNeuralNetwork,
+  loadingModel,
   preparingVocabulary,
   almostReady,
   ready,

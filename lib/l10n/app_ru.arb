@@ -96,5 +96,29 @@
   "bookImportError": "Не удалось импортировать книгу",
   "unsupportedFormat": "Неподдерживаемый формат книги",
   "selectBook": "Выберите книгу",
-  "supportedFormats": "Поддерживаемые форматы: EPUB, FB2, TXT"
+  "supportedFormats": "Поддерживаемые форматы: EPUB, FB2, TXT",
+
+  "translating": "Перевод...",
+  "translationError": "Ошибка перевода",
+  "noInternetConnection": "Нет подключения к интернету",
+  "noInternetHint": "Для перевода абзацев требуется интернет. Доступен только офлайн-перевод отдельных слов.",
+  "translationTimeout": "Время ожидания истекло. Попробуйте ещё раз.",
+  "saveToVocabulary": "Сохранить в словарь",
+  "wordSaved": "Слово сохранено в словарь",
+  "wordAlreadySaved": "Слово уже есть в словаре",
+
+  "loadingTranslation": "Загрузка перевода...",
+  "loadingTranslationHint": "Подготовка перевода главы для офлайн-чтения",
+  "translationLoadedOffline": "Перевод доступен офлайн",
+  "translationFailed": "Не удалось загрузить перевод",
+  "translationFailedHint": "Доступен только офлайн-перевод слов по нажатию. Свайп для перевода абзацев отключён.",
+  "retryTranslation": "Повторить",
+  "skipTranslation": "Продолжить без перевода",
+  
+  "checkingModels": "Проверка моделей...",
+  "downloadingLanguageModels": "Загрузка языковых моделей...",
+  "downloadingRussianModel": "Загрузка русской модели...",
+  "initializingTranslators": "Инициализация переводчиков...",
+  "modelsReady": "Готово!",
+  "loadingModel": "Загрузка модели..."
 }

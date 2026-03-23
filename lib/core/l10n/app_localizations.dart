@@ -649,6 +649,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supported formats: EPUB, FB2, TXT'**
   String get supportedFormats;
+
+  /// No description provided for @translating.
+  ///
+  /// In en, this message translates to:
+  /// **'Translating...'**
+  String get translating;
+
+  /// No description provided for @translationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation error'**
+  String get translationError;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @noInternetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paragraph translation requires internet. Only offline word translation is available.'**
+  String get noInternetHint;
+
+  /// No description provided for @translationTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation timed out. Please try again.'**
+  String get translationTimeout;
+
+  /// No description provided for @saveToVocabulary.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to vocabulary'**
+  String get saveToVocabulary;
+
+  /// No description provided for @wordSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Word saved to dictionary'**
+  String get wordSaved;
+
+  /// No description provided for @wordAlreadySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Word already in dictionary'**
+  String get wordAlreadySaved;
+
+  /// No description provided for @loadingTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading translation...'**
+  String get loadingTranslation;
+
+  /// No description provided for @loadingTranslationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing chapter translation for offline reading'**
+  String get loadingTranslationHint;
+
+  /// No description provided for @translationLoadedOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation available offline'**
+  String get translationLoadedOffline;
+
+  /// No description provided for @translationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation loading failed'**
+  String get translationFailed;
+
+  /// No description provided for @translationFailedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only offline word translation by tap is available. Swipe to translate paragraphs is disabled.'**
+  String get translationFailedHint;
+
+  /// No description provided for @retryTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryTranslation;
+
+  /// No description provided for @skipTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue without translation'**
+  String get skipTranslation;
+
+  /// No description provided for @checkingModels.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking models...'**
+  String get checkingModels;
+
+  /// No description provided for @downloadingLanguageModels.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading language models...'**
+  String get downloadingLanguageModels;
+
+  /// No description provided for @downloadingRussianModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading Russian model...'**
+  String get downloadingRussianModel;
+
+  /// No description provided for @initializingTranslators.
+  ///
+  /// In en, this message translates to:
+  /// **'Initializing translators...'**
+  String get initializingTranslators;
+
+  /// No description provided for @modelsReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready!'**
+  String get modelsReady;
+
+  /// No description provided for @loadingModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading model...'**
+  String get loadingModel;
 }
 
 class _AppLocalizationsDelegate

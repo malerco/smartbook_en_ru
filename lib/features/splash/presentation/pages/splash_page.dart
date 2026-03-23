@@ -24,7 +24,7 @@ class SplashPage extends StatelessWidget {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(ImageConstants.splashImage),
+            Image.asset(ImageConstants.splashImage, fit: BoxFit.fill,),
             SafeArea(
               child: Column(
                 children: [

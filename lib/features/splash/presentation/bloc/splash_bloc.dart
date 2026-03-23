@@ -40,7 +40,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         if (status.progress < 0.3) {
           messageType = LoadingMessageType.downloadingModels;
         } else if (status.progress < 0.6) {
-          messageType = LoadingMessageType.loadingNeuralNetwork;
+          messageType = LoadingMessageType.loadingModel;
         } else if (status.progress < 0.9) {
           messageType = LoadingMessageType.preparingVocabulary;
         } else {

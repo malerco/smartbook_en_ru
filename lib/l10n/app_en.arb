@@ -96,5 +96,29 @@
   "bookImportError": "Failed to import book",
   "unsupportedFormat": "Unsupported book format",
   "selectBook": "Select a book",
-  "supportedFormats": "Supported formats: EPUB, FB2, TXT"
+  "supportedFormats": "Supported formats: EPUB, FB2, TXT",
+
+  "translating": "Translating...",
+  "translationError": "Translation error",
+  "noInternetConnection": "No internet connection",
+  "noInternetHint": "Paragraph translation requires internet. Only offline word translation is available.",
+  "translationTimeout": "Translation timed out. Please try again.",
+  "saveToVocabulary": "Save to vocabulary",
+  "wordSaved": "Word saved to dictionary",
+  "wordAlreadySaved": "Word already in dictionary",
+
+  "loadingTranslation": "Loading translation...",
+  "loadingTranslationHint": "Preparing chapter translation for offline reading",
+  "translationLoadedOffline": "Translation available offline",
+  "translationFailed": "Translation loading failed",
+  "translationFailedHint": "Only offline word translation by tap is available. Swipe to translate paragraphs is disabled.",
+  "retryTranslation": "Retry",
+  "skipTranslation": "Continue without translation",
+  
+  "checkingModels": "Checking models...",
+  "downloadingLanguageModels": "Downloading language models...",
+  "downloadingRussianModel": "Downloading Russian model...",
+  "initializingTranslators": "Initializing translators...",
+  "modelsReady": "Ready!",
+  "loadingModel": "Loading model..."
 }

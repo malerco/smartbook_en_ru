@@ -18,10 +18,16 @@ import '../../features/books/domain/usecases/delete_book_usecase.dart' as _i919;
 import '../../features/books/domain/usecases/get_book_content_usecase.dart'
     as _i4;
 import '../../features/books/domain/usecases/get_books_usecase.dart' as _i297;
+import '../../features/books/domain/usecases/get_word_translations_usecase.dart'
+    as _i512;
 import '../../features/books/domain/usecases/import_book_usecase.dart' as _i156;
 import '../../features/books/domain/usecases/update_book_usecase.dart' as _i562;
 import '../../features/books/presentation/bloc/book_reader_bloc.dart' as _i420;
 import '../../features/books/presentation/bloc/books_bloc.dart' as _i815;
+import '../../features/books/presentation/bloc/chapter_translation_bloc.dart'
+    as _i799;
+import '../../features/books/presentation/bloc/reader_translation_bloc.dart'
+    as _i163;
 import '../../features/dictionary/domain/usecases/add_dictionary_entry_usecase.dart'
     as _i307;
 import '../../features/dictionary/domain/usecases/clear_dictionary_usecase.dart'
@@ -52,17 +58,25 @@ import '../../features/settings/presentation/bloc/settings_bloc.dart' as _i585;
 import '../../features/splash/domain/usecases/load_model_usecase.dart'
     as _i1040;
 import '../../features/splash/presentation/bloc/splash_bloc.dart' as _i442;
+import '../data/datasources/translation_hive_cache.dart' as _i547;
+import '../data/datasources/translation_remote_data_source.dart' as _i990;
 import '../data/repositories/books_repository_impl.dart' as _i515;
+import '../data/repositories/chapter_translation_repository_impl.dart' as _i268;
 import '../data/repositories/dictionary_repository_impl.dart' as _i1010;
 import '../data/repositories/settings_repository_impl.dart' as _i453;
 import '../data/repositories/translation_repository_impl.dart' as _i892;
 import '../domain/repositories/books_repository.dart' as _i195;
+import '../domain/repositories/chapter_translation_repository.dart' as _i976;
 import '../domain/repositories/dictionary_repository.dart' as _i794;
 import '../domain/repositories/settings_repository.dart' as _i977;
 import '../domain/repositories/translation_repository.dart' as _i352;
 import '../domain/usecases/translate_text_usecase.dart' as _i682;
-import '../ml/translation_model.dart' as _i1004;
+import '../ml/mlkit_translation_model.dart' as _i233;
+import '../network/dio_client.dart' as _i667;
+import '../network/interceptors/connectivity_interceptor.dart' as _i693;
+import '../network/interceptors/logging_interceptor.dart' as _i344;
 import '../services/book_parser/book_parser_service.dart' as _i71;
+import '../services/pronunciation_service.dart' as _i618;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -77,8 +91,20 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
-    gh.lazySingleton<_i1004.TranslationModel>(() => _i1004.TranslationModel());
+    gh.factory<_i693.ConnectivityInterceptor>(
+      () => _i693.ConnectivityInterceptor(),
+    );
+    gh.factory<_i344.LoggingInterceptor>(() => _i344.LoggingInterceptor());
+    gh.lazySingleton<_i233.MlKitTranslationModel>(
+      () => _i233.MlKitTranslationModel(),
+    );
+    gh.lazySingleton<_i547.TranslationHiveCache>(
+      () => _i547.TranslationHiveCache(),
+    );
     gh.lazySingleton<_i71.BookParserService>(() => _i71.BookParserService());
+    gh.lazySingleton<_i618.PronunciationService>(
+      () => _i618.PronunciationService(),
+    );
     gh.lazySingleton<_i977.SettingsRepository>(
       () => _i453.SettingsRepositoryImpl(gh<_i460.SharedPreferences>()),
     );
@@ -125,14 +151,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i69.ClearDictionaryUseCase>(),
       ),
     );
-    gh.lazySingleton<_i352.TranslationRepository>(
-      () => _i892.TranslationRepositoryImpl(gh<_i1004.TranslationModel>()),
+    gh.factory<_i163.ReaderTranslationBloc>(
+      () => _i163.ReaderTranslationBloc(
+        gh<_i233.MlKitTranslationModel>(),
+        gh<_i618.PronunciationService>(),
+      ),
     );
-    gh.lazySingleton<_i682.TranslateTextUseCase>(
-      () => _i682.TranslateTextUseCase(gh<_i352.TranslationRepository>()),
-    );
-    gh.lazySingleton<_i1040.LoadModelUseCase>(
-      () => _i1040.LoadModelUseCase(gh<_i352.TranslationRepository>()),
+    gh.lazySingleton<_i667.DioClient>(
+      () => _i667.DioClient(
+        gh<_i693.ConnectivityInterceptor>(),
+        gh<_i344.LoggingInterceptor>(),
+      ),
     );
     gh.lazySingleton<_i562.UpdateBookUseCase>(
       () => _i562.UpdateBookUseCase(gh<_i195.BooksRepository>()),
@@ -145,12 +174,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i919.DeleteBookUseCase>(
       () => _i919.DeleteBookUseCase(gh<_i195.BooksRepository>()),
-    );
-    gh.factory<_i442.SplashBloc>(
-      () => _i442.SplashBloc(
-        loadModelUseCase: gh<_i1040.LoadModelUseCase>(),
-        repository: gh<_i352.TranslationRepository>(),
-      ),
     );
     gh.lazySingleton<_i219.SetFontSizeUseCase>(
       () => _i219.SetFontSizeUseCase(gh<_i977.SettingsRepository>()),
@@ -182,6 +205,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i156.ImportBookUseCase>(),
       ),
     );
+    gh.lazySingleton<_i352.TranslationRepository>(
+      () => _i892.TranslationRepositoryImpl(gh<_i233.MlKitTranslationModel>()),
+    );
+    gh.lazySingleton<_i990.TranslationRemoteDataSource>(
+      () => _i990.TranslationRemoteDataSource(gh<_i667.DioClient>()),
+    );
     gh.factory<_i585.SettingsBloc>(
       () => _i585.SettingsBloc(
         gh<_i1029.GetSettingsUseCase>(),
@@ -198,6 +227,34 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i4.GetBookContentUseCase>(),
         gh<_i562.UpdateBookUseCase>(),
         gh<_i195.BooksRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i976.ChapterTranslationRepository>(
+      () => _i268.ChapterTranslationRepositoryImpl(
+        gh<_i990.TranslationRemoteDataSource>(),
+        gh<_i547.TranslationHiveCache>(),
+      ),
+    );
+    gh.lazySingleton<_i682.TranslateTextUseCase>(
+      () => _i682.TranslateTextUseCase(gh<_i352.TranslationRepository>()),
+    );
+    gh.lazySingleton<_i1040.LoadModelUseCase>(
+      () => _i1040.LoadModelUseCase(gh<_i352.TranslationRepository>()),
+    );
+    gh.factory<_i442.SplashBloc>(
+      () => _i442.SplashBloc(
+        loadModelUseCase: gh<_i1040.LoadModelUseCase>(),
+        repository: gh<_i352.TranslationRepository>(),
+      ),
+    );
+    gh.factory<_i512.GetWordTranslationsUseCase>(
+      () => _i512.GetWordTranslationsUseCase(
+        gh<_i976.ChapterTranslationRepository>(),
+      ),
+    );
+    gh.factory<_i799.ChapterTranslationBloc>(
+      () => _i799.ChapterTranslationBloc(
+        gh<_i976.ChapterTranslationRepository>(),
       ),
     );
     return this;

@@ -286,4 +286,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportedFormats => 'Supported formats: EPUB, FB2, TXT';
+
+  @override
+  String get translating => 'Translating...';
+
+  @override
+  String get translationError => 'Translation error';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get noInternetHint =>
+      'Paragraph translation requires internet. Only offline word translation is available.';
+
+  @override
+  String get translationTimeout => 'Translation timed out. Please try again.';
+
+  @override
+  String get saveToVocabulary => 'Save to vocabulary';
+
+  @override
+  String get wordSaved => 'Word saved to dictionary';
+
+  @override
+  String get wordAlreadySaved => 'Word already in dictionary';
+
+  @override
+  String get loadingTranslation => 'Loading translation...';
+
+  @override
+  String get loadingTranslationHint =>
+      'Preparing chapter translation for offline reading';
+
+  @override
+  String get translationLoadedOffline => 'Translation available offline';
+
+  @override
+  String get translationFailed => 'Translation loading failed';
+
+  @override
+  String get translationFailedHint =>
+      'Only offline word translation by tap is available. Swipe to translate paragraphs is disabled.';
+
+  @override
+  String get retryTranslation => 'Retry';
+
+  @override
+  String get skipTranslation => 'Continue without translation';
+
+  @override
+  String get checkingModels => 'Checking models...';
+
+  @override
+  String get downloadingLanguageModels => 'Downloading language models...';
+
+  @override
+  String get downloadingRussianModel => 'Downloading Russian model...';
+
+  @override
+  String get initializingTranslators => 'Initializing translators...';
+
+  @override
+  String get modelsReady => 'Ready!';
+
+  @override
+  String get loadingModel => 'Loading model...';
 }

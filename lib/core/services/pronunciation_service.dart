@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class PronunciationService {
-  static PronunciationService? _instance;
   Map<String, String>? _pronunciations;
   bool _isLoading = false;
 
-  PronunciationService._();
-
-  static PronunciationService get instance {
-    _instance ??= PronunciationService._();
-    return _instance!;
-  }
+  PronunciationService();
 
   Future<void> initialize() async {
     if (_pronunciations != null || _isLoading) return;

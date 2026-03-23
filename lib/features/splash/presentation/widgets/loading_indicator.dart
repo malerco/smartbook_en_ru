@@ -20,17 +20,17 @@ class LoadingIndicator extends StatelessWidget {
     final appLocale = AppLocalizations.of(context)!;
     switch (messageType) {
       case LoadingMessageType.initializing:
-        return appLocale.initializingTranslator;
+        return appLocale.checkingModels;
       case LoadingMessageType.downloadingModels:
-        return appLocale.downloadingModels;
-      case LoadingMessageType.loadingNeuralNetwork:
-        return appLocale.loadingNeuralNetwork;
+        return appLocale.downloadingLanguageModels;
+      case LoadingMessageType.loadingModel:
+        return appLocale.loadingModel;
       case LoadingMessageType.preparingVocabulary:
-        return appLocale.preparingVocabulary;
+        return appLocale.initializingTranslators;
       case LoadingMessageType.almostReady:
         return appLocale.almostReady;
       case LoadingMessageType.ready:
-        return appLocale.ready;
+        return appLocale.modelsReady;
     }
   }
 

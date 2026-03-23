@@ -286,4 +286,71 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get supportedFormats => 'Поддерживаемые форматы: EPUB, FB2, TXT';
+
+  @override
+  String get translating => 'Перевод...';
+
+  @override
+  String get translationError => 'Ошибка перевода';
+
+  @override
+  String get noInternetConnection => 'Нет подключения к интернету';
+
+  @override
+  String get noInternetHint =>
+      'Для перевода абзацев требуется интернет. Доступен только офлайн-перевод отдельных слов.';
+
+  @override
+  String get translationTimeout =>
+      'Время ожидания истекло. Попробуйте ещё раз.';
+
+  @override
+  String get saveToVocabulary => 'Сохранить в словарь';
+
+  @override
+  String get wordSaved => 'Слово сохранено в словарь';
+
+  @override
+  String get wordAlreadySaved => 'Слово уже есть в словаре';
+
+  @override
+  String get loadingTranslation => 'Загрузка перевода...';
+
+  @override
+  String get loadingTranslationHint =>
+      'Подготовка перевода главы для офлайн-чтения';
+
+  @override
+  String get translationLoadedOffline => 'Перевод доступен офлайн';
+
+  @override
+  String get translationFailed => 'Не удалось загрузить перевод';
+
+  @override
+  String get translationFailedHint =>
+      'Доступен только офлайн-перевод слов по нажатию. Свайп для перевода абзацев отключён.';
+
+  @override
+  String get retryTranslation => 'Повторить';
+
+  @override
+  String get skipTranslation => 'Продолжить без перевода';
+
+  @override
+  String get checkingModels => 'Проверка моделей...';
+
+  @override
+  String get downloadingLanguageModels => 'Загрузка языковых моделей...';
+
+  @override
+  String get downloadingRussianModel => 'Загрузка русской модели...';
+
+  @override
+  String get initializingTranslators => 'Инициализация переводчиков...';
+
+  @override
+  String get modelsReady => 'Готово!';
+
+  @override
+  String get loadingModel => 'Загрузка модели...';
 }

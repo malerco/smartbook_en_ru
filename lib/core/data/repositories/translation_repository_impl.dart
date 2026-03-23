@@ -6,11 +6,11 @@ import '../../domain/entities/model_status.dart';
 import '../../domain/entities/translation_result.dart';
 import '../../domain/repositories/translation_repository.dart';
 import '../../errors/failures.dart';
-import '../../ml/translation_model.dart';
+import '../../ml/mlkit_translation_model.dart';
 
 @LazySingleton(as: TranslationRepository)
 class TranslationRepositoryImpl implements TranslationRepository {
-  final TranslationModel _translationModel;
+  final MlKitTranslationModel _translationModel;
   final StreamController<ModelStatus> _statusController =
       StreamController<ModelStatus>.broadcast();
 

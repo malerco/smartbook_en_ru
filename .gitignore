@@ -119,3 +119,6 @@ app.*.symbols
 
 # FVM Version Cache
 .fvm/
+
+# API Keys (sensitive)
+lib/core/config/api_keys.dart

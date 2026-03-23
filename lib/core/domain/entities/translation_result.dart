@@ -8,6 +8,7 @@ class TranslationResult extends Equatable {
   final TranslationDirection direction;
   final List<WordPair> wordPairs;
   final DateTime timestamp;
+  final List<String> variants;
 
   const TranslationResult({
     required this.originalText,
@@ -16,6 +17,7 @@ class TranslationResult extends Equatable {
     required this.direction,
     required this.wordPairs,
     required this.timestamp,
+    this.variants = const [],
   });
 
   @override
@@ -26,6 +28,7 @@ class TranslationResult extends Equatable {
         direction,
         wordPairs,
         timestamp,
+        variants,
       ];
 }
 
