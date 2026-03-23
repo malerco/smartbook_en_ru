@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/utils/language_detector.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/domain/repositories/settings_repository.dart';
 import '../../../../core/l10n/app_localizations.dart';
@@ -54,6 +55,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
   int _lastSavedChapterIndex = -1;
   int _lastTranslationChapterIndex = -1;
   bool _translationSkipped = false;
+  TranslationDirection? _detectedDirection;
 
   @override
   void initState() {
@@ -153,7 +155,8 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                   }
                 }
 
-                // Start chapter translation loading when chapter changes
+                _detectedDirection ??= LanguageDetector.detectDirection(currentChapter.content);
+
                 if (_lastTranslationChapterIndex != currentChapterIndex && !_translationSkipped) {
                   _lastTranslationChapterIndex = currentChapterIndex;
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -162,7 +165,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                         bookId: widget.bookId,
                         chapterIndex: currentChapterIndex,
                         chapterContent: currentChapter.content,
-                        direction: TranslationDirection.enToRu,
+                        direction: _detectedDirection!,
                       ),
                     );
                   });
@@ -180,11 +183,9 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                       listener: (context, chapterTranslationState) {
                         chapterTranslationState.maybeWhen(
                           loaded: (translations, failedIndices) {
-                            // Pass cached translations to ReaderTranslationBloc
                             context.read<ReaderTranslationBloc>().setCachedTranslations(translations, failedIndices);
                           },
                           partial: (translations, failedIndices, progress, totalParagraphs, isLoading) {
-                            // Pass partial translations to ReaderTranslationBloc
                             context.read<ReaderTranslationBloc>().setCachedTranslations(translations, failedIndices);
                           },
                           skipped: () {
@@ -228,7 +229,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                                         color: colors.textPrimary,
                                       ),
                                       scrollController: _scrollController,
-                                      translationDirection: TranslationDirection.enToRu,
+                                      translationDirection: _detectedDirection ?? TranslationDirection.enToRu,
                                     ),
                                   ),
                                 ),
@@ -250,11 +251,11 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                             ],
                           ),
                         ),
-                          // Chapter loading overlay
                           ChapterLoadingOverlay(
                             bookId: widget.bookId,
                             chapterIndex: currentChapterIndex,
                             chapterContent: currentChapter.content,
+                            direction: _detectedDirection ?? TranslationDirection.enToRu,
                             onSkip: () {
                               context.read<ChapterTranslationBloc>().add(
                                 const ChapterTranslationEvent.skipped(),
@@ -450,6 +451,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
   }
 
   void _showChaptersDialog(BuildContext context, AppColorScheme colors) {
+    final appLocale = AppLocalizations.of(context)!;
     final bloc = context.read<BookReaderBloc>();
     final state = bloc.state;
 
@@ -472,7 +474,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  'Chapters',
+                  appLocale.chapters,
                   style: TextStyle(
                     color: colors.textPrimary,
                     fontSize: 18,

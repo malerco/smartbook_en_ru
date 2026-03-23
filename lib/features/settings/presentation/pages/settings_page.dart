@@ -60,17 +60,6 @@ class SettingsView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   _SettingsSection(
-                    title: appLocale.primaryTranslationLanguage,
-                    isMultipleRows: false,
-                    child: Expanded(
-                      child: _LanguageToggle(
-                        currentLanguage: primaryLanguage,
-                        isAppLanguage: false,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  _SettingsSection(
                     title: appLocale.appLanguage,
                     isMultipleRows: false,
                     child: Expanded(

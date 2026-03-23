@@ -9,6 +9,7 @@ class ChapterLoadingOverlay extends StatelessWidget {
   final String bookId;
   final int chapterIndex;
   final String chapterContent;
+  final TranslationDirection direction;
   final VoidCallback onSkip;
 
   const ChapterLoadingOverlay({
@@ -16,6 +17,7 @@ class ChapterLoadingOverlay extends StatelessWidget {
     required this.bookId,
     required this.chapterIndex,
     required this.chapterContent,
+    required this.direction,
     required this.onSkip,
   });
 
@@ -186,7 +188,7 @@ class ChapterLoadingOverlay extends StatelessWidget {
                             bookId: bookId,
                             chapterIndex: chapterIndex,
                             chapterContent: chapterContent,
-                            direction: TranslationDirection.enToRu,
+                            direction: direction,
                           ),
                         );
                       },

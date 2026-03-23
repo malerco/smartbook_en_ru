@@ -27,15 +27,23 @@ class BooksView extends StatelessWidget {
 
   Future<void> _pickAndImportBook(BuildContext context) async {
     final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: BookFormat.supportedExtensions,
+      type: FileType.any,
       allowMultiple: false,
     );
 
     if (result != null && result.files.isNotEmpty && context.mounted) {
       final filePath = result.files.first.path;
       if (filePath != null) {
-        context.read<BooksBloc>().add(BooksEvent.importRequested(filePath));
+        final extension = filePath.split('.').last.toLowerCase();
+        if (BookFormat.supportedExtensions.contains(extension)) {
+          context.read<BooksBloc>().add(BooksEvent.importRequested(filePath));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Unsupported format. Use: ${BookFormat.supportedExtensions.join(", ")}'),
+            ),
+          );
+        }
       }
     }
   }
