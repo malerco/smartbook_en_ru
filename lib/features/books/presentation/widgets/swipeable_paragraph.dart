@@ -14,6 +14,7 @@ class SwipeableParagraph extends StatefulWidget {
   final Widget child;
   final VoidCallback onSwipeLeft;
   final VoidCallback onSwipeRight;
+  final TextStyle? textStyle;
 
   const SwipeableParagraph({
     super.key,
@@ -27,6 +28,7 @@ class SwipeableParagraph extends StatefulWidget {
     required this.child,
     required this.onSwipeLeft,
     required this.onSwipeRight,
+    this.textStyle,
   });
 
   @override
@@ -180,6 +182,8 @@ class _SwipeableParagraphState extends State<SwipeableParagraph> {
               style: TextStyle(
                 color: colors.textSecondary,
                 fontStyle: FontStyle.italic,
+                fontSize: widget.textStyle?.fontSize,
+                fontFamily: widget.textStyle?.fontFamily,
               ),
             ),
           ],
@@ -204,6 +208,9 @@ class _SwipeableParagraphState extends State<SwipeableParagraph> {
           style: TextStyle(
             color: colors.primary,
             fontStyle: FontStyle.italic,
+            fontSize: widget.textStyle?.fontSize,
+            height: widget.textStyle?.height,
+            fontFamily: widget.textStyle?.fontFamily,
           ),
         ),
       ),

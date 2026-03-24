@@ -22,6 +22,9 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
   int _currentIndex = 0;
   bool _isFlipped = false;
   List<DictionaryEntry> _unlearnedEntries = [];
+  List<int> _shuffledIndices = [];
+  int _shufflePosition = 0;
+  final Random _random = Random();
 
   @override
   void initState() {
@@ -39,10 +42,17 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
 
   void _filterUnlearnedEntries() {
     _unlearnedEntries = widget.entries.where((e) => !e.isLearned).toList();
-    if (_currentIndex >= _unlearnedEntries.length) {
-      _currentIndex = _unlearnedEntries.isEmpty ? 0 : _unlearnedEntries.length - 1;
-    }
+    _shuffleIndices();
     _isFlipped = false;
+  }
+
+  void _shuffleIndices() {
+    _shuffledIndices = List.generate(_unlearnedEntries.length, (i) => i);
+    _shuffledIndices.shuffle(_random);
+    _shufflePosition = 0;
+    if (_shuffledIndices.isNotEmpty) {
+      _currentIndex = _shuffledIndices[0];
+    }
   }
 
   void _onRemember() {
@@ -78,10 +88,11 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
   void _nextCard() {
     setState(() {
       _isFlipped = false;
-      if (_currentIndex < _unlearnedEntries.length - 1) {
-        _currentIndex++;
+      _shufflePosition++;
+      if (_shufflePosition >= _shuffledIndices.length) {
+        _shuffleIndices();
       } else {
-        _currentIndex = 0;
+        _currentIndex = _shuffledIndices[_shufflePosition];
       }
     });
   }

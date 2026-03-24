@@ -7,16 +7,20 @@ class TranslationCard extends StatelessWidget {
   final TranslationResult? result;
   final bool isLoading;
   final bool isWord;
+  final bool isInDictionary;
   final VoidCallback? onDismiss;
   final VoidCallback? onSaveToVocabulary;
+  final VoidCallback? onRemoveFromVocabulary;
 
   const TranslationCard({
     super.key,
     this.result,
     this.isLoading = false,
     this.isWord = true,
+    this.isInDictionary = false,
     this.onDismiss,
     this.onSaveToVocabulary,
+    this.onRemoveFromVocabulary,
   });
 
   @override
@@ -131,19 +135,24 @@ class TranslationCard extends StatelessWidget {
                   ),
                 ),
         ),
-        if (isWord && onSaveToVocabulary != null) ...[
+        if (isWord) ...[
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
             child: TextButton.icon(
-              onPressed: onSaveToVocabulary,
-              icon: Icon(Icons.bookmark_add_outlined, color: colors.primary),
+              onPressed: isInDictionary ? onRemoveFromVocabulary : onSaveToVocabulary,
+              icon: Icon(
+                isInDictionary ? Icons.bookmark_remove_outlined : Icons.bookmark_add_outlined,
+                color: isInDictionary ? colors.error : colors.primary,
+              ),
               label: Text(
-                appLocale.saveToVocabulary,
-                style: TextStyle(color: colors.primary),
+                isInDictionary ? appLocale.removeFromVocabulary : appLocale.saveToVocabulary,
+                style: TextStyle(color: isInDictionary ? colors.error : colors.primary),
               ),
               style: TextButton.styleFrom(
-                backgroundColor: colors.primary.withValues(alpha: 0.1),
+                backgroundColor: isInDictionary 
+                    ? colors.error.withValues(alpha: 0.1) 
+                    : colors.primary.withValues(alpha: 0.1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

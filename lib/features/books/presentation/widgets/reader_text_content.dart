@@ -80,22 +80,24 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
       },
       child: Stack(
         children: [
-          // BlocBuilder rebuilds only ListView when chapter translations change
-          BlocBuilder<ChapterTranslationBloc, ChapterTranslationState>(
-            buildWhen: (previous, current) {
-              // Only rebuild when translations actually change
-              return current is ChapterTranslationPartial || 
-                     current is ChapterTranslationLoaded;
-            },
-            builder: (context, chapterState) {
-              return ListView.builder(
-                controller: widget.scrollController,
-                padding: const EdgeInsets.only(bottom: 120),
-                itemCount: _paragraphs.length,
-                cacheExtent: 500,
-                addAutomaticKeepAlives: false,
-                addRepaintBoundaries: true,
-                itemBuilder: (context, index) => _buildParagraphItem(index),
+          BlocBuilder<DictionaryBloc, DictionaryState>(
+            builder: (context, dictState) {
+              return BlocBuilder<ChapterTranslationBloc, ChapterTranslationState>(
+                buildWhen: (previous, current) {
+                  return current is ChapterTranslationPartial || 
+                         current is ChapterTranslationLoaded;
+                },
+                builder: (context, chapterState) {
+                  return ListView.builder(
+                    controller: widget.scrollController,
+                    padding: const EdgeInsets.only(bottom: 120),
+                    itemCount: _paragraphs.length,
+                    cacheExtent: 500,
+                    addAutomaticKeepAlives: false,
+                    addRepaintBoundaries: true,
+                    itemBuilder: (context, index) => _buildParagraphItem(index),
+                  );
+                },
               );
             },
           ),
@@ -116,13 +118,17 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
     final blocCachedTranslations = bloc.cachedTranslations;
     final failedIndices = bloc.failedIndices;
     
-    // Check if paragraph has cached translation (from bloc or local state)
     final hasCachedTranslation = _translatedParagraphs.containsKey(index) || 
         (blocCachedTranslations?.containsKey(index) ?? false);
-    // Pending = translation mode active but this paragraph not yet translated and not failed
     final isTranslationModeActive = bloc.isTranslationAvailable;
     final isPending = isTranslationModeActive && !hasCachedTranslation && !failedIndices.contains(index);
     final isFailed = failedIndices.contains(index);
+    
+    final dictState = context.read<DictionaryBloc>().state;
+    final dictionaryWords = dictState.maybeWhen(
+      loaded: (entries, _) => entries.map((e) => e.word.toLowerCase()).toSet(),
+      orElse: () => <String>{},
+    );
     
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -137,11 +143,14 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
         onRetryTranslation: isFailed ? () => _onRetryParagraph(index) : null,
         onSwipeLeft: () => _onParagraphSwipeLeft(index, paragraph),
         onSwipeRight: () => _onParagraphSwipeRight(index),
+        textStyle: widget.textStyle,
         child: TappableText(
           text: paragraph,
           style: widget.textStyle,
           onWordTap: _onWordTap,
           onTextSelected: _onTextSelected,
+          dictionaryWords: dictionaryWords,
+          dictionaryWordColor: context.colors.success,
         ),
       ),
     );
@@ -195,25 +204,39 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
   }
 
   Widget _buildTranslationOverlay() {
-    return BlocBuilder<ReaderTranslationBloc, ReaderTranslationState>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          translating: (text, isWord) => TranslationCard(
-            isLoading: true,
-            isWord: isWord,
-          ),
-          translated: (result, isWord) => TranslationCard(
-            result: result,
-            isWord: isWord,
-            onDismiss: () {
-              context.read<ReaderTranslationBloc>().add(
-                const ReaderTranslationEvent.dismissed(),
-              );
-            },
-            onSaveToVocabulary: isWord ? () => _saveToVocabulary(context, result) : null,
-          ),
-          error: (message, errorType) => _buildErrorCard(context, message, errorType),
-          orElse: () => const SizedBox.shrink(),
+    return BlocBuilder<DictionaryBloc, DictionaryState>(
+      builder: (context, dictState) {
+        final dictionaryWords = dictState.maybeWhen(
+          loaded: (entries, _) => entries.map((e) => e.word.toLowerCase()).toSet(),
+          orElse: () => <String>{},
+        );
+        
+        return BlocBuilder<ReaderTranslationBloc, ReaderTranslationState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              translating: (text, isWord) => TranslationCard(
+                isLoading: true,
+                isWord: isWord,
+              ),
+              translated: (result, isWord) {
+                final isInDictionary = dictionaryWords.contains(result.originalText.toLowerCase());
+                return TranslationCard(
+                  result: result,
+                  isWord: isWord,
+                  isInDictionary: isInDictionary,
+                  onDismiss: () {
+                    context.read<ReaderTranslationBloc>().add(
+                      const ReaderTranslationEvent.dismissed(),
+                    );
+                  },
+                  onSaveToVocabulary: isWord ? () => _saveToVocabulary(context, result) : null,
+                  onRemoveFromVocabulary: isWord ? () => _removeFromVocabulary(context, result) : null,
+                );
+              },
+              error: (message, errorType) => _buildErrorCard(context, message, errorType),
+              orElse: () => const SizedBox.shrink(),
+            );
+          },
         );
       },
     );
@@ -238,6 +261,34 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(appLocale.wordSaved),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+
+    context.read<ReaderTranslationBloc>().add(
+      const ReaderTranslationEvent.dismissed(),
+    );
+  }
+
+  void _removeFromVocabulary(BuildContext context, TranslationResult result) {
+    final appLocale = AppLocalizations.of(context)!;
+    final dictState = context.read<DictionaryBloc>().state;
+    
+    dictState.maybeWhen(
+      loaded: (entries, _) {
+        final entry = entries.firstWhere(
+          (e) => e.word.toLowerCase() == result.originalText.toLowerCase(),
+          orElse: () => entries.first,
+        );
+        context.read<DictionaryBloc>().add(DictionaryEvent.deleteRequested(entry.id));
+      },
+      orElse: () {},
+    );
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(appLocale.wordRemoved),
         duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
       ),

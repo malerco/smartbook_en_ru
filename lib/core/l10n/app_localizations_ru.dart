@@ -414,4 +414,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get resetProgressConfirm => 'Сбросить прогресс изучения всех слов?';
+
+  @override
+  String get removeFromVocabulary => 'Убрать из словаря';
+
+  @override
+  String get wordRemoved => 'Слово удалено из словаря';
 }

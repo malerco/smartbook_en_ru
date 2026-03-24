@@ -7,6 +7,8 @@ class TappableText extends StatefulWidget {
   final Function(String word) onWordTap;
   final Function(String text) onTextSelected;
   final bool enableSelection;
+  final Set<String> dictionaryWords;
+  final Color? dictionaryWordColor;
 
   const TappableText({
     super.key,
@@ -15,6 +17,8 @@ class TappableText extends StatefulWidget {
     required this.onWordTap,
     required this.onTextSelected,
     this.enableSelection = true,
+    this.dictionaryWords = const {},
+    this.dictionaryWordColor,
   });
 
   @override
@@ -29,6 +33,8 @@ class _TappableTextState extends State<TappableText> {
   TextSpan? _cachedTextSpan;
   String? _cachedText;
   TextStyle? _cachedStyle;
+  Set<String>? _cachedDictionaryWords;
+  Color? _cachedDictionaryColor;
 
   @override
   void dispose() {
@@ -87,9 +93,9 @@ class _TappableTextState extends State<TappableText> {
 
     return GestureDetector(
       onLongPress: () {
-        setState(() {
-          _isSelectionMode = true;
-        });
+        // setState(() {
+        //   _isSelectionMode = true;
+        // });
       },
       child: RepaintBoundary(
         child: RichText(
@@ -102,7 +108,9 @@ class _TappableTextState extends State<TappableText> {
   TextSpan _getTextSpan() {
     if (_cachedTextSpan != null && 
         _cachedText == widget.text && 
-        _cachedStyle == widget.style) {
+        _cachedStyle == widget.style &&
+        _cachedDictionaryWords == widget.dictionaryWords &&
+        _cachedDictionaryColor == widget.dictionaryWordColor) {
       return _cachedTextSpan!;
     }
     
@@ -117,6 +125,7 @@ class _TappableTextState extends State<TappableText> {
       final word = match.group(1) ?? '';
       final whitespace = match.group(2) ?? '';
       final cleanWord = _cleanWord(word);
+      final isInDictionary = widget.dictionaryWords.contains(cleanWord.toLowerCase());
 
       final recognizer = TapGestureRecognizer()
         ..onTap = () {
@@ -128,7 +137,11 @@ class _TappableTextState extends State<TappableText> {
 
       spans.add(TextSpan(
         text: word,
-        style: widget.style,
+        style: widget.style.copyWith(
+          color: isInDictionary ? widget.dictionaryWordColor : null,
+          decoration: isInDictionary ? TextDecoration.underline : null,
+          decorationColor: isInDictionary ? widget.dictionaryWordColor : null,
+        ),
         recognizer: recognizer,
       ));
 
@@ -142,6 +155,8 @@ class _TappableTextState extends State<TappableText> {
 
     _cachedText = widget.text;
     _cachedStyle = widget.style;
+    _cachedDictionaryWords = widget.dictionaryWords;
+    _cachedDictionaryColor = widget.dictionaryWordColor;
     _cachedTextSpan = TextSpan(children: spans);
     
     return _cachedTextSpan!;

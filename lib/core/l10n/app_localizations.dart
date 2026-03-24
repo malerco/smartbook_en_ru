@@ -889,6 +889,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset learning progress for all words?'**
   String get resetProgressConfirm;
+
+  /// No description provided for @removeFromVocabulary.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from dictionary'**
+  String get removeFromVocabulary;
+
+  /// No description provided for @wordRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Word removed from dictionary'**
+  String get wordRemoved;
 }
 
 class _AppLocalizationsDelegate

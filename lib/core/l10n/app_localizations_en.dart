@@ -413,4 +413,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetProgressConfirm => 'Reset learning progress for all words?';
+
+  @override
+  String get removeFromVocabulary => 'Remove from dictionary';
+
+  @override
+  String get wordRemoved => 'Word removed from dictionary';
 }

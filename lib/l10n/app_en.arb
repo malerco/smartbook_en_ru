@@ -141,5 +141,7 @@
   "allWordsLearned": "All words learned!",
   "resetProgressHint": "Reset progress to practice again",
   "resetProgress": "Reset Progress",
-  "resetProgressConfirm": "Reset learning progress for all words?"
+  "resetProgressConfirm": "Reset learning progress for all words?",
+  "removeFromVocabulary": "Remove from dictionary",
+  "wordRemoved": "Word removed from dictionary"
 }
