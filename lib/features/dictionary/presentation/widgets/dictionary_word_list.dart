@@ -99,13 +99,12 @@ class _WordListItem extends StatelessWidget {
         color: entry.isLearned 
             ? colors.success.withOpacity(0.1) 
             : Colors.transparent,
-        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
           if (entry.isLearned)
             Padding(
-              padding: const EdgeInsets.only(right: 8, left: 4),
+              padding: const EdgeInsets.only( left: 4),
               child: Icon(
                 Icons.check_circle,
                 color: colors.success,
@@ -114,12 +113,15 @@ class _WordListItem extends StatelessWidget {
             ),
           Expanded(
             flex: 3,
-            child: Text(
-              entry.word,
-              style: TextStyle(
-                color: colors.textPrimary,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                entry.word,
+                style: TextStyle(
+                  color: colors.textPrimary,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -146,32 +148,37 @@ class _WordListItem extends StatelessWidget {
               textAlign: TextAlign.right,
             ),
           ),
-          PopupMenuButton<String>(
-            icon: Icon(
-              Icons.more_vert,
-              color: colors.textSecondary,
-              size: 20,
-            ),
-            onSelected: (value) {
-              if (value == 'delete') {
-                onDelete();
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'delete',
-                child: Row(
-                  children: [
-                    Icon(Icons.delete_outline, color: colors.error, size: 20),
-                    const SizedBox(width: 8),
-                    Text(
-                      appLocale.deleteWord,
-                      style: TextStyle(color: colors.error),
-                    ),
-                  ],
-                ),
+          SizedBox(
+            width: 20,
+            child: PopupMenuButton<String>(
+              padding: EdgeInsetsGeometry.only(right: 4),
+              constraints: const BoxConstraints(),
+              icon: Icon(
+                Icons.more_vert,
+                color: colors.textSecondary,
+                size: 20,
               ),
-            ],
+              onSelected: (value) {
+                if (value == 'delete') {
+                  onDelete();
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete_outline, color: colors.error, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        appLocale.deleteWord,
+                        style: TextStyle(color: colors.error),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

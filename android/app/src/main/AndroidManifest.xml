@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="smartbook_en_ru"
+        android:label="SmartBook"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

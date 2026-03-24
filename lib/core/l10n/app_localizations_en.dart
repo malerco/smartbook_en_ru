@@ -419,4 +419,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wordRemoved => 'Word removed from dictionary';
+
+  @override
+  String get wordsToLearn => 'left to learn';
 }

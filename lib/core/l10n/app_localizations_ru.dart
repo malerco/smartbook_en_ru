@@ -420,4 +420,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get wordRemoved => 'Слово удалено из словаря';
+
+  @override
+  String get wordsToLearn => 'осталось выучить';
 }

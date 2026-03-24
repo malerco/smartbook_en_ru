@@ -901,6 +901,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Word removed from dictionary'**
   String get wordRemoved;
+
+  /// No description provided for @wordsToLearn.
+  ///
+  /// In en, this message translates to:
+  /// **'left to learn'**
+  String get wordsToLearn;
 }
 
 class _AppLocalizationsDelegate

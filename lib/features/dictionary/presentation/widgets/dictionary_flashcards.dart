@@ -19,46 +19,75 @@ class DictionaryFlashcards extends StatefulWidget {
 }
 
 class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
-  int _currentIndex = 0;
   bool _isFlipped = false;
   List<DictionaryEntry> _unlearnedEntries = [];
-  List<int> _shuffledIndices = [];
-  int _shufflePosition = 0;
+  String? _currentWordId;
+  String? _lastShownWordId;
   final Random _random = Random();
 
   @override
   void initState() {
     super.initState();
-    _filterUnlearnedEntries();
+    _updateUnlearnedEntries();
+    _pickRandomCard(excludeId: null);
   }
 
   @override
   void didUpdateWidget(DictionaryFlashcards oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.entries != widget.entries) {
-      _filterUnlearnedEntries();
+      _updateUnlearnedEntries();
     }
   }
 
-  void _filterUnlearnedEntries() {
+  void _updateUnlearnedEntries() {
     _unlearnedEntries = widget.entries.where((e) => !e.isLearned).toList();
-    _shuffleIndices();
+    // If current word was removed or learned, pick a new one
+    if (_currentWordId != null && !_unlearnedEntries.any((e) => e.id == _currentWordId)) {
+      _pickRandomCard(excludeId: _lastShownWordId);
+    }
+  }
+
+  void _pickRandomCard({String? excludeId}) {
+    if (_unlearnedEntries.isEmpty) {
+      _currentWordId = null;
+      return;
+    }
+    
+    if (_unlearnedEntries.length == 1) {
+      _currentWordId = _unlearnedEntries[0].id;
+      _lastShownWordId = _currentWordId;
+      _isFlipped = false;
+      return;
+    }
+    
+    // Pick random card, excluding the specified one
+    final availableEntries = excludeId != null 
+        ? _unlearnedEntries.where((e) => e.id != excludeId).toList()
+        : _unlearnedEntries;
+    
+    if (availableEntries.isEmpty) {
+      _currentWordId = _unlearnedEntries[_random.nextInt(_unlearnedEntries.length)].id;
+    } else {
+      _currentWordId = availableEntries[_random.nextInt(availableEntries.length)].id;
+    }
+    _lastShownWordId = _currentWordId;
     _isFlipped = false;
   }
 
-  void _shuffleIndices() {
-    _shuffledIndices = List.generate(_unlearnedEntries.length, (i) => i);
-    _shuffledIndices.shuffle(_random);
-    _shufflePosition = 0;
-    if (_shuffledIndices.isNotEmpty) {
-      _currentIndex = _shuffledIndices[0];
+  DictionaryEntry? get _currentEntry {
+    if (_currentWordId == null) return null;
+    try {
+      return _unlearnedEntries.firstWhere((e) => e.id == _currentWordId);
+    } catch (_) {
+      return _unlearnedEntries.isNotEmpty ? _unlearnedEntries.first : null;
     }
   }
 
   void _onRemember() {
-    if (_unlearnedEntries.isEmpty) return;
+    final entry = _currentEntry;
+    if (entry == null) return;
     
-    final entry = _unlearnedEntries[_currentIndex];
     final newCount = entry.rememberCount + 1;
     final isLearned = newCount >= 3;
     
@@ -73,9 +102,9 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
   }
 
   void _onDontRemember() {
-    if (_unlearnedEntries.isEmpty) return;
+    final entry = _currentEntry;
+    if (entry == null) return;
     
-    final entry = _unlearnedEntries[_currentIndex];
     final updatedEntry = entry.copyWith(
       rememberCount: 0,
       lastReviewedAt: DateTime.now(),
@@ -87,13 +116,7 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
 
   void _nextCard() {
     setState(() {
-      _isFlipped = false;
-      _shufflePosition++;
-      if (_shufflePosition >= _shuffledIndices.length) {
-        _shuffleIndices();
-      } else {
-        _currentIndex = _shuffledIndices[_shufflePosition];
-      }
+      _pickRandomCard(excludeId: _currentWordId);
     });
   }
 
@@ -135,7 +158,8 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
       );
     }
 
-    final entry = _unlearnedEntries[_currentIndex];
+    final entry = _currentEntry;
+    if (entry == null) return const SizedBox.shrink();
 
     return Column(
       children: [
@@ -145,7 +169,7 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${_currentIndex + 1} / ${_unlearnedEntries.length}',
+                '${appLocale.wordsToLearn}: ${_unlearnedEntries.length}',
                 style: TextStyle(
                   color: colors.textSecondary,
                   fontSize: 14,

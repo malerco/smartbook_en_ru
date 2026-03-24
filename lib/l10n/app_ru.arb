@@ -143,5 +143,6 @@
   "resetProgress": "Сбросить прогресс",
   "resetProgressConfirm": "Сбросить прогресс изучения всех слов?",
   "removeFromVocabulary": "Убрать из словаря",
-  "wordRemoved": "Слово удалено из словаря"
+  "wordRemoved": "Слово удалено из словаря",
+  "wordsToLearn": "осталось выучить"
 }
