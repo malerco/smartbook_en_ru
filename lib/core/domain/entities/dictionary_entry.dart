@@ -10,6 +10,9 @@ class DictionaryEntry extends Equatable {
   final String targetLanguage;
   final DateTime addedAt;
   final String? bookId;
+  final int rememberCount;
+  final bool isLearned;
+  final DateTime? lastReviewedAt;
 
   const DictionaryEntry({
     required this.id,
@@ -21,6 +24,9 @@ class DictionaryEntry extends Equatable {
     required this.targetLanguage,
     required this.addedAt,
     this.bookId,
+    this.rememberCount = 0,
+    this.isLearned = false,
+    this.lastReviewedAt,
   });
 
   DictionaryEntry copyWith({
@@ -33,6 +39,9 @@ class DictionaryEntry extends Equatable {
     String? targetLanguage,
     DateTime? addedAt,
     String? bookId,
+    int? rememberCount,
+    bool? isLearned,
+    DateTime? lastReviewedAt,
   }) {
     return DictionaryEntry(
       id: id ?? this.id,
@@ -44,6 +53,9 @@ class DictionaryEntry extends Equatable {
       targetLanguage: targetLanguage ?? this.targetLanguage,
       addedAt: addedAt ?? this.addedAt,
       bookId: bookId ?? this.bookId,
+      rememberCount: rememberCount ?? this.rememberCount,
+      isLearned: isLearned ?? this.isLearned,
+      lastReviewedAt: lastReviewedAt ?? this.lastReviewedAt,
     );
   }
 
@@ -58,6 +70,9 @@ class DictionaryEntry extends Equatable {
       'targetLanguage': targetLanguage,
       'addedAt': addedAt.toIso8601String(),
       'bookId': bookId,
+      'rememberCount': rememberCount,
+      'isLearned': isLearned,
+      'lastReviewedAt': lastReviewedAt?.toIso8601String(),
     };
   }
 
@@ -72,6 +87,11 @@ class DictionaryEntry extends Equatable {
       targetLanguage: json['targetLanguage'] as String,
       addedAt: DateTime.parse(json['addedAt'] as String),
       bookId: json['bookId'] as String?,
+      rememberCount: json['rememberCount'] as int? ?? 0,
+      isLearned: json['isLearned'] as bool? ?? false,
+      lastReviewedAt: json['lastReviewedAt'] != null 
+          ? DateTime.parse(json['lastReviewedAt'] as String) 
+          : null,
     );
   }
 
@@ -86,5 +106,8 @@ class DictionaryEntry extends Equatable {
         targetLanguage,
         addedAt,
         bookId,
+        rememberCount,
+        isLearned,
+        lastReviewedAt,
       ];
 }

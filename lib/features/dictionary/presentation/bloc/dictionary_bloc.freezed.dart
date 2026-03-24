@@ -21,50 +21,65 @@ mixin _$DictionaryEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
     required TResult Function(String entryId) deleteRequested,
     required TResult Function(String query) searchRequested,
     required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
     TResult? Function(String entryId)? deleteRequested,
     TResult? Function(String query)? searchRequested,
     TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
     TResult Function(String entryId)? deleteRequested,
     TResult Function(String query)? searchRequested,
     TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(DictionaryLoadRequested value) loadRequested,
     required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
     required TResult Function(DictionaryDeleteRequested value) deleteRequested,
     required TResult Function(DictionarySearchRequested value) searchRequested,
     required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DictionaryLoadRequested value)? loadRequested,
     TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
     TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult? Function(DictionarySearchRequested value)? searchRequested,
     TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DictionaryLoadRequested value)? loadRequested,
     TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
     TResult Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult Function(DictionarySearchRequested value)? searchRequested,
     TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -137,9 +152,11 @@ class _$DictionaryLoadRequestedImpl implements DictionaryLoadRequested {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
     required TResult Function(String entryId) deleteRequested,
     required TResult Function(String query) searchRequested,
     required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
   }) {
     return loadRequested();
   }
@@ -149,9 +166,11 @@ class _$DictionaryLoadRequestedImpl implements DictionaryLoadRequested {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
     TResult? Function(String entryId)? deleteRequested,
     TResult? Function(String query)? searchRequested,
     TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
   }) {
     return loadRequested?.call();
   }
@@ -161,9 +180,11 @@ class _$DictionaryLoadRequestedImpl implements DictionaryLoadRequested {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
     TResult Function(String entryId)? deleteRequested,
     TResult Function(String query)? searchRequested,
     TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
     required TResult orElse(),
   }) {
     if (loadRequested != null) {
@@ -177,9 +198,12 @@ class _$DictionaryLoadRequestedImpl implements DictionaryLoadRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(DictionaryLoadRequested value) loadRequested,
     required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
     required TResult Function(DictionaryDeleteRequested value) deleteRequested,
     required TResult Function(DictionarySearchRequested value) searchRequested,
     required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
   }) {
     return loadRequested(this);
   }
@@ -189,9 +213,12 @@ class _$DictionaryLoadRequestedImpl implements DictionaryLoadRequested {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DictionaryLoadRequested value)? loadRequested,
     TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
     TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult? Function(DictionarySearchRequested value)? searchRequested,
     TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
   }) {
     return loadRequested?.call(this);
   }
@@ -201,9 +228,12 @@ class _$DictionaryLoadRequestedImpl implements DictionaryLoadRequested {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DictionaryLoadRequested value)? loadRequested,
     TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
     TResult Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult Function(DictionarySearchRequested value)? searchRequested,
     TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
     required TResult orElse(),
   }) {
     if (loadRequested != null) {
@@ -293,9 +323,11 @@ class _$DictionaryAddRequestedImpl implements DictionaryAddRequested {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
     required TResult Function(String entryId) deleteRequested,
     required TResult Function(String query) searchRequested,
     required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
   }) {
     return addRequested(entry);
   }
@@ -305,9 +337,11 @@ class _$DictionaryAddRequestedImpl implements DictionaryAddRequested {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
     TResult? Function(String entryId)? deleteRequested,
     TResult? Function(String query)? searchRequested,
     TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
   }) {
     return addRequested?.call(entry);
   }
@@ -317,9 +351,11 @@ class _$DictionaryAddRequestedImpl implements DictionaryAddRequested {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
     TResult Function(String entryId)? deleteRequested,
     TResult Function(String query)? searchRequested,
     TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
     required TResult orElse(),
   }) {
     if (addRequested != null) {
@@ -333,9 +369,12 @@ class _$DictionaryAddRequestedImpl implements DictionaryAddRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(DictionaryLoadRequested value) loadRequested,
     required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
     required TResult Function(DictionaryDeleteRequested value) deleteRequested,
     required TResult Function(DictionarySearchRequested value) searchRequested,
     required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
   }) {
     return addRequested(this);
   }
@@ -345,9 +384,12 @@ class _$DictionaryAddRequestedImpl implements DictionaryAddRequested {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DictionaryLoadRequested value)? loadRequested,
     TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
     TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult? Function(DictionarySearchRequested value)? searchRequested,
     TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
   }) {
     return addRequested?.call(this);
   }
@@ -357,9 +399,12 @@ class _$DictionaryAddRequestedImpl implements DictionaryAddRequested {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DictionaryLoadRequested value)? loadRequested,
     TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
     TResult Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult Function(DictionarySearchRequested value)? searchRequested,
     TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
     required TResult orElse(),
   }) {
     if (addRequested != null) {
@@ -379,6 +424,185 @@ abstract class DictionaryAddRequested implements DictionaryEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DictionaryAddRequestedImplCopyWith<_$DictionaryAddRequestedImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DictionaryUpdateRequestedImplCopyWith<$Res> {
+  factory _$$DictionaryUpdateRequestedImplCopyWith(
+    _$DictionaryUpdateRequestedImpl value,
+    $Res Function(_$DictionaryUpdateRequestedImpl) then,
+  ) = __$$DictionaryUpdateRequestedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({DictionaryEntry entry});
+}
+
+/// @nodoc
+class __$$DictionaryUpdateRequestedImplCopyWithImpl<$Res>
+    extends _$DictionaryEventCopyWithImpl<$Res, _$DictionaryUpdateRequestedImpl>
+    implements _$$DictionaryUpdateRequestedImplCopyWith<$Res> {
+  __$$DictionaryUpdateRequestedImplCopyWithImpl(
+    _$DictionaryUpdateRequestedImpl _value,
+    $Res Function(_$DictionaryUpdateRequestedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DictionaryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? entry = null}) {
+    return _then(
+      _$DictionaryUpdateRequestedImpl(
+        null == entry
+            ? _value.entry
+            : entry // ignore: cast_nullable_to_non_nullable
+                  as DictionaryEntry,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$DictionaryUpdateRequestedImpl implements DictionaryUpdateRequested {
+  const _$DictionaryUpdateRequestedImpl(this.entry);
+
+  @override
+  final DictionaryEntry entry;
+
+  @override
+  String toString() {
+    return 'DictionaryEvent.updateRequested(entry: $entry)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DictionaryUpdateRequestedImpl &&
+            (identical(other.entry, entry) || other.entry == entry));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, entry);
+
+  /// Create a copy of DictionaryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DictionaryUpdateRequestedImplCopyWith<_$DictionaryUpdateRequestedImpl>
+  get copyWith =>
+      __$$DictionaryUpdateRequestedImplCopyWithImpl<
+        _$DictionaryUpdateRequestedImpl
+      >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadRequested,
+    required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
+    required TResult Function(String entryId) deleteRequested,
+    required TResult Function(String query) searchRequested,
+    required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
+  }) {
+    return updateRequested(entry);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadRequested,
+    TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
+    TResult? Function(String entryId)? deleteRequested,
+    TResult? Function(String query)? searchRequested,
+    TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
+  }) {
+    return updateRequested?.call(entry);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadRequested,
+    TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
+    TResult Function(String entryId)? deleteRequested,
+    TResult Function(String query)? searchRequested,
+    TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
+    required TResult orElse(),
+  }) {
+    if (updateRequested != null) {
+      return updateRequested(entry);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DictionaryLoadRequested value) loadRequested,
+    required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
+    required TResult Function(DictionaryDeleteRequested value) deleteRequested,
+    required TResult Function(DictionarySearchRequested value) searchRequested,
+    required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
+  }) {
+    return updateRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DictionaryLoadRequested value)? loadRequested,
+    TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
+    TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
+    TResult? Function(DictionarySearchRequested value)? searchRequested,
+    TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
+  }) {
+    return updateRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DictionaryLoadRequested value)? loadRequested,
+    TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
+    TResult Function(DictionaryDeleteRequested value)? deleteRequested,
+    TResult Function(DictionarySearchRequested value)? searchRequested,
+    TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
+    required TResult orElse(),
+  }) {
+    if (updateRequested != null) {
+      return updateRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DictionaryUpdateRequested implements DictionaryEvent {
+  const factory DictionaryUpdateRequested(final DictionaryEntry entry) =
+      _$DictionaryUpdateRequestedImpl;
+
+  DictionaryEntry get entry;
+
+  /// Create a copy of DictionaryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DictionaryUpdateRequestedImplCopyWith<_$DictionaryUpdateRequestedImpl>
   get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -457,9 +681,11 @@ class _$DictionaryDeleteRequestedImpl implements DictionaryDeleteRequested {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
     required TResult Function(String entryId) deleteRequested,
     required TResult Function(String query) searchRequested,
     required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
   }) {
     return deleteRequested(entryId);
   }
@@ -469,9 +695,11 @@ class _$DictionaryDeleteRequestedImpl implements DictionaryDeleteRequested {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
     TResult? Function(String entryId)? deleteRequested,
     TResult? Function(String query)? searchRequested,
     TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
   }) {
     return deleteRequested?.call(entryId);
   }
@@ -481,9 +709,11 @@ class _$DictionaryDeleteRequestedImpl implements DictionaryDeleteRequested {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
     TResult Function(String entryId)? deleteRequested,
     TResult Function(String query)? searchRequested,
     TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
     required TResult orElse(),
   }) {
     if (deleteRequested != null) {
@@ -497,9 +727,12 @@ class _$DictionaryDeleteRequestedImpl implements DictionaryDeleteRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(DictionaryLoadRequested value) loadRequested,
     required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
     required TResult Function(DictionaryDeleteRequested value) deleteRequested,
     required TResult Function(DictionarySearchRequested value) searchRequested,
     required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
   }) {
     return deleteRequested(this);
   }
@@ -509,9 +742,12 @@ class _$DictionaryDeleteRequestedImpl implements DictionaryDeleteRequested {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DictionaryLoadRequested value)? loadRequested,
     TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
     TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult? Function(DictionarySearchRequested value)? searchRequested,
     TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
   }) {
     return deleteRequested?.call(this);
   }
@@ -521,9 +757,12 @@ class _$DictionaryDeleteRequestedImpl implements DictionaryDeleteRequested {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DictionaryLoadRequested value)? loadRequested,
     TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
     TResult Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult Function(DictionarySearchRequested value)? searchRequested,
     TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
     required TResult orElse(),
   }) {
     if (deleteRequested != null) {
@@ -621,9 +860,11 @@ class _$DictionarySearchRequestedImpl implements DictionarySearchRequested {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
     required TResult Function(String entryId) deleteRequested,
     required TResult Function(String query) searchRequested,
     required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
   }) {
     return searchRequested(query);
   }
@@ -633,9 +874,11 @@ class _$DictionarySearchRequestedImpl implements DictionarySearchRequested {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
     TResult? Function(String entryId)? deleteRequested,
     TResult? Function(String query)? searchRequested,
     TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
   }) {
     return searchRequested?.call(query);
   }
@@ -645,9 +888,11 @@ class _$DictionarySearchRequestedImpl implements DictionarySearchRequested {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
     TResult Function(String entryId)? deleteRequested,
     TResult Function(String query)? searchRequested,
     TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
     required TResult orElse(),
   }) {
     if (searchRequested != null) {
@@ -661,9 +906,12 @@ class _$DictionarySearchRequestedImpl implements DictionarySearchRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(DictionaryLoadRequested value) loadRequested,
     required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
     required TResult Function(DictionaryDeleteRequested value) deleteRequested,
     required TResult Function(DictionarySearchRequested value) searchRequested,
     required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
   }) {
     return searchRequested(this);
   }
@@ -673,9 +921,12 @@ class _$DictionarySearchRequestedImpl implements DictionarySearchRequested {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DictionaryLoadRequested value)? loadRequested,
     TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
     TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult? Function(DictionarySearchRequested value)? searchRequested,
     TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
   }) {
     return searchRequested?.call(this);
   }
@@ -685,9 +936,12 @@ class _$DictionarySearchRequestedImpl implements DictionarySearchRequested {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DictionaryLoadRequested value)? loadRequested,
     TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
     TResult Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult Function(DictionarySearchRequested value)? searchRequested,
     TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
     required TResult orElse(),
   }) {
     if (searchRequested != null) {
@@ -756,9 +1010,11 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
     required TResult Function(String entryId) deleteRequested,
     required TResult Function(String query) searchRequested,
     required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
   }) {
     return clearRequested();
   }
@@ -768,9 +1024,11 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
     TResult? Function(String entryId)? deleteRequested,
     TResult? Function(String query)? searchRequested,
     TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
   }) {
     return clearRequested?.call();
   }
@@ -780,9 +1038,11 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
     TResult Function(String entryId)? deleteRequested,
     TResult Function(String query)? searchRequested,
     TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
     required TResult orElse(),
   }) {
     if (clearRequested != null) {
@@ -796,9 +1056,12 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(DictionaryLoadRequested value) loadRequested,
     required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
     required TResult Function(DictionaryDeleteRequested value) deleteRequested,
     required TResult Function(DictionarySearchRequested value) searchRequested,
     required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
   }) {
     return clearRequested(this);
   }
@@ -808,9 +1071,12 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DictionaryLoadRequested value)? loadRequested,
     TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
     TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult? Function(DictionarySearchRequested value)? searchRequested,
     TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
   }) {
     return clearRequested?.call(this);
   }
@@ -820,9 +1086,12 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DictionaryLoadRequested value)? loadRequested,
     TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
     TResult Function(DictionaryDeleteRequested value)? deleteRequested,
     TResult Function(DictionarySearchRequested value)? searchRequested,
     TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
     required TResult orElse(),
   }) {
     if (clearRequested != null) {
@@ -834,6 +1103,153 @@ class _$DictionaryClearRequestedImpl implements DictionaryClearRequested {
 
 abstract class DictionaryClearRequested implements DictionaryEvent {
   const factory DictionaryClearRequested() = _$DictionaryClearRequestedImpl;
+}
+
+/// @nodoc
+abstract class _$$DictionaryResetProgressRequestedImplCopyWith<$Res> {
+  factory _$$DictionaryResetProgressRequestedImplCopyWith(
+    _$DictionaryResetProgressRequestedImpl value,
+    $Res Function(_$DictionaryResetProgressRequestedImpl) then,
+  ) = __$$DictionaryResetProgressRequestedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$DictionaryResetProgressRequestedImplCopyWithImpl<$Res>
+    extends
+        _$DictionaryEventCopyWithImpl<
+          $Res,
+          _$DictionaryResetProgressRequestedImpl
+        >
+    implements _$$DictionaryResetProgressRequestedImplCopyWith<$Res> {
+  __$$DictionaryResetProgressRequestedImplCopyWithImpl(
+    _$DictionaryResetProgressRequestedImpl _value,
+    $Res Function(_$DictionaryResetProgressRequestedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DictionaryEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$DictionaryResetProgressRequestedImpl
+    implements DictionaryResetProgressRequested {
+  const _$DictionaryResetProgressRequestedImpl();
+
+  @override
+  String toString() {
+    return 'DictionaryEvent.resetProgressRequested()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DictionaryResetProgressRequestedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadRequested,
+    required TResult Function(DictionaryEntry entry) addRequested,
+    required TResult Function(DictionaryEntry entry) updateRequested,
+    required TResult Function(String entryId) deleteRequested,
+    required TResult Function(String query) searchRequested,
+    required TResult Function() clearRequested,
+    required TResult Function() resetProgressRequested,
+  }) {
+    return resetProgressRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadRequested,
+    TResult? Function(DictionaryEntry entry)? addRequested,
+    TResult? Function(DictionaryEntry entry)? updateRequested,
+    TResult? Function(String entryId)? deleteRequested,
+    TResult? Function(String query)? searchRequested,
+    TResult? Function()? clearRequested,
+    TResult? Function()? resetProgressRequested,
+  }) {
+    return resetProgressRequested?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadRequested,
+    TResult Function(DictionaryEntry entry)? addRequested,
+    TResult Function(DictionaryEntry entry)? updateRequested,
+    TResult Function(String entryId)? deleteRequested,
+    TResult Function(String query)? searchRequested,
+    TResult Function()? clearRequested,
+    TResult Function()? resetProgressRequested,
+    required TResult orElse(),
+  }) {
+    if (resetProgressRequested != null) {
+      return resetProgressRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DictionaryLoadRequested value) loadRequested,
+    required TResult Function(DictionaryAddRequested value) addRequested,
+    required TResult Function(DictionaryUpdateRequested value) updateRequested,
+    required TResult Function(DictionaryDeleteRequested value) deleteRequested,
+    required TResult Function(DictionarySearchRequested value) searchRequested,
+    required TResult Function(DictionaryClearRequested value) clearRequested,
+    required TResult Function(DictionaryResetProgressRequested value)
+    resetProgressRequested,
+  }) {
+    return resetProgressRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DictionaryLoadRequested value)? loadRequested,
+    TResult? Function(DictionaryAddRequested value)? addRequested,
+    TResult? Function(DictionaryUpdateRequested value)? updateRequested,
+    TResult? Function(DictionaryDeleteRequested value)? deleteRequested,
+    TResult? Function(DictionarySearchRequested value)? searchRequested,
+    TResult? Function(DictionaryClearRequested value)? clearRequested,
+    TResult? Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
+  }) {
+    return resetProgressRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DictionaryLoadRequested value)? loadRequested,
+    TResult Function(DictionaryAddRequested value)? addRequested,
+    TResult Function(DictionaryUpdateRequested value)? updateRequested,
+    TResult Function(DictionaryDeleteRequested value)? deleteRequested,
+    TResult Function(DictionarySearchRequested value)? searchRequested,
+    TResult Function(DictionaryClearRequested value)? clearRequested,
+    TResult Function(DictionaryResetProgressRequested value)?
+    resetProgressRequested,
+    required TResult orElse(),
+  }) {
+    if (resetProgressRequested != null) {
+      return resetProgressRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DictionaryResetProgressRequested implements DictionaryEvent {
+  const factory DictionaryResetProgressRequested() =
+      _$DictionaryResetProgressRequestedImpl;
 }
 
 /// @nodoc

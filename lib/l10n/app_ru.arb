@@ -133,5 +133,13 @@
   "back": "Назад",
   "next": "Далее",
   "skip": "Пропустить",
-  "getStarted": "Начать"
+  "getStarted": "Начать",
+  
+  "remember": "Помню",
+  "dontRemember": "Не помню",
+  "tapToFlip": "Нажмите, чтобы перевернуть",
+  "allWordsLearned": "Все слова выучены!",
+  "resetProgressHint": "Сбросьте прогресс, чтобы начать заново",
+  "resetProgress": "Сбросить прогресс",
+  "resetProgressConfirm": "Сбросить прогресс изучения всех слов?"
 }

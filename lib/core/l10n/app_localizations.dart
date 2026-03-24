@@ -847,6 +847,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
+
+  /// No description provided for @remember.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember'**
+  String get remember;
+
+  /// No description provided for @dontRemember.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t remember'**
+  String get dontRemember;
+
+  /// No description provided for @tapToFlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to flip'**
+  String get tapToFlip;
+
+  /// No description provided for @allWordsLearned.
+  ///
+  /// In en, this message translates to:
+  /// **'All words learned!'**
+  String get allWordsLearned;
+
+  /// No description provided for @resetProgressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset progress to practice again'**
+  String get resetProgressHint;
+
+  /// No description provided for @resetProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Progress'**
+  String get resetProgress;
+
+  /// No description provided for @resetProgressConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset learning progress for all words?'**
+  String get resetProgressConfirm;
 }
 
 class _AppLocalizationsDelegate

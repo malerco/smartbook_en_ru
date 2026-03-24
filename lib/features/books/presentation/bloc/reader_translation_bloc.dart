@@ -132,7 +132,6 @@ class ReaderTranslationBloc extends Bloc<ReaderTranslationEvent, ReaderTranslati
     ReaderTranslationParagraphSwiped event,
     Emitter<ReaderTranslationState> emit,
   ) async {
-    // Check if we have cached translation
     if (_cachedTranslations != null && _cachedTranslations!.containsKey(event.paragraphIndex)) {
       emit(ReaderTranslationState.paragraphTranslated(
         paragraphIndex: event.paragraphIndex,
@@ -140,7 +139,6 @@ class ReaderTranslationBloc extends Bloc<ReaderTranslationEvent, ReaderTranslati
         translatedText: _cachedTranslations![event.paragraphIndex]!,
       ));
     } else {
-      // No cached translation available
       emit(const ReaderTranslationState.error(
         message: 'Translation not available',
         errorType: TranslationErrorType.noInternet,

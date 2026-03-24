@@ -133,5 +133,13 @@
   "back": "Back",
   "next": "Next",
   "skip": "Skip",
-  "getStarted": "Get Started"
+  "getStarted": "Get Started",
+  
+  "remember": "Remember",
+  "dontRemember": "Don't remember",
+  "tapToFlip": "Tap to flip",
+  "allWordsLearned": "All words learned!",
+  "resetProgressHint": "Reset progress to practice again",
+  "resetProgress": "Reset Progress",
+  "resetProgressConfirm": "Reset learning progress for all words?"
 }

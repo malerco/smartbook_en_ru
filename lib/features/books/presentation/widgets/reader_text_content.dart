@@ -226,7 +226,7 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
     final entry = DictionaryEntry(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       word: result.originalText,
-      translation: result.translatedText,
+      translation: result.variants.length > 1 ? result.variants.join(', ') : result.translatedText,
       transcription: result.transcription.isNotEmpty ? result.transcription : null,
       sourceLanguage: isEnToRu ? 'en' : 'ru',
       targetLanguage: isEnToRu ? 'ru' : 'en',

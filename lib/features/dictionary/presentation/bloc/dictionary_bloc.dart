@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/domain/entities/dictionary_entry.dart';
 import '../../domain/usecases/get_dictionary_entries_usecase.dart';
 import '../../domain/usecases/add_dictionary_entry_usecase.dart';
+import '../../domain/usecases/update_dictionary_entry_usecase.dart';
 import '../../domain/usecases/delete_dictionary_entry_usecase.dart';
 import '../../domain/usecases/search_dictionary_usecase.dart';
 import '../../domain/usecases/clear_dictionary_usecase.dart';
@@ -16,6 +17,7 @@ part 'dictionary_state.dart';
 class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
   final GetDictionaryEntriesUseCase _getEntriesUseCase;
   final AddDictionaryEntryUseCase _addEntryUseCase;
+  final UpdateDictionaryEntryUseCase _updateEntryUseCase;
   final DeleteDictionaryEntryUseCase _deleteEntryUseCase;
   final SearchDictionaryUseCase _searchUseCase;
   final ClearDictionaryUseCase _clearUseCase;
@@ -23,15 +25,18 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
   DictionaryBloc(
     this._getEntriesUseCase,
     this._addEntryUseCase,
+    this._updateEntryUseCase,
     this._deleteEntryUseCase,
     this._searchUseCase,
     this._clearUseCase,
   ) : super(const DictionaryState.initial()) {
     on<DictionaryLoadRequested>(_onLoadRequested);
     on<DictionaryAddRequested>(_onAddRequested);
+    on<DictionaryUpdateRequested>(_onUpdateRequested);
     on<DictionaryDeleteRequested>(_onDeleteRequested);
     on<DictionarySearchRequested>(_onSearchRequested);
     on<DictionaryClearRequested>(_onClearRequested);
+    on<DictionaryResetProgressRequested>(_onResetProgressRequested);
   }
 
   Future<void> _onLoadRequested(
@@ -94,6 +99,38 @@ class DictionaryBloc extends Bloc<DictionaryEvent, DictionaryState> {
     try {
       await _clearUseCase();
       emit(const DictionaryState.loaded(entries: []));
+    } catch (e) {
+      emit(DictionaryState.error(message: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateRequested(
+    DictionaryUpdateRequested event,
+    Emitter<DictionaryState> emit,
+  ) async {
+    try {
+      await _updateEntryUseCase(event.entry);
+      add(const DictionaryEvent.loadRequested());
+    } catch (e) {
+      emit(DictionaryState.error(message: e.toString()));
+    }
+  }
+
+  Future<void> _onResetProgressRequested(
+    DictionaryResetProgressRequested event,
+    Emitter<DictionaryState> emit,
+  ) async {
+    try {
+      final entries = _getEntriesUseCase();
+      for (final entry in entries) {
+        final resetEntry = entry.copyWith(
+          rememberCount: 0,
+          isLearned: false,
+          lastReviewedAt: null,
+        );
+        await _updateEntryUseCase(resetEntry);
+      }
+      add(const DictionaryEvent.loadRequested());
     } catch (e) {
       emit(DictionaryState.error(message: e.toString()));
     }

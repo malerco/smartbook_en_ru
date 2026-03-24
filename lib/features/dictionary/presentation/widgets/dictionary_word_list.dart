@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/domain/entities/dictionary_entry.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/theme/theme.dart';
 
 class DictionaryWordList extends StatelessWidget {
@@ -15,6 +16,7 @@ class DictionaryWordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final appLocale = AppLocalizations.of(context)!;
     
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -25,9 +27,52 @@ class DictionaryWordList extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final entry = entries[index];
-        return _WordListItem(
-          entry: entry,
-          onDelete: () => onDelete(entry.id),
+        return Dismissible(
+          key: Key(entry.id),
+          direction: DismissDirection.endToStart,
+          background: Container(
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 20),
+            color: colors.error,
+            child: Icon(
+              Icons.delete_outline,
+              color: colors.white,
+            ),
+          ),
+          confirmDismiss: (direction) async {
+            return await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                backgroundColor: colors.surface,
+                title: Text(
+                  appLocale.deleteWord,
+                  style: TextStyle(color: colors.textPrimary),
+                ),
+                content: Text(
+                  '${appLocale.deleteWord} "${entry.word}"?',
+                  style: TextStyle(color: colors.textSecondary),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: Text(appLocale.cancel),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: Text(
+                      appLocale.confirm,
+                      style: TextStyle(color: colors.error),
+                    ),
+                  ),
+                ],
+              ),
+            ) ?? false;
+          },
+          onDismissed: (_) => onDelete(entry.id),
+          child: _WordListItem(
+            entry: entry,
+            onDelete: () => onDelete(entry.id),
+          ),
         );
       },
     );
@@ -46,50 +91,66 @@ class _WordListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final appLocale = AppLocalizations.of(context)!;
     
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: entry.isLearned 
+            ? colors.success.withOpacity(0.1) 
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Row(
         children: [
+          if (entry.isLearned)
+            Padding(
+              padding: const EdgeInsets.only(right: 8, left: 4),
+              child: Icon(
+                Icons.check_circle,
+                color: colors.success,
+                size: 16,
+              ),
+            ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: entry.word,
-                        style: TextStyle(
-                          color: colors.textPrimary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' — ',
-                        style: TextStyle(
-                          color: colors.textSecondary,
-                          fontSize: 16,
-                        ),
-                      ),
-                      TextSpan(
-                        text: entry.translation,
-                        style: TextStyle(
-                          color: colors.textSecondary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
+            flex: 3,
+            child: Text(
+              entry.word,
+              style: TextStyle(
+                color: colors.textPrimary,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          if (entry.transcription != null && entry.transcription!.isNotEmpty)
+            Expanded(
+              flex: 2,
+              child: Text(
+                entry.transcription!,
+                style: TextStyle(
+                  color: colors.textHint,
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
                 ),
-              ],
+              ),
+            ),
+          Expanded(
+            flex: 3,
+            child: Text(
+              entry.translation,
+              style: TextStyle(
+                color: colors.textSecondary,
+                fontSize: 14,
+              ),
+              textAlign: TextAlign.right,
             ),
           ),
           PopupMenuButton<String>(
             icon: Icon(
-              Icons.keyboard_arrow_down,
+              Icons.more_vert,
               color: colors.textSecondary,
+              size: 20,
             ),
             onSelected: (value) {
               if (value == 'delete') {
@@ -104,7 +165,7 @@ class _WordListItem extends StatelessWidget {
                     Icon(Icons.delete_outline, color: colors.error, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Delete',
+                      appLocale.deleteWord,
                       style: TextStyle(color: colors.error),
                     ),
                   ],

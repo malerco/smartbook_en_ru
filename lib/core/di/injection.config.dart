@@ -38,6 +38,8 @@ import '../../features/dictionary/domain/usecases/get_dictionary_entries_usecase
     as _i102;
 import '../../features/dictionary/domain/usecases/search_dictionary_usecase.dart'
     as _i548;
+import '../../features/dictionary/domain/usecases/update_dictionary_entry_usecase.dart'
+    as _i624;
 import '../../features/dictionary/presentation/bloc/dictionary_bloc.dart'
     as _i928;
 import '../../features/settings/domain/usecases/get_settings_usecase.dart'
@@ -114,6 +116,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i195.BooksRepository>(
       () => _i515.BooksRepositoryImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.factory<_i624.UpdateDictionaryEntryUseCase>(
+      () =>
+          _i624.UpdateDictionaryEntryUseCase(gh<_i794.DictionaryRepository>()),
+    );
     gh.lazySingleton<_i548.SearchDictionaryUseCase>(
       () => _i548.SearchDictionaryUseCase(gh<_i794.DictionaryRepository>()),
     );
@@ -142,19 +148,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i195.BooksRepository>(),
       ),
     );
-    gh.factory<_i928.DictionaryBloc>(
-      () => _i928.DictionaryBloc(
-        gh<_i102.GetDictionaryEntriesUseCase>(),
-        gh<_i307.AddDictionaryEntryUseCase>(),
-        gh<_i693.DeleteDictionaryEntryUseCase>(),
-        gh<_i548.SearchDictionaryUseCase>(),
-        gh<_i69.ClearDictionaryUseCase>(),
-      ),
-    );
     gh.factory<_i163.ReaderTranslationBloc>(
       () => _i163.ReaderTranslationBloc(
         gh<_i233.MlKitTranslationModel>(),
         gh<_i618.PronunciationService>(),
+      ),
+    );
+    gh.factory<_i928.DictionaryBloc>(
+      () => _i928.DictionaryBloc(
+        gh<_i102.GetDictionaryEntriesUseCase>(),
+        gh<_i307.AddDictionaryEntryUseCase>(),
+        gh<_i624.UpdateDictionaryEntryUseCase>(),
+        gh<_i693.DeleteDictionaryEntryUseCase>(),
+        gh<_i548.SearchDictionaryUseCase>(),
+        gh<_i69.ClearDictionaryUseCase>(),
       ),
     );
     gh.lazySingleton<_i667.DioClient>(

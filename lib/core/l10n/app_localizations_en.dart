@@ -392,4 +392,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getStarted => 'Get Started';
+
+  @override
+  String get remember => 'Remember';
+
+  @override
+  String get dontRemember => 'Don\'t remember';
+
+  @override
+  String get tapToFlip => 'Tap to flip';
+
+  @override
+  String get allWordsLearned => 'All words learned!';
+
+  @override
+  String get resetProgressHint => 'Reset progress to practice again';
+
+  @override
+  String get resetProgress => 'Reset Progress';
+
+  @override
+  String get resetProgressConfirm => 'Reset learning progress for all words?';
 }

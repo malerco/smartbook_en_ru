@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/injection.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/theme/theme.dart';
 import '../bloc/dictionary_bloc.dart';
@@ -13,10 +12,7 @@ class DictionaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<DictionaryBloc>()..add(const DictionaryEvent.loadRequested()),
-      child: const DictionaryView(),
-    );
+    return const DictionaryView();
   }
 }
 
@@ -160,6 +156,8 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
   }
 
   Widget _buildFlashcardsTab(AppColorScheme colors) {
+    final appLocale = AppLocalizations.of(context)!;
+    
     return BlocBuilder<DictionaryBloc, DictionaryState>(
       builder: (context, state) {
         return state.when(
@@ -173,7 +171,24 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
             if (entries.isEmpty) {
               return const EmptyDictionary();
             }
-            return DictionaryFlashcards(entries: entries);
+            return Column(
+              children: [
+                Expanded(
+                  child: DictionaryFlashcards(entries: entries),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: TextButton.icon(
+                    onPressed: () => _showResetProgressDialog(context, appLocale, colors),
+                    icon: Icon(Icons.refresh, color: colors.textSecondary),
+                    label: Text(
+                      appLocale.resetProgress,
+                      style: TextStyle(color: colors.textSecondary),
+                    ),
+                  ),
+                ),
+              ],
+            );
           },
           error: (message) => Center(
             child: Text(
@@ -183,6 +198,41 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
           ),
         );
       },
+    );
+  }
+
+  void _showResetProgressDialog(BuildContext context, AppLocalizations appLocale, AppColorScheme colors) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: colors.surface,
+        title: Text(
+          appLocale.resetProgress,
+          style: TextStyle(color: colors.textPrimary),
+        ),
+        content: Text(
+          appLocale.resetProgressConfirm,
+          style: TextStyle(color: colors.textSecondary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(appLocale.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(dialogContext);
+              context.read<DictionaryBloc>().add(
+                const DictionaryEvent.resetProgressRequested(),
+              );
+            },
+            child: Text(
+              appLocale.confirm,
+              style: TextStyle(color: colors.primary),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

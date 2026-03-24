@@ -1,6 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/domain/entities/dictionary_entry.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/theme/theme.dart';
+import '../bloc/dictionary_bloc.dart';
 
 class DictionaryFlashcards extends StatefulWidget {
   final List<DictionaryEntry> entries;
@@ -16,102 +20,182 @@ class DictionaryFlashcards extends StatefulWidget {
 
 class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
   int _currentIndex = 0;
-  bool _showTranslation = false;
+  bool _isFlipped = false;
+  List<DictionaryEntry> _unlearnedEntries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filterUnlearnedEntries();
+  }
+
+  @override
+  void didUpdateWidget(DictionaryFlashcards oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.entries != widget.entries) {
+      _filterUnlearnedEntries();
+    }
+  }
+
+  void _filterUnlearnedEntries() {
+    _unlearnedEntries = widget.entries.where((e) => !e.isLearned).toList();
+    if (_currentIndex >= _unlearnedEntries.length) {
+      _currentIndex = _unlearnedEntries.isEmpty ? 0 : _unlearnedEntries.length - 1;
+    }
+    _isFlipped = false;
+  }
+
+  void _onRemember() {
+    if (_unlearnedEntries.isEmpty) return;
+    
+    final entry = _unlearnedEntries[_currentIndex];
+    final newCount = entry.rememberCount + 1;
+    final isLearned = newCount >= 3;
+    
+    final updatedEntry = entry.copyWith(
+      rememberCount: newCount,
+      isLearned: isLearned,
+      lastReviewedAt: DateTime.now(),
+    );
+    
+    context.read<DictionaryBloc>().add(DictionaryEvent.updateRequested(updatedEntry));
+    _nextCard();
+  }
+
+  void _onDontRemember() {
+    if (_unlearnedEntries.isEmpty) return;
+    
+    final entry = _unlearnedEntries[_currentIndex];
+    final updatedEntry = entry.copyWith(
+      rememberCount: 0,
+      lastReviewedAt: DateTime.now(),
+    );
+    
+    context.read<DictionaryBloc>().add(DictionaryEvent.updateRequested(updatedEntry));
+    _nextCard();
+  }
+
+  void _nextCard() {
+    setState(() {
+      _isFlipped = false;
+      if (_currentIndex < _unlearnedEntries.length - 1) {
+        _currentIndex++;
+      } else {
+        _currentIndex = 0;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final appLocale = AppLocalizations.of(context)!;
     
-    if (widget.entries.isEmpty) {
-      return const SizedBox.shrink();
+    if (_unlearnedEntries.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.celebration_outlined,
+              size: 64,
+              color: colors.success,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              appLocale.allWordsLearned,
+              style: TextStyle(
+                color: colors.textPrimary,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              appLocale.resetProgressHint,
+              style: TextStyle(
+                color: colors.textSecondary,
+                fontSize: 14,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
     }
 
-    final entry = widget.entries[_currentIndex];
+    final entry = _unlearnedEntries[_currentIndex];
 
     return Column(
       children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _showTranslation = !_showTranslation;
-                });
-              },
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                child: _FlashCard(
-                  key: ValueKey('$_currentIndex-$_showTranslation'),
-                  word: _showTranslation ? entry.translation : entry.word,
-                  isTranslation: _showTranslation,
-                  colors: colors,
-                ),
-              ),
-            ),
-          ),
-        ),
-        // Progress indicator
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${_currentIndex + 1} / ${widget.entries.length}',
+                '${_currentIndex + 1} / ${_unlearnedEntries.length}',
                 style: TextStyle(
                   color: colors.textSecondary,
                   fontSize: 14,
                 ),
               ),
+              Row(
+                children: List.generate(3, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Icon(
+                      index < entry.rememberCount 
+                          ? Icons.star 
+                          : Icons.star_border,
+                      color: colors.primary,
+                      size: 18,
+                    ),
+                  );
+                }),
+              ),
             ],
           ),
         ),
-        // Navigation buttons
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isFlipped = !_isFlipped;
+                });
+              },
+              child: _FlipCard(
+                entry: entry,
+                isFlipped: _isFlipped,
+                colors: colors,
+                appLocale: appLocale,
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(24),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _NavigationButton(
-                icon: Icons.arrow_back_ios_rounded,
-                onPressed: _currentIndex > 0
-                    ? () {
-                        setState(() {
-                          _currentIndex--;
-                          _showTranslation = false;
-                        });
-                      }
-                    : null,
-                colors: colors,
+              Expanded(
+                child: _ActionButton(
+                  label: appLocale.dontRemember,
+                  icon: Icons.close,
+                  color: colors.error,
+                  onPressed: _onDontRemember,
+                ),
               ),
-              _NavigationButton(
-                icon: Icons.refresh_rounded,
-                onPressed: () {
-                  setState(() {
-                    _showTranslation = !_showTranslation;
-                  });
-                },
-                colors: colors,
-                isPrimary: true,
-              ),
-              _NavigationButton(
-                icon: Icons.arrow_forward_ios_rounded,
-                onPressed: _currentIndex < widget.entries.length - 1
-                    ? () {
-                        setState(() {
-                          _currentIndex++;
-                          _showTranslation = false;
-                        });
-                      }
-                    : null,
-                colors: colors,
+              const SizedBox(width: 10,),
+              Expanded(
+                child: _ActionButton(
+                  label: appLocale.remember,
+                  icon: Icons.check,
+                  color: colors.success,
+                  onPressed: _onRemember,
+                ),
               ),
             ],
           ),
@@ -122,28 +206,103 @@ class _DictionaryFlashcardsState extends State<DictionaryFlashcards> {
   }
 }
 
-class _FlashCard extends StatelessWidget {
-  final String word;
-  final bool isTranslation;
+class _FlipCard extends StatefulWidget {
+  final DictionaryEntry entry;
+  final bool isFlipped;
   final AppColorScheme colors;
+  final AppLocalizations appLocale;
 
-  const _FlashCard({
-    super.key,
-    required this.word,
-    required this.isTranslation,
+  const _FlipCard({
+    required this.entry,
+    required this.isFlipped,
     required this.colors,
+    required this.appLocale,
   });
 
   @override
+  State<_FlipCard> createState() => _FlipCardState();
+}
+
+class _FlipCardState extends State<_FlipCard> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  bool _showFront = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+    _controller.addListener(() {
+      if (_controller.value >= 0.5 && _showFront) {
+        setState(() => _showFront = false);
+      } else if (_controller.value < 0.5 && !_showFront) {
+        setState(() => _showFront = true);
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(_FlipCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isFlipped != oldWidget.isFlipped) {
+      if (widget.isFlipped) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    }
+    if (widget.entry.id != oldWidget.entry.id) {
+      _controller.reset();
+      _showFront = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        final angle = _animation.value * pi;
+        final transform = Matrix4.identity()
+          ..setEntry(3, 2, 0.001)
+          ..rotateY(angle);
+        
+        return Transform(
+          transform: transform,
+          alignment: Alignment.center,
+          child: _showFront
+              ? _buildFrontCard()
+              : Transform(
+                  transform: Matrix4.identity()..rotateY(pi),
+                  alignment: Alignment.center,
+                  child: _buildBackCard(),
+                ),
+        );
+      },
+    );
+  }
+
+  Widget _buildFrontCard() {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: colors.wordCardBackground,
+        color: widget.colors.wordCardBackground,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: colors.shadow,
+            color: widget.colors.shadow,
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -153,29 +312,91 @@ class _FlashCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            isTranslation ? Icons.translate : Icons.text_fields,
-            color: colors.primary.withOpacity(0.3),
-            size: 48,
+            Icons.touch_app_outlined,
+            color: widget.colors.primary.withOpacity(0.3),
+            size: 32,
           ),
           const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              word,
+              widget.entry.word,
               style: TextStyle(
-                color: colors.textPrimary,
-                fontSize: 28,
+                color: widget.colors.textPrimary,
+                fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           Text(
-            isTranslation ? 'Translation' : 'Tap to reveal',
+            widget.appLocale.tapToFlip,
             style: TextStyle(
-              color: colors.textHint,
+              color: widget.colors.textHint,
               fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBackCard() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: widget.colors.primary.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: widget.colors.primary, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: widget.colors.shadow,
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            widget.entry.word,
+            style: TextStyle(
+              color: widget.colors.textPrimary,
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          if (widget.entry.transcription != null && 
+              widget.entry.transcription!.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              widget.entry.transcription!,
+              style: TextStyle(
+                color: widget.colors.textHint,
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+          const SizedBox(height: 16),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            decoration: BoxDecoration(
+              color: widget.colors.primary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              widget.entry.translation,
+              style: TextStyle(
+                color: widget.colors.onPrimary,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -184,53 +405,46 @@ class _FlashCard extends StatelessWidget {
   }
 }
 
-class _NavigationButton extends StatelessWidget {
+class _ActionButton extends StatelessWidget {
+  final String label;
   final IconData icon;
-  final VoidCallback? onPressed;
-  final AppColorScheme colors;
-  final bool isPrimary;
+  final Color color;
+  final VoidCallback onPressed;
 
-  const _NavigationButton({
+  const _ActionButton({
+    required this.label,
     required this.icon,
+    required this.color,
     required this.onPressed,
-    required this.colors,
-    this.isPrimary = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isEnabled = onPressed != null;
-    
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: isPrimary ? 64 : 48,
-        height: isPrimary ? 64 : 48,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
-          color: isPrimary
-              ? colors.primary
-              : isEnabled
-                  ? colors.surfaceVariant
-                  : colors.surfaceVariant.withOpacity(0.5),
-          shape: BoxShape.circle,
-          boxShadow: isPrimary
-              ? [
-                  BoxShadow(
-                    color: colors.primary.withOpacity(0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ]
-              : null,
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color, width: 2),
         ),
-        child: Icon(
-          icon,
-          color: isPrimary
-              ? colors.onPrimary
-              : isEnabled
-                  ? colors.textPrimary
-                  : colors.textDisabled,
-          size: isPrimary ? 28 : 20,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 24),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: color,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

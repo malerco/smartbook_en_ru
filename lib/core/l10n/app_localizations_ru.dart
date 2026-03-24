@@ -393,4 +393,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get getStarted => 'Начать';
+
+  @override
+  String get remember => 'Помню';
+
+  @override
+  String get dontRemember => 'Не помню';
+
+  @override
+  String get tapToFlip => 'Нажмите, чтобы перевернуть';
+
+  @override
+  String get allWordsLearned => 'Все слова выучены!';
+
+  @override
+  String get resetProgressHint => 'Сбросьте прогресс, чтобы начать заново';
+
+  @override
+  String get resetProgress => 'Сбросить прогресс';
+
+  @override
+  String get resetProgressConfirm => 'Сбросить прогресс изучения всех слов?';
 }

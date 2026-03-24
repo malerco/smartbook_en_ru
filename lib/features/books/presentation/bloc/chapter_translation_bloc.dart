@@ -52,7 +52,6 @@ class ChapterTranslationBloc extends Bloc<ChapterTranslationEvent, ChapterTransl
         targetLanguage: targetLanguage,
       ),
       onData: (progress) {
-        // Show loading progress until we have enough paragraphs
         if (progress.translations.length < _minParagraphsBeforeReading && !progress.isComplete) {
           return ChapterTranslationState.loading(
             progress: progress.progress,
@@ -62,16 +61,14 @@ class ChapterTranslationBloc extends Bloc<ChapterTranslationEvent, ChapterTransl
         }
         
         hasShownPartial = true;
-        
-        // Complete
+
         if (progress.isComplete) {
           return ChapterTranslationState.loaded(
             translations: progress.translations,
             failedIndices: progress.failedIndices,
           );
         }
-        
-        // Partial - allow reading while loading continues
+
         return ChapterTranslationState.partial(
           translations: progress.translations,
           failedIndices: progress.failedIndices,

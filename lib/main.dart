@@ -9,6 +9,7 @@ import 'core/router/app_router.dart';
 import 'core/services/offline_dictionary_service.dart';
 import 'core/services/pronunciation_service.dart';
 import 'core/theme/theme.dart';
+import 'features/dictionary/presentation/bloc/dictionary_bloc.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
 
 Future<void> main() async {
@@ -34,8 +35,15 @@ class AITranslatorApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<SettingsBloc>()..add(const SettingsEvent.loadRequested()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<SettingsBloc>()..add(const SettingsEvent.loadRequested()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<DictionaryBloc>()..add(const DictionaryEvent.loadRequested()),
+        ),
+      ],
       child: const _AppView(),
     );
   }
