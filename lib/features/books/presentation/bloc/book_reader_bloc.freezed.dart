@@ -1082,6 +1082,9 @@ abstract class _$$BookReaderLoadedImplCopyWith<$Res> {
   ) = __$$BookReaderLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Book book, BookContent content, int currentChapterIndex});
+
+  $BookCopyWith<$Res> get book;
+  $BookContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
@@ -1118,6 +1121,26 @@ class __$$BookReaderLoadedImplCopyWithImpl<$Res>
                   as int,
       ),
     );
+  }
+
+  /// Create a copy of BookReaderState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookCopyWith<$Res> get book {
+    return $BookCopyWith<$Res>(_value.book, (value) {
+      return _then(_value.copyWith(book: value));
+    });
+  }
+
+  /// Create a copy of BookReaderState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookContentCopyWith<$Res> get content {
+    return $BookContentCopyWith<$Res>(_value.content, (value) {
+      return _then(_value.copyWith(content: value));
+    });
   }
 }
 

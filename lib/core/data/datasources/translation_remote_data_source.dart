@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import '../../error/exceptions.dart';
+import '../../errors/exceptions.dart';
 import '../../network/dio_client.dart';
 import 'package:dio/dio.dart';
 

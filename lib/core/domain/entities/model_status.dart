@@ -1,4 +1,6 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'model_status.freezed.dart';
 
 enum ModelLoadingState {
   initial,
@@ -7,33 +9,17 @@ enum ModelLoadingState {
   error,
 }
 
-class ModelStatus extends Equatable {
-  final ModelLoadingState state;
-  final double progress;
-  final String? errorMessage;
+@freezed
+class ModelStatus with _$ModelStatus {
+  const ModelStatus._();
 
-  const ModelStatus({
-    this.state = ModelLoadingState.initial,
-    this.progress = 0.0,
-    this.errorMessage,
-  });
-
-  ModelStatus copyWith({
-    ModelLoadingState? state,
-    double? progress,
+  const factory ModelStatus({
+    @Default(ModelLoadingState.initial) ModelLoadingState state,
+    @Default(0.0) double progress,
     String? errorMessage,
-  }) {
-    return ModelStatus(
-      state: state ?? this.state,
-      progress: progress ?? this.progress,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+  }) = _ModelStatus;
 
   bool get isLoaded => state == ModelLoadingState.loaded;
   bool get isLoading => state == ModelLoadingState.loading;
   bool get hasError => state == ModelLoadingState.error;
-
-  @override
-  List<Object?> get props => [state, progress, errorMessage];
 }

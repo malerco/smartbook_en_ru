@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/domain/repositories/chapter_translation_repository.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/errors/exceptions.dart';
 
 @injectable
 class GetWordTranslationsUseCase {

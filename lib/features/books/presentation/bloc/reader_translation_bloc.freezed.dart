@@ -1608,6 +1608,8 @@ abstract class _$$ReaderTranslationTranslatedImplCopyWith<$Res> {
   ) = __$$ReaderTranslationTranslatedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({TranslationResult result, bool isWord});
+
+  $TranslationResultCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -1640,6 +1642,16 @@ class __$$ReaderTranslationTranslatedImplCopyWithImpl<$Res>
                   as bool,
       ),
     );
+  }
+
+  /// Create a copy of ReaderTranslationState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TranslationResultCopyWith<$Res> get result {
+    return $TranslationResultCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value));
+    });
   }
 }
 
