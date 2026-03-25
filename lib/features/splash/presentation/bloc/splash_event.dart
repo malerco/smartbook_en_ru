@@ -1,0 +1,7 @@
+part of 'splash_bloc.dart';
+
+@freezed
+class SplashEvent with _$SplashEvent {
+  const factory SplashEvent.started() = SplashStarted;
+  const factory SplashEvent.progressUpdated(double progress, LoadingMessageType messageType) = SplashProgressUpdated;
+}
