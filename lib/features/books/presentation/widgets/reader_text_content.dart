@@ -157,7 +157,6 @@ class _ReaderTextContentState extends State<ReaderTextContent> {
   }
 
   void _onRetryParagraph(int index) {
-    // TODO: Emit retry event for single paragraph
   }
 
   void _onWordTap(String word) {
