@@ -50,11 +50,7 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
         elevation: 0,
         title: Text(
           appLocale.dictionaryTitle,
-          style: TextStyle(
-            color: colors.textPrimary,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+          style: context.appTextTheme.textTheme.headlineMedium,
         ),
         centerTitle: false,
       ),
@@ -93,14 +89,8 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
         dividerColor: Colors.transparent,
         labelColor: colors.onPrimary,
         unselectedLabelColor: colors.textSecondary,
-        labelStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 14,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 14,
-        ),
+        labelStyle: context.appTextTheme.textTheme.labelLarge,
+        unselectedLabelStyle: context.appTextTheme.textTheme.titleSmall,
         tabs: [
           Tab(text: appLocale.wordList),
           Tab(text: appLocale.flashcards),
@@ -144,7 +134,7 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
                 const SizedBox(height: 16),
                 Text(
                   message,
-                  style: TextStyle(color: colors.textSecondary),
+                  style: context.appTextTheme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -183,7 +173,7 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
                     icon: Icon(Icons.refresh, color: colors.textSecondary),
                     label: Text(
                       appLocale.resetProgress,
-                      style: TextStyle(color: colors.textSecondary),
+                      style: context.appTextTheme.textTheme.bodySmall!.copyWith(color: colors.textSecondary),
                     ),
                   ),
                 ),
@@ -193,7 +183,7 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
           error: (message) => Center(
             child: Text(
               message,
-              style: TextStyle(color: colors.textSecondary),
+              style: context.appTextTheme.textTheme.bodyMedium,
             ),
           ),
         );
@@ -208,11 +198,11 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
         backgroundColor: colors.surface,
         title: Text(
           appLocale.resetProgress,
-          style: TextStyle(color: colors.textPrimary),
+          style: context.appTextTheme.textTheme.titleLarge,
         ),
         content: Text(
           appLocale.resetProgressConfirm,
-          style: TextStyle(color: colors.textSecondary),
+          style: context.appTextTheme.textTheme.bodyMedium,
         ),
         actions: [
           TextButton(
@@ -228,7 +218,7 @@ class _DictionaryViewState extends State<DictionaryView> with SingleTickerProvid
             },
             child: Text(
               appLocale.confirm,
-              style: TextStyle(color: colors.primary),
+              style: context.appTextTheme.textTheme.labelLarge!.copyWith(color: colors.primary),
             ),
           ),
         ],

@@ -115,7 +115,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           },
                           child: Text(
                             appLocale.back,
-                            style: TextStyle(color: colors.textSecondary),
+                            style: context.appTextTheme.textTheme.bodySmall!.copyWith(color: colors.textSecondary),
                           ),
                         )
                       else
@@ -137,10 +137,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ),
                               child: Text(
                                 appLocale.getStarted,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: context.appTextTheme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
                               ),
                             )
                           : ElevatedButton(
@@ -163,10 +160,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ),
                               child: Text(
                                 appLocale.next,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: context.appTextTheme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
                               ),
                             ),
                     ],
@@ -177,10 +171,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       onPressed: _completeOnboarding,
                       child: Text(
                         appLocale.skip,
-                        style: TextStyle(
-                          color: colors.textSecondary,
-                          fontSize: 14,
-                        ),
+                        style: context.appTextTheme.textTheme.bodyMedium,
                       ),
                     ),
                 ],
