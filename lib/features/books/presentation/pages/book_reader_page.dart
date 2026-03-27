@@ -4,14 +4,16 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/utils/language_detector.dart';
 import '../../../../core/di/injection.dart';
+import '../../../../core/domain/entities/book_content.dart';
 import '../../../../core/domain/repositories/settings_repository.dart';
-import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../bloc/book_reader_bloc.dart';
 import '../bloc/chapter_translation_bloc.dart';
 import '../bloc/reader_translation_bloc.dart';
 import '../widgets/chapter_loading_overlay.dart';
+import '../widgets/chapters_bottom_sheet.dart';
+import '../widgets/reader_app_bar.dart';
 import '../widgets/reader_text_content.dart';
 
 class BookReaderPage extends StatelessWidget {
@@ -123,7 +125,6 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final appLocale = AppLocalizations.of(context)!;
 
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, settingsState) {
@@ -144,7 +145,6 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
               loading: () => _buildLoading(colors),
               loaded: (book, content, currentChapterIndex) {
                 final currentChapter = content.chapters[currentChapterIndex];
-                final totalChapters = content.chapters.length;
 
                 if (_lastSavedChapterIndex != currentChapterIndex) {
                   _lastSavedChapterIndex = currentChapterIndex;
@@ -174,11 +174,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                 return Scaffold(
                   backgroundColor: colors.background,
                   body: GestureDetector(
-                    onTap: () {
-                      // setState(() {
-                      //   _showControls = !_showControls;
-                      // });
-                    },
+                    onTap: () {},
                     child: BlocListener<ChapterTranslationBloc, ChapterTranslationState>(
                       listener: (context, chapterTranslationState) {
                         chapterTranslationState.maybeWhen(
@@ -206,11 +202,14 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                                   duration: const Duration(milliseconds: 200),
                                   height: _showControls ? 56 : 0,
                                   child: _showControls
-                                      ? _buildAppBar(
-                                          context,
-                                          colors,
-                                          book.title,
-                                          currentChapter.title,
+                                      ? ReaderAppBar(
+                                          bookTitle: book.title,
+                                          chapterTitle: currentChapter.title,
+                                          onChaptersPressed: () => _showChaptersDialog(
+                                            context,
+                                            content.chapters,
+                                            currentChapterIndex,
+                                          ),
                                         )
                                       : const SizedBox.shrink(),
                                 ),
@@ -233,21 +232,6 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                                     ),
                                   ),
                                 ),
-                              // AnimatedContainer(
-                              //   duration: const Duration(milliseconds: 200),
-                              //   height: _showControls ? 80 : 0,
-                              //   child: _showControls
-                              //       ? _buildBottomControls(
-                              //           context,
-                              //           colors,
-                              //           currentChapterIndex,
-                              //           totalChapters,
-                              //           content.chapters
-                              //               .map((c) => c.title)
-                              //               .toList(),
-                              //         )
-                              //       : const SizedBox.shrink(),
-                              // ),
                             ],
                           ),
                         ),
@@ -312,229 +296,24 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
     );
   }
 
-  Widget _buildAppBar(
+  void _showChaptersDialog(
     BuildContext context,
-    AppColorScheme colors,
-    String bookTitle,
-    String chapterTitle,
-  ) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: colors.background,
-        border: Border(
-          bottom: BorderSide(
-            color: colors.surfaceVariant.withOpacity(0.3),
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back, color: colors.textPrimary),
-            onPressed: () => context.pop(),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  bookTitle,
-                  style: TextStyle(
-                    color: colors.textPrimary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  chapterTitle,
-                  style: TextStyle(
-                    color: colors.textSecondary,
-                    fontSize: 12,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.list, color: colors.textPrimary),
-            onPressed: () => _showChaptersDialog(context, colors),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomControls(
-    BuildContext context,
-    AppColorScheme colors,
+    List<BookChapter> chapters,
     int currentChapterIndex,
-    int totalChapters,
-    List<String> chapterTitles,
   ) {
-    final canGoPrevious = currentChapterIndex > 0;
-    final canGoNext = currentChapterIndex < totalChapters - 1;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: colors.background,
-        border: Border(
-          top: BorderSide(
-            color: colors.surfaceVariant.withOpacity(0.3),
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.chevron_left,
-              color: canGoPrevious ? colors.primary : colors.textSecondary.withOpacity(0.3),
-            ),
-            onPressed: canGoPrevious
-                ? () {
-                    _scrollController.jumpTo(0);
-                    context.read<BookReaderBloc>().add(
-                          BookReaderEvent.chapterChanged(
-                            chapterIndex: currentChapterIndex - 1,
-                          ),
-                        );
-                  }
-                : null,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '${currentChapterIndex + 1} / $totalChapters',
-                  style: TextStyle(
-                    color: colors.textSecondary,
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                LinearProgressIndicator(
-                  value: (currentChapterIndex + 1) / totalChapters,
-                  backgroundColor: colors.surfaceVariant,
-                  valueColor: AlwaysStoppedAnimation<Color>(colors.primary),
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.chevron_right,
-              color: canGoNext ? colors.primary : colors.textSecondary.withOpacity(0.3),
-            ),
-            onPressed: canGoNext
-                ? () {
-                    _scrollController.jumpTo(0);
-                    context.read<BookReaderBloc>().add(
-                          BookReaderEvent.chapterChanged(
-                            chapterIndex: currentChapterIndex + 1,
-                          ),
-                        );
-                  }
-                : null,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showChaptersDialog(BuildContext context, AppColorScheme colors) {
-    final appLocale = AppLocalizations.of(context)!;
     final bloc = context.read<BookReaderBloc>();
-    final state = bloc.state;
 
-    if (state is! BookReaderLoaded) return;
-
-    showModalBottomSheet(
+    ChaptersBottomSheet.show(
       context: context,
-      backgroundColor: colors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (dialogContext) {
-        return Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.6,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  appLocale.chapters,
-                  style: TextStyle(
-                    color: colors.textPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Divider(color: colors.surfaceVariant),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: state.content.chapters.length,
-                  itemBuilder: (context, index) {
-                    final chapter = state.content.chapters[index];
-                    final isCurrentChapter = index == state.currentChapterIndex;
-
-                    return ListTile(
-                      leading: Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          color: isCurrentChapter
-                              ? colors.primary
-                              : colors.textSecondary,
-                          fontWeight: isCurrentChapter
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
-                      ),
-                      title: Text(
-                        chapter.title,
-                        style: TextStyle(
-                          color: isCurrentChapter
-                              ? colors.primary
-                              : colors.textPrimary,
-                          fontWeight: isCurrentChapter
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      selected: isCurrentChapter,
-                      onTap: () {
-                        Navigator.of(dialogContext).pop();
-                        _initialScrollRestored = true;
-                        _scrollController.jumpTo(0);
-                        // Reset skip flag - cache check happens in bloc
-                        setState(() {
-                          _translationSkipped = false;
-                        });
-                        bloc.add(
-                          BookReaderEvent.chapterChanged(chapterIndex: index),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
+      chapters: chapters,
+      currentChapterIndex: currentChapterIndex,
+      onChapterSelected: (index) {
+        _initialScrollRestored = true;
+        _scrollController.jumpTo(0);
+        setState(() {
+          _translationSkipped = false;
+        });
+        bloc.add(BookReaderEvent.chapterChanged(chapterIndex: index));
       },
     );
   }

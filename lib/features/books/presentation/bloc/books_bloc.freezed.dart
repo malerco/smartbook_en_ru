@@ -224,6 +224,8 @@ abstract class _$$BooksAddRequestedImplCopyWith<$Res> {
   ) = __$$BooksAddRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Book book});
+
+  $BookCopyWith<$Res> get book;
 }
 
 /// @nodoc
@@ -248,6 +250,16 @@ class __$$BooksAddRequestedImplCopyWithImpl<$Res>
                   as Book,
       ),
     );
+  }
+
+  /// Create a copy of BooksEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookCopyWith<$Res> get book {
+    return $BookCopyWith<$Res>(_value.book, (value) {
+      return _then(_value.copyWith(book: value));
+    });
   }
 }
 
@@ -552,6 +564,8 @@ abstract class _$$BooksUpdateRequestedImplCopyWith<$Res> {
   ) = __$$BooksUpdateRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Book book});
+
+  $BookCopyWith<$Res> get book;
 }
 
 /// @nodoc
@@ -576,6 +590,16 @@ class __$$BooksUpdateRequestedImplCopyWithImpl<$Res>
                   as Book,
       ),
     );
+  }
+
+  /// Create a copy of BooksEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookCopyWith<$Res> get book {
+    return $BookCopyWith<$Res>(_value.book, (value) {
+      return _then(_value.copyWith(book: value));
+    });
   }
 }
 

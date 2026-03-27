@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import '../../error/exceptions.dart';
+import '../../errors/exceptions.dart';
 
 @injectable
 class ConnectivityInterceptor extends Interceptor {

@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../domain/repositories/chapter_translation_repository.dart';
-import '../../error/exceptions.dart';
+import '../../errors/exceptions.dart';
 import '../datasources/translation_hive_cache.dart';
 import '../datasources/translation_remote_data_source.dart';
 

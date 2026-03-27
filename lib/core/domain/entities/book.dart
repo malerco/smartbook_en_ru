@@ -1,106 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Book extends Equatable {
-  final String id;
-  final String title;
-  final String? author;
-  final String filePath;
-  final String? coverPath;
-  final int totalPages;
-  final int currentPage;
-  final double progress;
-  final double scrollPosition;
-  final DateTime addedAt;
-  final DateTime? lastReadAt;
+part 'book.freezed.dart';
+part 'book.g.dart';
 
-  const Book({
-    required this.id,
-    required this.title,
-    this.author,
-    required this.filePath,
-    this.coverPath,
-    this.totalPages = 0,
-    this.currentPage = 0,
-    this.progress = 0.0,
-    this.scrollPosition = 0.0,
-    required this.addedAt,
-    this.lastReadAt,
-  });
-
-  Book copyWith({
-    String? id,
-    String? title,
+@freezed
+class Book with _$Book {
+  const factory Book({
+    required String id,
+    required String title,
     String? author,
-    String? filePath,
+    required String filePath,
     String? coverPath,
-    int? totalPages,
-    int? currentPage,
-    double? progress,
-    double? scrollPosition,
-    DateTime? addedAt,
+    @Default(0) int totalPages,
+    @Default(0) int currentPage,
+    @Default(0.0) double progress,
+    @Default(0.0) double scrollPosition,
+    required DateTime addedAt,
     DateTime? lastReadAt,
-  }) {
-    return Book(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      author: author ?? this.author,
-      filePath: filePath ?? this.filePath,
-      coverPath: coverPath ?? this.coverPath,
-      totalPages: totalPages ?? this.totalPages,
-      currentPage: currentPage ?? this.currentPage,
-      progress: progress ?? this.progress,
-      scrollPosition: scrollPosition ?? this.scrollPosition,
-      addedAt: addedAt ?? this.addedAt,
-      lastReadAt: lastReadAt ?? this.lastReadAt,
-    );
-  }
+  }) = _Book;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'author': author,
-      'filePath': filePath,
-      'coverPath': coverPath,
-      'totalPages': totalPages,
-      'currentPage': currentPage,
-      'progress': progress,
-      'scrollPosition': scrollPosition,
-      'addedAt': addedAt.toIso8601String(),
-      'lastReadAt': lastReadAt?.toIso8601String(),
-    };
-  }
-
-  factory Book.fromJson(Map<String, dynamic> json) {
-    return Book(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      author: json['author'] as String?,
-      filePath: json['filePath'] as String,
-      coverPath: json['coverPath'] as String?,
-      totalPages: json['totalPages'] as int? ?? 0,
-      currentPage: json['currentPage'] as int? ?? 0,
-      progress: (json['progress'] as num?)?.toDouble() ?? 0.0,
-      scrollPosition: (json['scrollPosition'] as num?)?.toDouble() ?? 0.0,
-      addedAt: DateTime.parse(json['addedAt'] as String),
-      lastReadAt: json['lastReadAt'] != null
-          ? DateTime.parse(json['lastReadAt'] as String)
-          : null,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        id,
-        title,
-        author,
-        filePath,
-        coverPath,
-        totalPages,
-        currentPage,
-        progress,
-        scrollPosition,
-        addedAt,
-        lastReadAt,
-      ];
+  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
 }

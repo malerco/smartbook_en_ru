@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import '../../error/exceptions.dart';
+import '../../errors/exceptions.dart';
 import '../../data/datasources/translation_remote_data_source.dart';
 
 abstract class ChapterTranslationRepository {

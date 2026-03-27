@@ -255,6 +255,8 @@ abstract class _$$DictionaryAddRequestedImplCopyWith<$Res> {
   ) = __$$DictionaryAddRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DictionaryEntry entry});
+
+  $DictionaryEntryCopyWith<$Res> get entry;
 }
 
 /// @nodoc
@@ -279,6 +281,16 @@ class __$$DictionaryAddRequestedImplCopyWithImpl<$Res>
                   as DictionaryEntry,
       ),
     );
+  }
+
+  /// Create a copy of DictionaryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DictionaryEntryCopyWith<$Res> get entry {
+    return $DictionaryEntryCopyWith<$Res>(_value.entry, (value) {
+      return _then(_value.copyWith(entry: value));
+    });
   }
 }
 
@@ -435,6 +447,8 @@ abstract class _$$DictionaryUpdateRequestedImplCopyWith<$Res> {
   ) = __$$DictionaryUpdateRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DictionaryEntry entry});
+
+  $DictionaryEntryCopyWith<$Res> get entry;
 }
 
 /// @nodoc
@@ -459,6 +473,16 @@ class __$$DictionaryUpdateRequestedImplCopyWithImpl<$Res>
                   as DictionaryEntry,
       ),
     );
+  }
+
+  /// Create a copy of DictionaryEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DictionaryEntryCopyWith<$Res> get entry {
+    return $DictionaryEntryCopyWith<$Res>(_value.entry, (value) {
+      return _then(_value.copyWith(entry: value));
+    });
   }
 }
 

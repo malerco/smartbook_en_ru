@@ -1,41 +1,37 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class BookChapter extends Equatable {
-  final String id;
-  final String title;
-  final String content;
-  final int orderIndex;
+part 'book_content.freezed.dart';
+part 'book_content.g.dart';
 
-  const BookChapter({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.orderIndex,
-  });
+@freezed
+class BookChapter with _$BookChapter {
+  const factory BookChapter({
+    required String id,
+    required String title,
+    required String content,
+    required int orderIndex,
+  }) = _BookChapter;
 
-  @override
-  List<Object?> get props => [id, title, content, orderIndex];
+  factory BookChapter.fromJson(Map<String, dynamic> json) =>
+      _$BookChapterFromJson(json);
 }
 
-class BookContent extends Equatable {
-  final String bookId;
-  final String title;
-  final String? author;
-  final List<BookChapter> chapters;
-  final String? coverImagePath;
+@freezed
+class BookContent with _$BookContent {
+  const BookContent._();
 
-  const BookContent({
-    required this.bookId,
-    required this.title,
-    this.author,
-    required this.chapters,
-    this.coverImagePath,
-  });
+  const factory BookContent({
+    required String bookId,
+    required String title,
+    String? author,
+    required List<BookChapter> chapters,
+    String? coverImagePath,
+  }) = _BookContent;
+
+  factory BookContent.fromJson(Map<String, dynamic> json) =>
+      _$BookContentFromJson(json);
 
   String get fullText => chapters.map((c) => c.content).join('\n\n');
 
   int get totalCharacters => fullText.length;
-
-  @override
-  List<Object?> get props => [bookId, title, author, chapters, coverImagePath];
 }
