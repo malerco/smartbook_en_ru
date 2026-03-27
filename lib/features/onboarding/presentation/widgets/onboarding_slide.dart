@@ -47,18 +47,16 @@ class OnboardingSlide extends StatelessWidget {
           const SizedBox(height: 48),
           Text(
             title,
-            style: GoogleFonts.playfairDisplay(
+            style: context.appTextTheme.brandTitle!.copyWith(
               fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: colors.textPrimary,
+              fontStyle: FontStyle.normal,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
           Text(
             description,
-            style: TextStyle(
-              fontSize: 16,
+            style: context.appTextTheme.textTheme.bodyLarge!.copyWith(
               color: colors.textSecondary,
               height: 1.5,
             ),

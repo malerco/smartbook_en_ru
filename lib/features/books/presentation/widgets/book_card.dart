@@ -45,9 +45,8 @@ class BookCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             book.title,
-            style: const TextStyle(
+            style: context.appTextTheme.textTheme.bodySmall!.copyWith(
               color: AppColors.textPrimary,
-              fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
             maxLines: 2,
@@ -57,9 +56,8 @@ class BookCard extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               book.author!,
-              style: const TextStyle(
+              style: context.appTextTheme.textTheme.labelSmall!.copyWith(
                 color: AppColors.textSecondary,
-                fontSize: 10,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

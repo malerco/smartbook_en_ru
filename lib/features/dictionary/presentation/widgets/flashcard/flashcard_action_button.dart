@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/theme/theme_provider.dart';
+
 class FlashcardActionButton extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -16,6 +18,7 @@ class FlashcardActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyles = context.appTextTheme.textTheme;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -33,11 +36,8 @@ class FlashcardActionButton extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: TextStyle(
-                  color: color,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                maxLines: 1,
+                style: textStyles.bodySmall,
               ),
             ),
           ],

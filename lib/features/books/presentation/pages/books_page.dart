@@ -64,11 +64,7 @@ class BooksView extends StatelessWidget {
         elevation: 0,
         title: Text(
           appLocale.booksTitle,
-          style: TextStyle(
-            color: colors.textPrimary,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+          style: context.appTextTheme.textTheme.headlineMedium,
         ),
         centerTitle: false,
       ),
@@ -111,7 +107,7 @@ class BooksView extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     message,
-                    style: TextStyle(color: colors.textSecondary),
+                    style: context.appTextTheme.textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                 ],

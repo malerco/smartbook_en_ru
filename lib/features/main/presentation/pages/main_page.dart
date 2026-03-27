@@ -120,7 +120,7 @@ class _NavBarItem extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               label,
-              style: TextStyle(
+              style: context.appTextTheme.textTheme.labelSmall!.copyWith(
                 color: isSelected ? colors.navBarSelected : colors.navBarUnselected,
                 fontSize: 11,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,

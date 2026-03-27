@@ -89,7 +89,11 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   ) async {
     final result = await _importBookUseCase(event.filePath);
     result.fold(
-      (failure) => emit(BooksState.error(message: failure.message)),
+      (failure) {
+        emit(BooksState.error(message: failure.message));
+        final books = _getBooksUseCase();
+        emit(BooksState.loaded(books: books));
+      },
       (_) => add(const BooksEvent.loadRequested()),
     );
   }

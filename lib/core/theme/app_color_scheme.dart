@@ -145,7 +145,7 @@ class DarkColorScheme implements AppColorScheme {
   Color get bookshelfBackground => const Color(0xFF1C1410);
 
   @override
-  Color get dictionaryBackground => const Color(0xFF2A2018);
+  Color get dictionaryBackground => const Color(0xFF1C1410);
   @override
   Color get wordCardBackground => const Color(0xFF3D3028);
 

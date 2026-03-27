@@ -221,11 +221,10 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
                                     ),
                                     child: ReaderTextContent(
                                       content: currentChapter.content,
-                                      textStyle: TextStyle(
+                                      textStyle: context.appTextTheme.textTheme.bodyLarge!.copyWith(
                                         fontSize: fontSize,
                                         height: lineSpacing,
                                         fontFamily: fontFamily,
-                                        color: colors.textPrimary,
                                       ),
                                       scrollController: _scrollController,
                                       translationDirection: _detectedDirection ?? TranslationDirection.enToRu,
@@ -287,7 +286,7 @@ class _BookReaderViewState extends State<BookReaderView> with WidgetsBindingObse
             const SizedBox(height: 16),
             Text(
               message,
-              style: TextStyle(color: colors.textSecondary),
+              style: context.appTextTheme.textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
           ],

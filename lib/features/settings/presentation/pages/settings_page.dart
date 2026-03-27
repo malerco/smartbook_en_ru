@@ -34,11 +34,7 @@ class SettingsView extends StatelessWidget {
         elevation: 0,
         title: Text(
           appLocale.settingsTitle,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: colors.textPrimary,
-            fontSize: 24,
-          ),
+          style: context.appTextTheme.textTheme.displaySmall,
         ),
         centerTitle: false,
       ),
